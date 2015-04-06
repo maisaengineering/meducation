@@ -1,24 +1,11 @@
 development:
-  KIDS_PROMOTION_AT_STREAMS: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da50100/20140710165710893-893874335000.png'
-  POST_PROMOTION_AT_STREAMS: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da60100/20140710165714744-744794095000.png'
-  POST_PROMOTION_AT_KID_DASHBOARD: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da70100/20140710165717456-456754131000.png'
-  POST_SHARING_REMINDER_TEXT: "Hey! Haven't seen a post from you on KidsLink yet. Are you sharing with me?"
-  PROMPT_NAMES: ['KIDS_PROMOTION_AT_STREAMS', 'POST_PROMOTION_AT_STREAMS', 'POST_PROMOTION_AT_KID_DASHBOARD', 'CHILD_SEASONAL_POPUP', 'ADD_FRIENDS_PROMPT', 'HEART_ICONS']
-  SMS_URL: "localhost:3000/m/"
-  TOKEN_DOWNTIME: "current wait time: 1 to 3 days"
-  INV_REQ_SUCCESS_REDIRECT: "http://mykidslink.com"
-  INV_REQ_FAILURE_REDIRECT: "http://mykidslink.com"
-  #Session secret key base (for dev generate token using `rake secret` and use that key in below)
+  TEMP_BUCKET: "test-kl-tmp"
   SECRET_KEY_BASE: "3363d36532aeba0a4f0d96811b767705eeda4924a750264ab050e0fd827fedc4cb8260646495af0b0884feec197facbdb43352a75694cd5ccfca367ea9267cb6"
-  TEMP_BUCKET: "test-kl-tmp"
-
 test:
-  KIDS_PROMOTION_AT_STREAMS: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da50100/20140710165710893-893874335000.png'
-  POST_PROMOTION_AT_STREAMS: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da60100/20140710165714744-744794095000.png'
-  POST_PROMOTION_AT_KID_DASHBOARD: 'https://test-ms-templates.s3.amazonaws.com/assets/template_image/source/53be788e6d61691a8da70100/20140710165717456-456754131000.png'
-  POST_SHARING_REMINDER_TEXT: "Hey! Haven't seen a post from you on KidsLink yet. Are you sharing with me?"
-  PROMPT_NAMES: ['KIDS_PROMOTION_AT_STREAMS', 'POST_PROMOTION_AT_STREAMS', 'POST_PROMOTION_AT_KID_DASHBOARD', 'CHILD_SEASONAL_POPUP', 'ADD_FRIENDS_PROMPT', 'HEART_ICONS']
-  SMS_URL: "http://localhost:3000/m/"
-  TOKEN_DOWNTIME: "current wait time: 1 to 3 days"
   TEMP_BUCKET: "test-kl-tmp"
+production:
+  TEMP_BUCKET: "test-kl-tmp"
+  SECRET_KEY_BASE: "3363d36532aeba0a4f0d96811b767705eeda4924a750264ab050e0fd827fedc4cb8260646495af0b0884feec197facbdb43352a75694cd5ccfca367ea9267cb6"
+
+
 

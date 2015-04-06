@@ -1,0 +1,25 @@
+- @category.children.each do |child|
+  - documents = documents_vault(child)
+  - if documents.count> 0
+    - if child.has_children?
+      #demo3.docRow{class: documents.count.eql?(0) ? 'categoryRowEmpty' : '', onclick:"child_node('#{child.id}','#{@profile.id}');"}
+        .docMain{:onclick => ""}
+          .docTitlePlus
+            .docTitle
+              %a{:href => "#"} #{child.display_name}
+            .docSubTitle
+              %span.dstItemNumber= documents.count.eql?(0) ? '(no documents)' : pluralize(documents.count, 'document')
+        .documentButtons
+          .documentButton.dbCaptureHere.clickLink{:onclick => ""}
+            = link_to "Capture new", "#", class: 'capture_new_document_right', id:child.root.id
+        .clear
+        #demo3a.docList.dlLevelTwo{:class=>"#{child.id}",:style => "display: none;"}
+    - else
+      = render 'no_children_node', level_one: child, profile: @profile, root_id: child.root.id
+
+= render 'documents_at_node', category: @category  unless @category.has_children?
+-  profile_user_custom_tags(@category.id).each do |user_tag|
+  - documents = documents_vault(user_tag)
+  - if documents.count> 0
+    = render 'no_children_node', level_one: user_tag, profile: @profile, root_id: @category.root.id
+

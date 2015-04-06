@@ -1,0 +1,29 @@
+.editProfileFieldContainer.editProfileFieldContainerContacts
+  %span.editProfileLabel Primary doctor
+  = text_field_tag "kid[doctor_name]", f.pre_fill(:doctor_name), placeholder:"name"
+  %br/
+  = text_field_tag "kid[doctor_phone]", f.pre_fill(:doctor_phone), placeholder:"phone"
+  %br/
+  = email_field_tag "kid[doctor_email]", f.pre_fill(:doctor_email), placeholder:"email"
+.editProfileFieldContainer.editProfileFieldContainerContacts
+  %span.editProfileLabel Dentist
+  = text_field_tag "kid[dentist_name]", f.pre_fill(:dentist_name), placeholder:"name"
+  %br/
+  = text_field_tag "kid[dentist_phone]", f.pre_fill(:dentist_phone), placeholder:"phone"
+  %br/
+  = email_field_tag "kid[dentist_email]", f.pre_fill(:dentist_email), placeholder:"email"
+.editProfileFieldContainer
+  %span.editProfileLabel Medicines
+  = text_area_tag "kid[medicines]", f.pre_fill(:medicines)
+.editProfileFieldContainer
+  %span.editProfileLabel Food allergies
+  = text_area_tag "kid[food_allergies]", f.pre_fill(:food_allergies)
+.editProfileFieldContainer
+  %span.editProfileLabel Medical issues
+  = text_area_tag "kid[medical_issues]", f.pre_fill(:medical_issues)
+.editProfileFieldContainer
+  %span.editProfileLabel Special needs
+  = text_area_tag "kid[special_needs]", f.pre_fill(:special_needs)
+.editProfileFieldContainer
+  %span.editProfileLabel Other health/wellness
+  = text_area_tag "kid[other_concerns]", f.pre_fill(:other_concerns)

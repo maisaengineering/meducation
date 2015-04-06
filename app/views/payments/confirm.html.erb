@@ -1,0 +1,22 @@
+<div class ="bodyContainer">
+  
+
+<h1>You have successfully completed Kidslink Payment Organization </h1>
+<h1>Thank you for choosing Kidslink. Please click here  KidsLink Profile <%= link_to "Kidslink  Profile ", profiles_path(@user, :kid_login => "new_login")%></h1>
+
+<div> Organization : American Internation School  (2012-2013 (Current)): </div>
+
+<h2>Your Transaction Details</h2>
+
+<table>
+  <tr><td>Amount</td><td>$<%= @result.transaction.amount %></td></tr>
+  <tr><td>Transaction ID:</td><td><%= @result.transaction.id %></td></tr>
+  <tr><td>First Name:</td><td><%= h @result.transaction.customer_details.first_name %></td></tr>
+  <tr><td>Last Name:</td><td><%= h @result.transaction.customer_details.last_name %></td></tr>
+  <tr><td>Email:</td><td><%= h @result.transaction.customer_details.email %></td></tr>
+  <tr><td>Credit Card:</td><td><%= h @result.transaction.credit_card_details.masked_number %></td></tr>
+  <tr><td>Card Type:</td><td><%= h @result.transaction.credit_card_details.card_type %></td></tr>
+</table>
+
+
+</div>

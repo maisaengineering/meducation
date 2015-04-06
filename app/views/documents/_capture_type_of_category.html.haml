@@ -1,0 +1,65 @@
+#capture_type_of_category.popUpContainer.popUpDocumentsCapture{:style => "display: none;"}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureTopText What type of document are you capturing?
+              #captureCategoryContainer
+                - @categories.positioned.each do |category|
+                  .captureCategory.clickLink{id: "captureCategory-#{category.id}"}
+                    .captureCategoryTitle{:style => "background-image: url(#{category_icon(category)});"}
+                      = link_to category.name,'#',id: category.id, class: category.children.empty?? 'choose_document': nil
+                .captureSkipToQC
+                  or
+                  %a{:href => "#",class: 'choose_document',id: @categories.first.id}
+                    Skip and do
+                    %span#qcPhrase Quick Capture
+              = hidden_field_tag :selected_category,  nil
+              = hidden_field_tag :user_tags, @parent_profile.user_tags.map(&:tag).to_a.join(', ')
+              #captureDocTypeContainer
+
+              .captureBottomButtons
+                .captureButton.cbCancel
+                  %a{:href => "#"} Cancel
+              .clear
+          %div{:style => "display:none;"}
+            = form_for(Document.new,url: accept_and_save_documents_path,html: { method: :post},:remote=>true, authenticity_token: true) do |f|
+              -#= hidden_field_tag 'document[multi_upload]', true
+
+              = f.file_field :source
+              = f.file_field :attachment
+              = f.hidden_field :profile_id,value: @profile.id
+              = f.hidden_field :category_id
+              = f.hidden_field :org_provider
+              = f.hidden_field :description
+              = f.hidden_field :taken_on
+              = f.hidden_field :expiration_date
+              = f.hidden_field :tags
+              = f.hidden_field :multi_upload, value: true
+              = hidden_field_tag :type_of_action
+              = hidden_field_tag :profile_id,@profile.id
+
+
+
+  :javascript
+    $('.captureCategoryTitle a').click(function(e){
+      e.preventDefault();
+     var $this = $(this);
+      $.ajax({
+        url: '/categories/'+$(this).attr('id')+'/ancestors' ,
+        beforeSend: function(){
+         // remove class captureCategoryOn for all elements
+         $('.captureCategory').removeClass('captureCategoryOn');
+         // add captureCategoryOn for clciked one
+         $this.closest('.captureCategory').toggleClass('captureCategoryOn');
+        },
+        success: function(data){
+          $("#selected_category").val($this.attr('id'));
+          $('#captureDocTypeContainer').html(data);
+        }
+      });
+    });

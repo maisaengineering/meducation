@@ -1,0 +1,34 @@
+=hidden_field_tag :season_id, "#{session[:season_id]}", :readonly => true
+
+%label
+  Family currently enrolled?
+  .formErrorText#enrolled_error{:style => "display: none"} ERROR: This field is required          
+=select_tag :family_currently_enrolled, options_for_select([['Yes','Yes'],['No','No']]), :include_blank => true
+
+%label Active members of
+%label{:style => "text-transform: captalize;"} 
+  Peachtree Presbyterian Church?
+  .formErrorText#active_error{:style => "display: none"} ERROR: Active members? is required          
+=select_tag :active_member_of_ppc, options_for_select([['Yes','Yes'],['No','No']]), :include_blank => true
+
+%label 
+  Age group and school days
+  .formErrorText#age_error{:style => "display: none"} ERROR: Age group is required          
+=select_tag :age_group_and_school_days, options_for_select(org_season_session), :include_blank => true
+
+=label :secondary_choice_of_class_days, "Secondary choice of class days"
+=text_field_tag :secondary_choice_of_class_days
+
+%label 
+  Are you enrolling siblings today?
+  .formErrorText#sibbling_error{:style => "display: none"} ERROR: Siblings is required          
+=select_tag :are_you_enrolling_siblings, options_for_select([['Yes','Yes'],['No','No']]), :include_blank => true
+
+=label :sibling_name, "Sibling's name"
+=text_field_tag :sibling_name
+
+=label :sibling_age, "Sibling's age group"
+=text_field_tag :sibling_age
+
+=label :sibling_days, "Sibling's days"
+=text_field_tag :sibling_days

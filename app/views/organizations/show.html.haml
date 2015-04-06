@@ -1,0 +1,16 @@
+
+
+%h1 Success!
+.bodyText
+%p
+  You have successfully updated 
+  %b 
+    = @organization.name 
+        
+    
+
+
+
+//= image_tag @organization.logo
+
+= link_to 'Return', edit_organization_path(@organization)

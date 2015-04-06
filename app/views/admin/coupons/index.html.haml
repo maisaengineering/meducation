@@ -1,0 +1,26 @@
+%h1 Listing  Admin Coupons
+
+
+%table
+  %tr
+    %th CouponCode
+    %th Discount(%)
+    %th Organization
+    %th
+    %th
+    %th
+
+  - @admin_coupons.each do |admin_coupon|
+  - @org = Organization.where(:_id => admin_coupon.organization_id).first
+
+    %tr
+      %td= admin_coupon.name
+      %td= admin_coupon.discount
+      %td= @org.name
+      %td= link_to 'Show', admin_coupon
+      %td= link_to 'Edit', edit_admin_coupon_path(admin_coupon)
+      %td= link_to 'Destroy', admin_coupon,data: { :confirm => 'Are you sure?' }, :method => :delete
+
+%br
+
+= link_to 'New Coupon', new_admin_coupon_path

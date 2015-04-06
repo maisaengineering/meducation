@@ -1,0 +1,48 @@
+- cookies[:dashboard_visited] = current_user.id.to_s
+.popUpContainer.popUpMessage.popUpMessageWelcomeOrg
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %span.panelName Welcome!
+            .popUpMessageTopText
+              %strong Welcome #{organization.name} parent!
+            .popUpMessageText
+              %p This is your new KidsLink family dashboard.
+              %p To see information about individual children, click their names at the top or bottom of your screen.
+              %hr/
+              %p
+                Inside KidsLink, you can store important documents (like
+                = succeed ")," do
+                  %strong.bBlue birth certificates
+                information (like
+                %strong.bBlue allergies
+                and
+                = succeed ")," do
+                  %strong.bBlue doctors
+                and milestones (like
+                = succeed ")." do
+                  %strong.bBlue first day of school
+              %p You can even capture documents and photos straight from your smartphone by visiting mykidslink.com on your iPhone or Android device.
+              %p
+                But right now, to see information about your relationship with
+                = succeed "," do
+                  %strong= organization.name
+                (1) click into a child's personal dashboard, and then (2) click "Organizations" at the bottom of the screen.
+            .clear
+            .popUpMessageButtons
+              .pumButton.pumbOkay
+                %a{href: "#"} Okay Thanks!
+            .clear
+        -#%div{style: "display:none;"}
+          %form{action: "", enctype: "multipart/form-data", method: "post", name: "imgPost"}
+            %input#demo3{name: "upload1", type: "file"}/
+  :javascript
+    // remove the params(welcome_message) from address bar to allow  user to reload the page by refreshing
+    //window.history.pushState({}, "Hide", "#{top_dashboard_path(params[:profile_id])}");
+    $('.popUpMessageButtons .pumButton.pumbOkay a').click(function(e){
+      e.preventDefault();
+      $(this).parents('.popUpMessageWelcomeOrg').hide();
+    })

@@ -1,0 +1,15 @@
+<h1>New Application Submitted for <%= @season %></h1>
+<p>KidsLink has received a new application on your behalf:</p>
+<p>
+  <% if !@session.nil? %>
+    Session: <%= @session %><br />
+  <% end %>
+  Applicant Name: <%= @fname %> (<%= @nick_name.to_a.map{|n| "#{n}"}.to_sentence.html_safe %>) <%= @lname %><br />
+  <%#*Time of application: 00/00/00 00:00pm EDT%>
+  Time of application: <%= @created_time.strftime('%m/%d/%Y %I:%M%P %Z') %>
+</p>
+<p>
+	<%#= link_to "Click here to view the child's profile", org_child_profile_organizations_url(:id => @org_id, :kid_id => @kid_id, :org => @org_id) %>
+	<%= link_to "Click here to manage enrollees", "https://me.mykidslink.com/" %>.
+</p>
+<p>For any questions about KidsLink, please reply to this email or visit our web site at <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a></strong> and choose the About Us page.</p>

@@ -1,0 +1,67 @@
+-if each_field['type'] == 'select'
+  %label
+    #{each_field['name']}
+
+  - if each_field['lookup'] != 'sessions'
+    - lookup_items = @cur_org.try(:send,each_field['lookup'])  if each_field.has_key?('lookup') && @cur_org.respond_to?(each_field['lookup'])
+    - select_items = Organization.split_array(lookup_items) if lookup_items != nil
+  - else
+    - select_items = LookUp.send(each_field['lookup'],session[:current_org],params[:season])
+  - select_items||= each_field['selection_list']
+  - select_items||= "Select"
+
+  = select_tag :"#{index}[#{each_field['id']}]", options_for_select(select_items), {:include_blank => true}
+
+
+-elsif each_field['type'] == 'textarea'
+  -if each_field['reverse'] == 'true'
+    = text_area_tag :"#{index}[#{each_field['id']}]"
+    %label_right #{each_field['name']}
+  - else
+    %label #{each_field['name']}
+    = text_area_tag :"#{index}[#{each_field['id']}]"
+
+-elsif each_field['type'] == 'date'
+  %label #{each_field['name']}
+  = text_field_tag :"#{index}[#{each_field['id']}]"
+
+-elsif each_field['type'] == 'radio_button'
+  %label #{each_field['name']}
+  -each_field['items'].each do |each_checkbox|
+    = each_checkbox['boxLabel']
+    = radio_button_tag :"index[#{index}].#{each_checkbox['boxLabel']}",id ="each_checkbox['boxLabel']",checked = false
+
+-elsif each_field['type'] == 'check_box'
+  -if each_field['reverse'] == 'true'
+    .ackBox
+      = check_box_tag :"#{index}[#{each_field['id']}]"
+    .ackText
+      #{each_field['name']}
+  -else
+    = check_box_tag :"#{index}[#{each_field['id']}]"
+    .ackText
+      #{each_field['name']}
+
+-elsif each_field['type'] == 'password'              
+  .styles{:style => "display:#{each_field['display']}"}
+    %label #{each_field['name']}
+    = password_field_tag :"#{index}[#{each_field['id']}]"
+
+-elsif each_field['type'] == 'phone'
+  %label #{each_field['name']}        
+  = text_field_tag :"#{index}[#{each_field['id']}]", '' ,:id => 'profile_parent_attributes___phone_numbers__contact', :style => "width: 120px;"
+  = select_tag :"#{index}[#{each_field['id']}][type]", options_for_select(each_field['selection_list']), { :style => "width: 75px;", :include_blank => true }
+-elsif each_field['type'] == 'phone_type'
+  = select_tag :"#{index}[#{each_field['id']}]", options_for_select(each_field['selection_list']),{:include_blank => true }, :id => 'profile_parent_attributes___phone_numbers__type'
+
+-elsif each_field['type'] == 'ack'
+
+-else
+  -if each_field['reverse'] == 'true'
+    = text_field_tag :"#{index}[#{each_field['id']}]"
+    %label_right #{each_field['name']}
+  -else
+    %label #{each_field['name']}
+    = text_field_tag :"#{index}[#{each_field['id']}]"
+
+

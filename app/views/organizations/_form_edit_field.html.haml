@@ -1,0 +1,45 @@
+-if each_field['type'] == 'select'
+  %tr
+    %td.printField #{each_field['name']}
+
+    - if each_field['lookup'] != 'sessions'
+      - lookup_items = @organization.try(:send,each_field['lookup'])  if each_field.has_key?('lookup') && @cur_org.respond_to?(each_field['lookup'])
+      - select_items = Organization.split_array(lookup_items) if lookup_items != nil
+    - else
+      - select_items = LookUp.send(each_field['lookup'],session[:current_org],session[:season])
+    - select_items||= each_field['selection_list']
+    - select_items||= "Select"
+
+    %td= current_val.blank? ? '&nbsp;'.html_safe : current_val
+
+
+-elsif each_field['type'] == 'textarea'
+  %tr
+    %td.printField #{each_field['name']}
+    %td= current_val.blank? ? '&nbsp;'.html_safe : current_val
+
+-elsif each_field['type'] == 'date'
+  %tr
+    %td.printField #{each_field['name']}
+    - if current_val.class == Time
+      %td= current_val.blank? ? '&nbsp;'.html_safe : current_val.strftime('%m/%d/%Y')
+    - else
+      %td= current_val.blank? ? '&nbsp;'.html_safe : current_val
+-elsif each_field['type'] == 'phone'
+  %tr
+    %td.printField #{each_field['name']}
+    - if current_val
+      - type = current_val[:type].blank? ? nil : "(#{current_val[:type]})"
+      %td= current_val[:contact].blank? ? '&nbsp;'.html_safe : "#{current_val[:contact]} #{type}"
+    - else
+      %td &nbsp;
+
+-elsif each_field['type'] == 'ack'
+
+-else
+  %tr
+    - if (each_field['name'] !=  "Admission Agreement")
+      %td.printField #{each_field['name']}
+      %td= current_val.blank? ? '&nbsp;'.html_safe : current_val
+
+

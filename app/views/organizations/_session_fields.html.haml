@@ -1,0 +1,5 @@
+%tr{class: 'nested-fields'}
+  %td= f.text_field :session_name ,readonly: f.object.new_record? ? false : true
+  %td= f.check_box :session_open
+  %td= f.object.new_record? ? 0 : applied
+  %td= f.object.new_record? ? 0 : accepted

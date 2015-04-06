@@ -1,0 +1,2445 @@
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require jquery.jscrollpane
+ *= require jquery-ui/datepicker
+ *= require organizations
+ *= require profiles
+ *= require colpicker
+*/
+html {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font-family: "museo-sans", "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: 300;
+	color: #555;
+	background-color: #FFF;
+	background-image: url(<%= asset_path('h_bg.png')%>);
+	background-repeat: repeat-x;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+img {
+	border: none;
+}
+a {
+	color: inherit;
+}
+a:hover {
+	color: #000;
+}
+
+h1 {
+	font-weight: 700;
+	font-size: 18px;
+}
+
+form {
+	padding: 0px;
+	margin: 0px;
+}
+b {
+	font-weight: 700;
+	font-size: inherit;
+}
+
+.clear {
+	clear: both;
+}
+
+b.bBlue {
+	color: #13a3de;
+}
+
+i {
+	font-style: italic;
+	font-size: inherit;
+}
+
+/* page structure */
+.message{
+	color: #E3981C;
+	font-size: 12px !important;
+	font-weight: 700;		
+	margin-top: -8px !important;
+	color: #E3981C;
+}
+
+.standardForm .field_with_errors
+{
+background-color: #fd9 !important;
+	border-color: #fab138 !important;
+}
+
+.mainContainer {
+	margin: 5px;
+	padding: 5px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 975px;
+}
+
+.header {
+	padding-bottom: 10px;
+}
+
+.header .userBox {
+	font-size: 10px;
+	float: right;
+	margin-top: 80px;
+	text-align: right;
+}
+.header .headerBox {
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-image: url(<%= asset_path('h_headerBox_bg.png')%>);
+	background-repeat: repeat-y;
+	height: 115px;
+	float: left;
+	vertical-align: auto;
+	padding-right: 10px;
+	padding-left: 10px;
+	position: relative;
+	z-index: 0;
+}
+.header .logoBox {
+	width: 122px;
+	vertical-align: auto;
+	float: left;
+}
+
+.header #klLogo {
+	width: 102px;
+	height: 75px;
+	background-image: url(<%= asset_path('h_logo.png')%>);
+	margin-top: 20px;
+	margin-left: 10px;
+	background-repeat: no-repeat;
+	display: block;
+}
+.header #klLogo1 {
+	width: 102px;
+	height: 75px;
+/*	background-image: url(h_logo.png);*/
+	margin-top: 20px;
+	margin-left: 10px;
+	background-repeat: no-repeat;
+	display: block;
+}
+
+.header .myKids {
+	color: #fab138;
+	font-weight: 700;
+	font-size: 15px;
+	margin-top: 78px;
+	float: left;
+	text-transform: lowercase;
+	margin-left: 15px;
+	margin-right: 20px;
+}
+
+.header .childSummaryBox {
+	width: 215px;
+	height: 115px;
+	float: left;
+}
+.header .childSummaryBox.selected {
+	height: 145px;
+	background-color: #fff;
+	background-image: url(<%= asset_path('h_childSelectedArrow_bg.png')%>);
+	background-repeat: no-repeat;*
+	position: relative;
+	z-index: 1;
+	font-size: 11px;
+	color: #666;
+	font-weight: 300;
+	padding-top: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.header .childSummaryBoxShadow {
+    height: 115px;
+    width: 234px;
+    position: relative;
+    background-color: #fff;
+    z-index: -1;
+    margin-left: -234px;
+    box-shadow: 4px 2px 7px #777;
+    float: left;
+    margin-right: 10px;
+}
+
+.header .childPhotoBox {
+	width: 70px;
+	height: 99px;
+	float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 5px;
+    padding-left: 0;
+    background-size: auto 99px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.header .csbPhoto {
+    background-size: auto 99px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 70px;
+    height: 99px;
+    margin-right: 10px;
+}
+
+.header .csbName {
+	color: #000;
+	font-weight: 700;
+	display: block;
+	font-size: 13px;
+}
+
+.header .csbID {
+	display: block;
+}
+
+.header .csbAlerts {
+	display: block;
+	font-weight: 700;
+	color: #9ba112;
+	margin-top: 8px;
+	margin-bottom: 7px;
+}
+
+.header .csbAlertsOn {
+	color: #ed1c24;
+}
+
+.header .csbOrgList {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.header .csbOrgList li {
+	list-style: none;
+	margin-left: 0px;
+}
+
+.header .orgLogoBox {
+	float: left;
+	height: 100%;
+}
+
+.header .orgLogoBox table {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.header .orgLogoBox td {
+	vertical-align: middle;
+}
+
+.header .navContainer {
+	float: left;
+	padding-top: 70px;
+	padding-left: 15px;
+}
+
+.header .navTab {
+	display: inline-block;
+	padding: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font-weight: 700;
+	font-size: 13px;
+	margin-left: 10px;
+	color: #13a3de;
+	text-transform: lowercase;
+}
+
+.header .navTab:hover {
+	border-radius: 0px 0px 5px 5px;
+	box-shadow: 4px 4px 7px #777;
+}
+
+.header .navTabOn {
+	border-radius: 0px 0px 5px 5px;
+	box-shadow: 4px 4px 7px #777;
+}
+
+.header .navTab a {
+	text-decoration: none;
+}
+
+
+.bodyContainer {
+	clear: both;
+	padding-top: 15px;
+}
+
+
+/* basic */
+
+.bodyText {
+	font-size: 14px;
+	color: #666;
+	font-weight: 300;
+	width: 600px;
+	line-height: 1.5em;
+}
+
+.bigLink {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.blueLink {
+	color: #10a2dd;
+}
+
+
+/* popups */
+
+.popUpContainer {
+	/* Set rules to fill background */
+	min-height: 100%;
+	min-width: 1024px;
+	/* Set up positioning */
+	position: fixed;	
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+
+	margin: 0px;
+	margin-top: -5px;
+	z-index: 1000;
+	/* Set up proportionate scaling */
+	width: 100%;
+	height: auto;		
+}
+
+.popUpBG {	
+	min-height: 100%;
+	min-width: 1024px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0px;
+	background-color: #09C;
+	opacity: .6;
+}
+
+.popUpContainer .popUpTable {
+	width: 100%;
+	height: 100%;
+	border: none;
+	z-index: 1001;
+}
+
+.popUpContainer .popUpTableTD {
+	vertical-align: middle;
+	align: center;
+}
+
+.popUpContent {
+	width: 400px;
+	margin: auto;
+}
+
+.popUpPanel {
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	/* overflow: hidden; */
+	margin-bottom: 35px;
+	padding: 15px;
+	position: relative;
+}
+
+.popUpPanel h2 {
+	color: #000;
+	font-size: 15px;
+	font-weight: 700;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.popUpPanel td {
+	padding-right: 5px;
+}
+
+.popUpPanel input[type=submit] {
+	background-color: #fab138;
+	border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	color: #fff;
+	font-weight: 500;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-top: 15px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.popUpPanel input[type=reset].btnCancel {
+	
+        background-color: #ddd;
+	color: #666;
+	margin-left: 5px;
+        border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	font-weight: 500;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.popUpPanel input[type=text] {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	font-size: 14px;
+}
+
+.popUpPanel textarea {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	width: 200px;
+	height: 90px;
+	border: solid 1px #ccc;
+	font-size: 14px;
+}
+
+.popUpPanel select {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	font-size: 14px;
+}
+
+.popUpPanel input[type=password] {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	width: 100px;
+	height: 23px;
+	border: solid 1px #ccc;
+	font-size: 14px;
+}
+
+.popUpPanel .formInputError {
+	background-color: #fd9;
+	border-color: #fab138 !important ;
+}
+
+.popUpPanel .formErrorText {
+	color: #e3981c;
+	font-size: 12px;
+	font-weight: 700;
+	padding-bottom: 10px;
+	padding-top: 2px;
+}
+
+.popUpPanel .formLabel {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.popUpPanel .formField {
+	vertical-align: top;
+}
+
+/* forms */
+
+input, select, textarea {
+	font-family: "museo-sans", "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+
+.standardForm label {
+	display: block;
+	float: left;
+	clear: both;
+	margin-bottom: 7px;
+	margin-right: 5px;
+	width: 225px;
+	font-size: 14px;
+}
+
+.standardForm input[type=text] {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.standardForm textarea {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 90px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.standardForm select {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.standardForm input[type=password] {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 100px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.standardForm input[type=submit] {
+	background-color: #fab138;
+	border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	color: #fff;
+	font-weight: 300;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin: 15px;
+	margin-left: 220px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+.standardForm input[type=reset].btnCancel {
+    
+	background-color: #ddd;
+	color: #666;
+	margin-left: 5px;
+        border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	font-weight: 500;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.standardForm .ackText {
+	float: left;
+	font-size: 12px;
+	width: 400px;
+	display: inline-block;
+	margin-bottom: 12px;
+	margin-left: 10px;
+    text-align: justify;
+    margin-top: 6px;
+}
+
+.standardForm input[type=checkbox].ackBox {
+	clear: both;
+	margin-bottom: 7px;
+	margin-top: 4px;
+        float: left;
+}
+
+/* For JSON form we don't have input[type=checkbox] */
+.standardForm .ackBox {
+    clear: both;
+    margin-bottom: 7px;
+    margin-top: 4px;
+    float: left;
+}
+
+/* Registration Pages */
+
+#registrationExplanation {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 600px;
+	line-height: 1.3em;
+	font-size: .9em;
+	color: #888;
+}
+
+.registrationMessageFromOrg {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 600px;
+	font-size: 1.2em;
+	line-height: 1.6em;
+}
+
+/* Register with Key: Login Decision Page */
+
+.rwkLoginDecisionsBox {
+	width: 400px;
+	height: 120px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+}
+
+.rwkLoginDecisionContainer {
+	padding: 10px;
+	padding-top: 32px;
+	float: left;
+	width: 175px;
+	text-align: center;
+	font-size: 14px;
+	background-color: #eaf9fe;
+	height: 100%;
+	font-weight: 500;
+}
+
+.rwkLoginDecisionContainer + .rwkLoginDecisionContainer {
+	border-left: 2px dotted #13a3de;
+	background-color: #fff;
+	padding-top: 25px;
+}
+
+.rwkLoginDecisionContainer a {
+	text-decoration: none;
+}
+
+.rwkLoginDecisionContainer a:hover {
+	text-decoration: underline;
+}
+
+.rwkLoginDecisionContainer #rwkExistingText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkNewText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkAndapplyText {
+	font-size: .8em;
+	display: block;
+	font-weight: 300;
+	margin-top: 4px;
+}
+
+/* Existing Login Page */
+
+.loginDecisionsBox {
+	width: 500px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+	padding: 15px;
+	padding-top: 20px;
+}
+
+.forgotPasswordLink {
+	font-size: 10px;
+	color: #666;
+	margin-left: 15px;
+}
+
+/* Register with Key: Choose Child Page */
+
+.rwkeccChooseChildBox {
+	width: 500px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+	padding: 15px;
+	padding-top: 20px;
+}
+
+/* Standard Form Box */
+
+.formBox {
+	width: 500px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+	padding: 15px;
+	padding-top: 20px;
+}
+
+.formBox .formSection {
+	clear: both;
+	font-weight: 700;
+	color: #68c4ea;
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.formBox .formSection:first-child {
+	margin-top: -15px;
+	border-top: none;
+}
+
+.formBox .formTopCaptionImportant {
+	clear: both;
+	font-weight: 700;
+	color: #333;
+	font-size: 14px;
+	padding-top: 0px;
+	padding-bottom: 15px;
+}
+
+.formBox .formSectionDivider {
+	height: 10px;
+	border-bottom: 1px solid #999;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+.formBox .formSectionPrimaryAction {
+	text-align: center;
+	padding-bottom: 10px;
+	font-weight: 500;
+	text-transform: lowercase;
+}
+
+.formTopErrorText {
+	width: 400px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fab138;
+	overflow: hidden;
+	margin-top: 25px;
+	padding: 15px;
+	font-size: 13px;
+	color: #000;
+	margin-bottom: 5px;
+}
+
+.formTopErrorHeader {
+	display: block;
+	color: #fff;
+	font-size: 24px;
+	font-weight: 500;
+}
+
+.formBox .formInputError {
+	background-color: #fd9;
+	border-color: #fab138 !important ;
+}
+.formInputError {
+	background-color: #fd9;
+	border-color: #fab138 !important ;
+}
+.formBox .formErrorText {
+	color: #e3981c;
+	font-size: 12px;
+	font-weight: 700;
+	padding-bottom: 10px;
+	padding-top: 2px;
+}
+
+/* File Upload Hack */
+
+.fileUploadContainer {
+    position: relative; 
+    display: block;
+    float: left;
+    width: 230px;
+}
+
+.fileUploadButtonContainer {
+    position: relative; 
+    width: 125px; 
+    height: 30px; 
+    overflow: hidden;
+}
+
+input[type="file"]{
+    -webkit-appearance: none;
+    text-align: left;
+    -webkit-rtl-ordering:  left;
+}
+
+input[type="file"]::-webkit-file-upload-button{
+    width: 100px; 
+    /*position: absolute; */
+    top: 0px;
+    background-color: #fab138;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #777;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-transform: lowercase;
+    cursor: pointer;
+}​
+
+.fileUploadStatus {
+	position: absolute;
+	top: 5px;
+	left: 110px;
+}
+
+/* Child Dash Left */
+
+.childDashLeft {
+	width: 193px;
+}
+
+.cdlHome {
+	padding-left: 23px;
+	font-size: 15px;
+	padding-top: 13px;
+	padding-bottom: 18px;
+	font-weight: 500;
+}
+
+.cdlHome a {
+	color: #10a2dd;
+}
+
+.cdlOrgList {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	width: 185px;
+}
+
+.cdlOrgList li {
+	list-style: none;
+	margin-left: 0px;
+	padding-top: 5px;
+	padding-left: 7px;
+	border-top: solid 1px #c2c2c2;
+	height: 20px;
+	font-weight: 500;
+	font-size: 14px;
+	width: 185px;
+}
+
+.cdlOrgList li.selected {
+	background-color: #fab138;
+	color: #fff;
+	background-image: url(<%= asset_path('l_orgSelected_bg.png')%>);
+	background-position: right;
+	background-repeat: no-repeat;
+	border: none;
+	font-weight: 700;
+	width: 193px;
+}
+
+.cdlOrgList li.selected + li {
+    border: none;
+}
+
+.cdlOrgList li:first-child {
+	border: none;
+}
+
+.cdlOrgList li a {
+	text-decoration: none;
+}
+
+.cdlOrgList li.atApp {
+	color: #a7ab4e;
+}
+
+.cdlOrgList li.atApp span {
+	font-size: 10px;
+	font-weight: 300;
+}
+
+.cdlApplyAnotherBox {
+	width: 145px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 12px;
+	font-weight: 500;
+	color: #666;
+	text-align: center;
+	padding-top: 20px;
+	display: none;
+}
+
+.cdlApplyLink {
+	color: #13a3de;
+	font-size: 20px;
+	font-weight: 500;
+	text-align: center;
+	display: block;
+	text-transform: lowercase;
+}
+
+/* Dash Content */
+
+.dashContainer {
+	clear: both;
+	width: 740px;
+	float: right;
+	margin-top: 48px;
+}
+
+.dashPanel {
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	/* overflow: hidden; */
+	margin-bottom: 35px;
+	border-top: 5px solid #68c4ea;
+	padding: 15px;
+	padding-top: 20px;
+	position: relative;
+}
+
+.dashContainerLeft {
+	float: left;
+	width: 340px;
+}
+
+.dashContainerRight {
+	float: right;
+	width: 340px;
+}
+
+
+/* dash org headers */
+
+.dashOrgHeader {
+	margin-top: 0px;
+	margin-bottom: 35px;
+	/* border-bottom: #fab138 solid 1px; */
+	/* padding-bottom: 10px; */
+}
+
+.dashOrgHeader h1 {
+	padding: 0px;
+	margin: 0px;
+}
+
+.dashOrgLogo {
+	float: left;
+	padding-right: 15px;
+}
+
+.dashOrgHeaderInfo {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.dashOrgHeaderInfoBlock {
+	display: inline-block;
+	padding-right: 15px;
+	vertical-align: top;
+}
+
+.dashOrgHeaderLinkBox {
+	border-radius: 7px;
+	background-color: #feedd1;
+	padding: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #f49903;
+	margin-top: 15px;
+}
+
+.dashOrgHeaderLinkBox a {
+	padding-left: 4px;
+	padding-right: 4px;
+	/* color: #f5a012; */
+	font-weight: 700;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.dashMembershipSeasonBox {
+	margin-top: -10px;
+	margin-bottom: 30px;
+	padding-bottom: 2px;
+	border-bottom: #999 solid 1px;
+	text-align: center;
+	clear: both;
+}
+
+.dashMembershipSeasonBox h2 {
+	padding: 0px;
+	margin: 0px;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+/* general panels */
+
+.panelName {
+	position: absolute;
+	top: -15px;
+	right: 20px;
+	background-color: #9ba112;
+	border-radius: 7px;
+	box-shadow: 2px 2px 5px #999;
+	padding: 4px;
+	padding-left: 12px;
+	padding-right: 12px;
+	color: #fff;
+	font-weight: 700;
+	font-size: 15px;
+	text-transform: lowercase;
+	z-index: 10;
+}
+
+.panelName a {
+	text-decoration: none;
+	color: #fff;
+}
+
+.panelOptions {
+	position: absolute;
+	top: -3px;
+	left: -75px;
+	color: #68c4ea;
+	font-weight: 500;
+	font-size: 11px;
+	z-index: 10;
+	display: none;
+}
+
+.panelOptionsWithEdit {
+	left: -100px;
+}
+
+.panelOptions a {
+	color: #68c4ea;
+	text-decoration: none;
+}
+
+.panelFieldName {
+	color: #888;
+	font-size: 13px;
+	font-weight: 500;
+	vertical-align: top;
+	padding-top: 5px;
+    width:130px;
+}
+
+.panelFieldContent {
+	color: #000;
+	font-size: 13px;
+	font-weight: 300;
+	vertical-align: top;
+	padding-bottom: 7px;
+	padding-top: 5px;
+	padding-left: 15px;
+    /*width: 150px;*/
+    /*word-break: break-all;*/
+}
+
+.panelFieldContent a {
+	text-decoration: none;
+	border-bottom: 1px dotted #68c4ea;
+}
+
+.panelFieldContent ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.panelFieldContent ul li {
+	list-style: none;
+	text-indent: -15px;
+	margin-left: 15px;
+	padding-bottom: .2em;
+}
+
+.panelFieldContent .ulMoreLine {
+	padding-top: 8px;
+}
+
+.panelFieldContentSmall {
+	font-size: 11px;
+}
+
+.panelActionContainer {
+	margin-top: 5px;
+	padding-top: 12px;
+	padding-bottom: 5px;
+	text-align: center;
+	border-top: 1px solid #68c4ea;
+}
+
+.panelActionContainer ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+.panelActionContainer ul li {
+	display: inline;
+	margin-left: 0px;
+	color: #666;
+	font-weight: 700;
+	font-size: 14px;
+	text-indent: 0px;
+	padding-bottom: 0px;
+}
+
+.panelActionContainer ul li + li:before {
+	content: " \00A0 \2022 \00A0 \00A0 ";
+}
+
+
+/* Specific panels */
+
+/* - Panel: Profile Data - */
+
+#dashProfileData {
+	background-color: #eaf9fe;
+}
+
+/* - Panel: Organization Status - */
+
+#dashOrgStatus table {
+	width: 100%;
+}
+
+#dashOrgStatus table td {
+	vertical-align: top;
+}
+
+#dashOrgStatus .panelOrgStatusName {
+	font-weight: 500;
+	color: #555;
+	padding-right: 10px;
+}
+
+#dashOrgStatus .panelOrgStatusStatus {
+	font-weight: 300;
+	color: #555;
+	padding-right: 10px;
+}
+
+#dashOrgStatus .panelOrgStatusHeader {
+	color: #68c4ea;
+	font-size: 14px;
+	font-weight: 700;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	text-transform: lowercase;
+}
+
+#dashOrgStatus .panelOrgStatusSeason {
+	font-size: 12px;
+	font-weight: 300;
+	color: #999;
+	padding-bottom: 6px;
+	display: block;
+}
+
+#dashOrgStatus .panelOrgStatusBarholder {
+	width: 20%;
+}
+
+#dashOrgStatus .panelOrgStatusColorbar {
+	height: 15px;
+	display: block;
+}
+
+#dashOrgStatus .colorbarAppSubmitted {
+	background-color: #fab138;
+}
+
+#dashOrgStatus .colorbarAccepted {
+	background-color: #cfc50f;
+}
+
+#dashOrgStatus .colorbarRegistered {
+	background-color: #598527;
+}
+
+#dashOrgStatus .colorbarEnrolled {
+	background-color: #13a3de;
+}
+
+
+/* - Panel: Universal Documents - */
+
+#dashUniDocs .panelFieldContent {
+	padding-left: 0px;
+}
+
+#dashUniDocs table#panelUniDocList {
+	padding-bottom: 10px;
+	width: 100%
+}
+
+#dashUniDocs #panelUniDocList td {
+	padding-bottom: 5px;
+}
+
+#dashUniDocs .panelUniDocDate {
+	color: #999;
+	font-size: 12px;
+	padding-top: 1px;
+}
+
+#dashUniDocs .panelUniDocOtherDocs {
+	color: #999;
+	font-size: 12px;
+	padding-top: 8px;
+	line-height: 1.5em;
+}
+
+/* - Panel: Universal Documents - */
+
+#dashAlerts dl {
+	padding: 0px;
+	margin: 0px;
+}
+
+#dashAlerts dt {
+	font-size: 14px;
+	color: #c00;
+	font-weight: 500;
+	padding: 0px;
+	margin: 0px;
+	padding-bottom: 2px;
+}
+
+#dashAlerts dt a {
+	border-bottom: 1px dotted #68c4ea;
+	text-decoration: none;
+	font-weight: 700;
+}
+
+#dashAlerts dd + dt {
+	padding-top: 15px;
+}
+
+#dashAlerts dd {
+	font-size: 12px;
+	color: #666;
+	font-weight: 300;
+	padding: 0px;
+	margin: 0px;
+}
+
+#dashAlerts .panelAlertsPastDue {
+	color: #ed1c24;
+	font-weight: 500;
+}
+
+/* - Management pages - */
+
+.manageLimitsContainer {
+	padding: 0px;
+	margin: 0px;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+.manageLimitsContainer select {
+	padding: 2px;
+	font-size: 14px;
+	font-weight: 500;
+	margin-left: 10px;
+}
+
+.manageLimitsContainer td {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.panelManageContainer {
+	margin-bottom: 20px;
+}
+
+.panelManageText {
+}
+
+.panelManageButton {
+	background-color: #fff;
+	display: inline-block;
+	padding: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font-weight: 700;
+	font-size: 13px;
+	margin-left: 10px;
+	color: #13a3de;
+	text-transform: lowercase;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px #999;
+	border: solid 1px #ddd;
+}
+
+.panelManageButton a {
+	text-decoration: none;
+}
+
+.manageTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.manageTable td {
+	padding-right: 10px;
+	border-top: solid 1px #ccc;
+	padding-top: 8px;
+	padding-bottom: 6px;
+	vertical-align: top;
+}
+
+.manageTable .manageTableHeader td {
+	font-weight: bold;
+	border-bottom: solid 2px #68c4ea;
+	border-top: none;
+	white-space: nowrap;
+	overflow: hidden;
+	vertical-align: middle;
+}
+.manageTable .manageTableHeader th {
+	
+	border-bottom: solid 2px #68c4ea;
+	border-top: none;
+	white-space: nowrap;
+	overflow: hidden;
+	vertical-align: middle;
+        text-align: left;
+}
+
+.managePanel .formSection {
+	clear: both;
+	font-weight: 700;
+	color: #68c4ea;
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.managePanel .formSection:first-child {
+	margin-top: -15px;
+	border-top: none;
+}
+
+.managePanel .formTopCaptionImportant {
+	clear: both;
+	font-weight: 700;
+	color: #333;
+	font-size: 14px;
+	padding-top: 0px;
+	padding-bottom: 15px;
+}
+
+.managePanel .formSectionDivider {
+	height: 10px;
+	border-bottom: 1px solid #999;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+.managePanel .formSectionPrimaryAction {
+	text-align: center;
+	padding-bottom: 10px;
+	font-weight: 500;
+	text-transform: lowercase;
+}
+
+.managePanel .formInputError {
+	background-color: #fd9;
+	border-color: #fab138 !important ;
+}
+
+.managePanel .formErrorText {
+	color: #e3981c;
+	font-size: 12px;
+	font-weight: 700;
+	padding-bottom: 10px;
+	padding-top: 2px;
+}
+
+.managePanel label {
+	display: block;
+	float: left;
+	clear: both;
+	margin-bottom: 7px;
+	margin-right: 5px;
+	width: 225px;
+	font-size: 14px;
+}
+
+.managePanel input[type=text] {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.managePanel textarea {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 90px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.managePanel select {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.manageContainer input[type=submit] {
+	background-color: #fab138;
+	border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	color: #fff;
+	font-weight: 500;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.manageContainer input[type=reset].btnCancel {
+	background-color: #ddd;
+	color: #666;
+	margin-left: 5px;
+        border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.3em;
+	font-weight: 500;
+	border: none;
+	padding: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.manageContainer .manageExplanation {
+	margin-top: 10px;
+	margin-bottom: 20px;
+        width: 600px;
+        line-height: 1.3em;
+        font-size: .9em;
+        color: #888;
+}
+
+/* Management page: Enrollees */
+
+#manageEnrolleesTable .manageAlertRedCell {
+	color: #ed1c24;
+	font-weight: bold;
+}
+
+#manageEnrolleesTable .manageNameCell {
+	font-weight: 700;
+}
+
+/* Management page: Forms/Docs */
+
+#manageFormsTable .manageNameCell {
+	font-weight: 700;
+}
+
+#manageFormsTable .manageViewCell {
+	font-size: .8em;
+}
+
+#manageFormsTable .manageEditCell {
+	font-size: .8em;
+}
+
+/* Management page: Edit Form */
+
+#dashEditForm textarea {
+	width: 100%;
+	height: 300px;
+	border: solid 1px #ccc;
+	font-size: 14px;
+	white-space: nowrap; 
+}
+
+/* Management page: Org content */
+
+#orgContentPage .managePanel {
+	width: 500px !important;
+}
+
+/* Extra */
+
+.manageContainer input[type="reset"].btnCancel {
+background-color: #DDD;
+color: #666;
+margin-left: 5px;
+}
+
+
+/* Management page: Preview */
+
+.previewContainer {
+	width: 100%;
+	padding: 15px;
+	padding-top: 5px;
+	margin-bottom: 15px;
+	background-color: #eee;
+	border: solid 1px #ccc;
+}
+
+/* Attachments page */
+
+.attachmentContainer h2.attachmentStep {
+	font-size: 14px;
+}
+
+.attachmentContainer h2.attachmentStep .attachmentStepNum {
+	font-size: 20px;
+	color: #fab138;
+	padding-right: 5px;
+}
+
+.attachmentText {
+	font-size: 13px;
+}
+
+.attachmentList {
+	margin-left: 10px;
+	font-size: 15px;
+	color: #13a3de;
+	line-height: 1.5em;
+	font-weight: 500;
+}
+
+.attachmentDivider {
+	height: 1px;
+	border-bottom: 1px solid #ccc;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.attachmentTemplateList {
+	margin-left: 10px;
+	color: #13a3de;
+	line-height: 1.5em;
+}
+
+.attachmentBoxName {
+	font-size: 14px;
+	font-weight: 700;
+	padding-top: 20px;
+	padding-bottom: 5px;
+	padding-left: 25px;
+}
+
+.attachmentDecisionsBox {
+	margin-left: 25px;
+	width: 600px;
+	height: 150px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	border-top: 5px solid #68c4ea;
+	margin-bottom: 25px;
+}
+
+.attachmentDecisionContainer {
+	padding: 10px;
+	padding-top: 47px;
+	float: left;
+	width: 275px;
+	text-align: center;
+	font-size: 12px;
+	background-color: #eaf9fe;
+	height: 100%;
+	font-weight: 500;
+}
+
+.attachmentDecisionContainer + .attachmentDecisionContainer {
+	border-left: 2px dotted #13a3de;
+	background-color: #fff;
+	padding-top: 25px;
+}
+
+.adcSmall {
+	width: 75px;
+	font-size: 14px;
+	font-weight: 700;
+	padding-top: 55px !important ;
+}
+
+.adcLarge {
+	width: 475px;
+	font-size: 13px;
+	font-weight: 300;
+	padding-top: 25px;
+}
+
+.attachmentUploadExplanation {
+	padding-bottom: 15px;
+}
+
+.attachmentDecisionContainer a {
+	text-decoration: none;
+}
+
+.attachmentDecisionContainer a:hover {
+	text-decoration: underline;
+}
+
+.attachmentDecisionContainer .attachmentExistingDocText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+}
+
+.attachmentDecisionContainer .attachmentExistingKLRText {
+	font-size: 1.1em;
+	display: block;
+	font-weight: 700;
+}
+
+.attachmentDecisionContainer .attachmentUploadText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+	margin-top: 30px;
+}
+
+.attachmentUploadContainer {
+	position: relative; 
+	display: block;
+	float: left;
+	width: 230px;
+}
+
+.attachmentUploadButtonContainer {
+	position: relative; 
+	width: 125px; 
+	height: 30px; 
+	overflow: hidden;
+	left: 160px;
+}
+
+.attachmentUploadButtonContainer input[type=button]{
+	width: 100px; 
+	position: absolute; 
+	top: 0px;
+	background-color: #fab138;
+	border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.1em;
+	color: #fff;
+	font-weight: 500;
+	border: none;
+	padding: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.attachmentUploadButtonContainer input[type=file]
+{
+	font-size: 45px; 
+	position: absolute; 
+	right: 0px; 
+	top: 0px; 
+	opacity: 0; 
+	cursor: pointer;
+
+	filter: alpha(opacity=0); 
+	-ms-filter: "alpha(opacity=0)"; 
+	-khtml-opacity: 0; 
+	-moz-opacity: 0;
+}
+
+.attachmentUploadStatus {
+	position: absolute;
+	top: 5px;
+	left: 280px;
+	width: 100px;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+
+/* Document view page */
+
+.documentViewImageBox {
+}
+
+.documentViewUploadDate {
+	margin-top: 15px;
+}
+
+.documentViewReplaceLink {
+	color: #13a3de;
+	font-weight: 700;
+	margin-top: 15px;
+}
+
+.documentViewLink a {
+	color: #13a3de;
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.documentViewLinkFilename {
+	color: #555;
+	font-weight: 300;
+	font-size: 14px;
+}
+
+.documentViewShare {
+	margin-top: 15px;
+}
+
+.documentViewShareHeader {
+	font-size: 15px;
+	font-weight: 700;
+}
+
+/* org-side child profile */
+
+.orgChildProfilePhoto img {
+	border: solid #fff 5px;
+	box-shadow: 4px 4px 7px #777;	
+}
+
+#orgChildProfileLeft {
+	margin-top: 20px;
+}
+
+#orgChildProfileRight h1 {
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+
+#orgChildProfileRight {
+	margin-top: 0px;
+}
+
+#orgChildProfileRight #dashAlerts dt {
+	font-size: 14px;
+	color: #c00;
+	font-weight: 700;
+	padding: 0px;
+	margin: 0px;
+	padding-bottom: 2px;
+}
+
+#orgChildProfileRight #dashProfileData .panelActionContainer {
+	display: none; 
+}
+
+#orgChildProfileRight #dashUniDocs .panelActionContainer {
+	display: none; 
+}
+
+#orgChildPr #privacy_policyofileRight #dashUniDocs .ulMoreLine {
+	display: none; 
+}
+
+.formdisplay{
+    display: none;
+}
+
+
+
+/* Printable Templates */
+
+.printTemplateBody {
+    font-family: "museo-sans", "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #000;
+    background-color: #FFF;
+    background-image: none;
+    position: relative;
+    margin: 30px;
+    padding: 0px;
+    height: 100%;
+}
+
+.printTemplateTable td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: bottom;
+    text-align: left;
+    font-size: 16px;
+    border-bottom: solid 1px #000;
+    padding-right: 10px;
+    min-width: 300px;
+    page-break-inside: avoid;
+    font-weight: 300;
+}
+
+.printTemplateTable td.printField {
+    font-weight: 700;
+    font-size: 13px;
+    max-width: 300px;
+    border-bottom: none;
+    min-width: none;
+    vetical-align: top;
+}
+
+.printTemplateTable td.printFieldExplanation {
+    border: none;
+    padding-top: 40px;
+    font-size: 13px;
+}
+
+.printTemplateTable td.printSectionName {
+    border: none;
+    border-top: solid 20px #fff;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 300;
+    background-color: #CCC;
+    -webkit-print-color-adjust: exact;
+    page-break-after: avoid;
+}
+
+.printTemplateBody h1 {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.printTemplateBody h2 {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.printTemplateBody h1 + h2 {
+    margin-top: -10px;
+}
+
+.printLogo img {
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+/* class wrote for empty lines on print profile screen */
+.dashempty {
+    clear: both;
+    float: right;
+    margin-top: 18px;
+}
+.link_to_download {
+    font-style: italic;
+    padding-left: 740px;
+}
+
+/*START- scrolling and active styles for existing documents */
+.scrollable_docs{
+    overflow:auto;
+    width: 477px;
+    position: relative;
+    margin-top: -18px;
+}
+/*.scrollable_docs .choose_existing_document {*/
+    /*height: 140px;*/
+/*}*/
+
+.scrollable_docs .space{
+    padding-left: 10px;
+}
+
+.scrollable_docs .active{
+    border:1px solid #fab138;
+    padding: 1px 6px 2px 6px;
+    background-color: #68c4ea;
+}
+.scrollable_docs .text_in_doc{
+    max-width:100px;
+    overflow:hidden;
+    word-break:break-all;
+    vertical-align: top;
+}
+.scrollable_docs .lazy{
+    margin-top: -12px;
+}
+/*END- scrolling and active styles for existing documents */
+
+.link_button {
+     width: 100px;
+     top: 0px;
+     background-color: #fab138;
+     border-radius: 8px;
+     box-shadow: 2px 2px 4px #777;
+     font-size: 1.1em;
+     color: #fff;
+     font-weight: 500;
+     border: none;
+     padding: 3px 15px 3px 15px;
+    text-decoration: none;
+     text-transform: lowercase;
+     cursor: pointer;
+ }
+
+#manageEnrolleesTable td.header_asc {
+    background: url(asc.gif) no-repeat !important;
+    background-position: 58px 14px  !important;
+    cursor: pointer;
+}
+#manageEnrolleesTable td.header_desc {
+    background: url(desc.gif) no-repeat !important;
+    background-position: 58px 14px  !important;
+    cursor: pointer;
+}
+#manageEnrolleesTable td.header {
+    background: url(bg.gif);
+    cursor: pointer;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: 58px 14px  !important;
+    /*padding-bottom: 0px;*/
+}
+
+
+
+label.opt{
+    clear: both;
+    font-weight: 700;
+    color: #333;
+    font-size: 14px;
+    padding-top: 0px;
+    padding-bottom: 15px;
+}
+
+.error{
+    color: #e3981c;
+    font-size: 12px;
+    font-weight: 700;
+    padding-bottom: 10px;
+    padding-top: 2px;
+    display: block;
+}
+
+.klPanelNotes{
+    color: #888888;
+    float: left;
+    font-size: 0.9em;
+    line-height: 1.3em;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: inherit;
+}
+
+
+.bodyContainer{
+    position: relative;
+}
+
+.klfl{
+    float:left;
+    clear:both;
+}
+
+.kl-new-layout {
+    padding-top: 0;
+}
+.kl-new-layout span {
+    padding: 2px 5px;
+    margin: 0 5px;
+    background: #c4eafa;
+    color: #222;
+}
+.kl-new-layout span:hover {
+    background: #68c4ea;
+    color: #fff;
+}
+.kl-new-layout p {
+    border-bottom: solid 1px #ccc;
+    padding: 5px 0 15px 0;
+    vertical-align: top;
+}
+.kl-border {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.kl-new-layout p b{
+    width: 250px;
+    float:left;
+}
+
+.kl-new-layout .klbutton{
+    margin-left: 80px;
+}
+.kl-new-layout select{
+    margin-left: 25px;
+}
+
+.kl-new-layout form{ display:inline-block}
+.acenter { text-align:center; margin-top: 35px;}
+
+.kl-new-layout ul{ list-style:none}
+
+
+.klbutton{
+    background-color: #fab138;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #777;
+    font-size: 1.3em;
+    color: #fff;
+    font-weight: 500;
+    border: 0;
+    padding: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-transform: lowercase;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.kl-new-layout .greenBtn{
+    background-color: #8e940f !important;
+     width:100px;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+.kl-new-layout .greenBtn:hover{ background-color: #abb11a  !important; }
+.red{ background-color:#fee !important;
+    width:100px;
+    margin-left: 10px !important;
+    color:#e33  !important}
+.red:hover{ background-color:#fff !important; }
+
+/* dashboard to support  greater than 5 kids*/
+.header .multipleChildrenBox {
+    height: 100px;
+    margin-left: 2px;
+    padding-left: 0px;
+    padding-top: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    float: left;
+}
+.header .mcbChildBox {
+    height: 30px;
+    line-height: 30px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #13a3de;
+    cursor: pointer;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+.header .mcbChildPhotoBox {
+    height: 28px;
+    width: 28px;
+    margin-right: 4px;
+    background-repeat: no-repeat;
+    background-position: center -3px;
+    background-size: auto 36px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    border: solid 1px #fff;
+}
+.header .sponsorBox {
+    width: 190px;
+    height: 110px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    float: left;
+}
+.header .mcbChildName {
+    float: left;
+    width: 50px;
+    margin-right: 4px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.header .csbPhoto {
+    float: left;
+    padding-right: 5px;
+}
+
+.Admin-nav{
+    float: none !important;
+}
+
+.Admin-nav .navTab{
+    margin:7px!important;
+}
+
+.notice{
+    color:green !important;
+    font-size: 15px;
+}
+
+.managePanel input[type=number] {
+    display: block;
+    float: left;
+    margin-bottom: 7px;
+    width: 200px;
+    height: 23px;
+    border: solid 1px #ccc;
+    margin-right: 7px;
+    font-size: 14px;
+}
+
+/*  org document upload button new style to FIX in IE*/
+.orgDocumentUploadBtn {
+    width: 100px;
+    position: absolute;
+    top: 0;
+    background-color: #fab138;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #777;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    border: 0;
+    line-height: 29px;
+    text-transform: lowercase;
+    cursor: pointer;
+    position:relative;
+    text-align:center;
+}
+
+.orgDocumentUploadBtn input {
+    display: block !important;
+    width: 140px !important;
+    height: 38px !important;
+    opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    overflow: hidden !important;
+    position:absolute;
+    top:0px;
+    cursor:pointer;
+    left:-20px;
+}
+
+.attachmentUploadContainer{
+    width: 130px !important;
+}
+
+.univInvForm{
+    margin-left: 26%;
+    width: 44%;
+}
+.univInvForm .univSubmitBtn{
+ text-align: center;
+}
+
+
+
+
+div.img {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #fab138;
+    height: auto;
+    width: auto;
+    float: left;
+    text-align: center;
+
+}
+
+div.img img {
+    display: inline;
+    margin: 5px;
+    height: auto;
+    width: 200px;
+    border: 1px solid #ffffff;
+}
+
+div.img a:hover img {
+    border:1px solid #0000ff;
+}
+
+div.desc {
+    text-align: center;
+    font-weight: normal;
+    width: 120px;
+    margin: 5px;
+
+}
+
+
+div.desc input.klCircle {
+    width: 30px!important;
+    height: 30px !important;
+    border-radius: 15px;
+    text-align: center;
+}
+
+div.desc .link a{
+    border-radius: 26px;
+    text-align: center;
+    float: left;
+    width: 14px;
+    padding: 6px;
+    background-color: rgb(235, 7, 7);
+    color: white;
+    text-decoration: none;
+    font-weight: bolder !important;
+
+}
+
+
+.panelFieldContent ul {
+    width: 217px;
+    word-wrap: break-word;
+}
+
+.panelFieldContent ul li {
+    text-indent: 0px;
+    margin-left: 0px;
+}
+
+
+.panelFieldContent{ width: 217px;
+    word-wrap: break-word;
+    display: inline-block;}
+
+
+.header .csbName {
+    word-wrap: break-word;
+    width: 120px;
+    display: inline-block;
+}
+
+#contact_vi_mail:hover{
+    color:black;
+}
+
+#global-zeroclipboard-html-bridge{
+
+    /*border: solid 2px #ddd;*/
+    display: inline-block;
+    padding: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    font-weight: 700;
+    font-size: 13px;
+    color:black;
+    /*position: absolute !important;*/
+    text-transform: lowercase;
+    /*border-radius: 5px;*/
+    /*box-shadow: 2px 2px 3px #999;*/
+    margin-top: -10px;
+    margin-left: -8px;
+}
+
+#clipTarget{
+    font-weight: 300;
+    margin: 0 0 15px 10px;
+    padding: 12px 5px 8px 10px;
+    color: #676767;
+    border-radius: 3px;
+    box-shadow: inset 1px 1px 3px rgba(50,50,50,.25);
+    border: 1px solid #b5b5b5;
+    height: 400px;
+    width: 580px;
+    outline-width: 0;
+ }
+
+.close {
+    background: #000;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #c4eafa; }
+
+#d_clip_button{
+    width: auto;
+/*position: absolute; */
+    top: 0px;
+    background-color: #fab138;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #777;
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    padding: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: lowercase;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+}
+
+
+
+
+.modalBx .popUpContent {
+    width: 630px;
+    margin: auto;
+}
+
+.modalBx .popUpPanel {
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modalBx{
+    display: none;
+}
+
+.klUpper{
+    text-transform: uppercase;
+}
+.univInvForm .OUBtn {
+    text-align: center;
+    float: left;
+    margin-top: -10px;
+}
+
+/*Admin header tabs alignment fix*/
+.header .navContainer {
+    padding-left:0px !important;
+    border-bottom:2px solid #68c4ea !important;
+    clear:both !important;
+    padding-top:5px !important;
+}
+.Admin-nav {
+    float:left !important;
+}
+
+.header .navContainer  div {
+    width: 125px !important;
+}
+
+/*Distribute Invites styles*/
+.distribute_invites .redirection_url_btn{
+    padding:   0 5px 1px 4px !important;
+    margin-top: 0px !important;
+}
+.distribute_invites #redirection_url{
+    width: auto !important;
+}
+.distribute_invites hr{
+    border: 1px dotted;
+    margin: 10px;
+}
+.distribute_invites label{
+    width: 270px !important;
+}
+.distribute_invites .notice_message{
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.manageContainer a.add_version{
+    margin-left:15px ;
+}

@@ -1,0 +1,32 @@
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  %tr
+    %td.profileInnerTDContainer{:valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td.panelFieldName Full name
+          %td.panelFieldContent #{@kid_profile.full_name}
+        %tr
+          %td.panelFieldName Preferred name
+          %td.panelFieldContent #{@kid_profile.nickname}
+        %tr
+          %td.panelFieldName Birthday
+          %td.panelFieldContent= l(@kid_profile.kids_type.birthdate,format: :birthdate)
+        %tr
+          %td.panelFieldName Age
+          %td.panelFieldContent= accurate_humanize_age(@kid_profile.kids_type.birthdate)
+        %tr
+          %td.panelFieldName Gender
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:gender)}
+    %td.profileInnerTDContainer{:valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td.panelFieldName Address
+          %td.panelFieldContent
+            - if @parent_profile.address
+              = append_line_break(@parent_profile.address.address1)
+              =  append_line_break(@parent_profile.address.address2)
+              = @parent_profile.address.city + "," if @parent_profile.address.city.present?
+              #{@parent_profile.address.state} #{@parent_profile.address.zipcode}
+        %tr
+          %td.panelFieldName Other basic details
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:other_basic_details)}

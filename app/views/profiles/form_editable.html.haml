@@ -1,0 +1,108 @@
+//= @form.content
+%br
+%br
+//= JSON.parse(@form.content)['field']
+%br
+%br
+
+.dashContainer
+  %h1 Edit Form
+  .standardForm
+    .standardForm
+      = form_tag update_form_res_profiles_path, :method => 'post', :html=>{:'data_type' => 'json'}, authenticity_token: true do
+        =hidden_field_tag :form_id, value = params[:form_id]
+        =hidden_field_tag :org_id, value = params[:org_id]
+        =hidden_field_tag :season, value = params[:season]
+
+        .formBox
+          - JSON.parse(@form.content)['field'].each do |each_field|
+          
+            -if each_field['type'] == 'select'
+              %label #{each_field['id']} :
+              = select_tag :"#{each_field['name']}", options_for_select(each_field['selection_list'])
+
+            -elsif each_field['type'] == 'textarea'
+              %label #{each_field['id']} :
+              = text_area_tag :"#{each_field['name']}", "#{each_field['value']}"
+
+            -elsif each_field['type'] == 'date'
+              %label #{each_field['id']} :
+              = text_field_tag :"#{each_field['name']}", "#{each_field['value']}"
+
+            -elsif each_field['type'] == 'radio_button'
+              %label #{each_field['id']} :
+              -each_field['items'].each do |each_checkbox|
+                %label #{each_checkbox['boxLabel']}
+                = radio_button_tag :"#{each_checkbox['boxLabel']}",name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+
+            -elsif each_field['type'] == 'check_box'
+              %label #{each_field['id']} :
+              -each_field['items'].each do |each_checkbox|
+                %label #{each_checkbox['boxLabel']}
+                = check_box_tag :"#{each_checkbox['boxLabel']}",name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+                %br
+            - elsif each_field['type'] == 'password'
+              %label #{each_field['type']} :
+              = password_field_tag :"#{each_field['name']}", "#{each_field['value']}"
+
+            - else
+              %label #{each_field['id']} :       
+              = text_field_tag :"#{each_field['id']}", "#{each_field['value']}"
+        //= JSON.parse(@form.content)['field']
+  .standardForm
+    %input{:type => "submit", :value => "Save changes"}/
+    %input.btnCancel{:type => "reset", :value => "Cancel",:onclick => "goBack()"}
+
+    %br
+    %br
+
+
+.childDashLeft
+  .cdlHome      
+    = link_to "kidslink home", "#"
+
+  %ul.cdlOrgList
+    %li
+      = link_to "#{@kid_profile.kids_type.nickname} overview", child_dashboard_profiles_path(:child => params[:child], :email =>params[:email])
+
+      - prv_org = [] 
+      - @orgnization_season.each do |org|
+        - org_id = org.split(',')[3]             
+        - if !prv_org.include?(org_id)                                  
+          -season_acc=org.split(',')[2]
+          -if(season_acc!="applied")
+            -if(params[:org]==org.split(',')[3])
+              %li.selected
+                = link_to "#{(org.split(',')[12])}", child_org_dashboard_profiles_path(:child => params[:child], :org =>org.split(',')[3], :email =>params[:email])
+            -else
+              %li   
+                = link_to "#{(org.split(',')[12])}", child_org_dashboard_profiles_path(:child => params[:child], :org =>org.split(',')[3], :email =>params[:email])
+          - prv_org.push(org_id) 
+      - prv_org1 = [] 
+      - @orgnization_season.each do |org|
+        - org_id = org.split(',')[3]  
+        - if !prv_org1.include?(org_id)
+        -season_acc=org.split(',')[2]
+          -if(season_acc=="applied")
+            -if(params[:org]==org.split(',')[3])
+              %li.selected
+                = link_to "#{(org.split(',')[12])}", child_org_dashboard_profiles_path(:child => params[:child], :org =>org.split(',')[3], :email =>params[:email])
+            -else
+              %li.atApp   
+                = link_to "#{(org.split(',')[12])}<span> (@appl) </span>".html_safe, child_org_dashboard_profiles_path(:child => params[:child], :org =>org.split(',')[3], :email =>params[:email])
+          - prv_org1.push(org_id)        
+
+  .cdlApplyAnotherBox      
+    = link_to "Apply", "#", :class => 'cdlApplyLink'
+    for another KidsLink affiliated organization
+
+
+          
+
+
+  
+:javascript
+  function goBack()
+    {
+    window.history.go(-1)
+    }

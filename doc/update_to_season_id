@@ -1,0 +1,4 @@
+#To update season_year  to season_id run
+# rake db:add_org_season_id
+
+

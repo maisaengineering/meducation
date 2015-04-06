@@ -1,0 +1,94 @@
+%form
+  %h1 View/Manage Enrollees
+  %table.manageLimitsContainer{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %tr
+      %td Season to manage 
+      %td        
+        = select_tag('season_id', options_for_select(organization_seasons(@organization)))
+        = hidden_field_tag('org', value= params[:id])
+    %tr
+      %td Session
+      %td
+        #session 
+          = select_tag('session_data', options_for_select(organization_sessions(@organization)))                  
+    %tr
+      %td Enrollment status
+      %td
+        = select_tag('enrollement_id', options_for_select([['All','All'],['Application submitted','Application submitted'],['Accepted','Accepted'],['Registered','Registered'],['Enrolled','Enrolled'],['Rejected','Rejected']]))
+          
+  #dashEnrolleesList.dashPanel
+    %span.panelName Enrollees
+    .panelManageContainer
+      %span.panelManageText Click a child's name, or identify children and select an action:
+      %span.panelManageButton
+        = link_to 'Change Status', "#", :onclick => "status()", :class => "active"
+        
+      %span.panelManageButton
+        =link_to "Contact via email", "#"
+ 
+      %span.panelManageButton          
+        =link_to "Send form","#", :onclick => "form()", :class => "active"
+
+      %span.panelManageButton
+        =link_to "Export all data","#"
+
+    #loading
+      %table#manageEnrolleesTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr.manageTableHeader
+          %td
+            = check_box_tag('universal', value = "", checked = false, :class => 'parent_ckeck') 
+          %td Name
+          %td Pref name
+          %td Birthdate
+          %td Season
+          %td Session
+          %td Status
+          %td Alert Status
+        
+        -@profiles.each do |profile_details|          
+          %tr
+            %td
+              = check_box_tag(profile_details.kids_type.id, '', checked = false, :class => 'child_ckeck', :onclick =>"activate()") 
+            %td.manageNameCell
+              %a{:href => ""} #{profile_details.kids_type.fname} , #{profile_details.kids_type.lname} 
+            %td #{profile_details.kids_type.nickname}
+            %td #{profile_details.kids_type.birthdate.strftime("%m/%d/%Y")}
+            %td 
+              = organization_seasons(@organization).first.split(' (')[0]              
+            %td
+              = kid_session(profile_details.kids_type.id.to_s, organization_seasons(@organization).first.split(' (')[0])  
+            %td 
+              = kid_status(profile_details.kids_type.id.to_s, organization_seasons(@organization).first.split(' (')[0])  
+            %td.manageAlertRedCell Alerts Outstanding
+        
+.popUpContainer
+  .popUpBG
+  
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          //%form  
+          = form_tag popup_send_form_res_organizations_path, :method => 'post', authenticity_token: true do
+            .popUpPanel
+              %h2 Send form or document request to selected children
+              %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+                %tr
+                  %td.formLabel Form/Document
+                  = hidden_field_tag :kids_id, params[:kids_id]
+                  = hidden_field_tag :season, params[:season]                  
+
+                  %td.formField
+                    
+                    //= select_tag :form_need, options_for_select(@org_forms)
+                    = select_tag :form_need,@org_data
+                    
+              = submit_tag "Submit Changes"
+              %a{:href => org_enrollees_organizations_path(:id => session[:current_org])}
+                %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}            
+              
+:javascript
+  function goBack()
+  {        
+    history.go(-1);
+  }

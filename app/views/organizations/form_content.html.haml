@@ -1,0 +1,77 @@
+
+%h1 Preview Form
+#dashPreviewForm.manageContainer
+  %p.manageExplanation Below is a preview of how your form will look to your enrollees.  If you'd like to make any changes, please click cancel at the bottom.  Otherwise, click to save the changes.
+  .previewContainer
+    / start preview form
+    .standardForm
+      = form_tag create_profile_profiles_path, :method => 'post', :html=>{:'data_type' => 'json', :id => "profile_form"}, authenticity_token: true do
+      
+        =hidden_field_tag :form_id, value = @form_id
+
+        %br
+        %br
+        %b=@jsonTemplate['form']['name'].html_safe unless (@jsonTemplate['form'].blank? || @jsonTemplate['form']['name'].blank?)
+        %p.manageExplanation
+          =@jsonTemplate['form']['description'].html_safe unless @jsonTemplate['form']['description'].blank?
+
+        -@jsonTemplate['form']['panel'].each do |each_panel|
+          .formBox  
+            .formSection #{each_panel['name']}            
+            -if !each_panel['description'].blank?
+              .formTopCaptionImportant
+              .klPanelNotes
+                = each_panel['description'].html_safe
+
+            -if !each_panel['field'].nil?
+              - each_panel['field'].each_with_index do |each_field|
+                = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :org_id => session[:current_org], :season => session[:season]}
+
+            - if !each_panel['fieldgroup'].nil?
+              - if each_panel['fieldgroup']['multiply']
+                - each_panel['fieldgroup']['multiply_default'].times do |index|
+                  - each_panel['fieldgroup']['field'].each_with_index do |each_field|
+                    = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :org_id => session[:current_org], :season => session[:season]}
+                  %div{:class => ("table_hr" if index+1 < each_panel['fieldgroup']['multiply_default'])}
+
+
+              - else
+                - each_panel['fieldgroup']['field'].each_with_index do |each_field|
+                  = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :org_id => session[:current_org], :season => session[:season]}
+            - unless each_panel['footer'].blank?
+              .klPanelNotes
+                = each_panel['footer'].html_safe
+      - unless @jsonTemplate['form']['footer'].blank?
+        %p.manageExplanation
+          =@jsonTemplate['form']['footer'].html_safe
+
+  .standardForm
+  %input{:type => "submit", :value => "Save changes", :onclick => "go_to_form()"}
+  %input.btnCancel{:type => "reset", :value => "Cancel", :onclick => "goBack()"}
+
+
+
+  -#%span.panelManageButton
+  -#  = link_to "Go to Forms/documents", org_form_and_documents_path(id: params[:id],season: params[:season_id] )
+
+:javascript
+  function goBack()
+    {
+      window.history.go(-1)
+    }
+  function go_to_form()
+    {
+      window.location.href = "/organizations/#{params[:id]}/forms_and_documents?season=#{params[:season_id]}"
+    }
+
+    function displaying(checked)
+    {
+      if(checked== true)                     
+        $(".styles").css("display", "block");
+      else
+        $(".styles").css("display", "none");
+      
+    }
+
+
+    

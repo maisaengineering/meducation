@@ -1,0 +1,123 @@
+- @document.new_record? ? (method = :post; url = documents_path(params[:profile_id],@document,notification_id: params[:notification_id]); document_name = @notification.document_definition.name) : (method = :put;  url = document_path(params[:profile_id],@document);  document_name = @document.name)
+= form_for(@document,url: url,html: {method: method}, authenticity_token: true) do |f|
+  -#= hidden_field_tag notification_id: params[:notification_id]
+  = f.hidden_field :profile_id
+  = f.hidden_field :recent_name ,value: document_name
+  = f.hidden_field :tags , value:""
+  = hidden_field_tag :replace_doc ,'yes'
+  - if @document.new_record?
+    = f.hidden_field :category_id, value: @document_definition.name.to_s.downcase.eql?('photograph of child') ? Category.where(name: Document::PHOTOGRAPH).first.id : Category.where(name: Document::QUICKCAPTURE).first.id
+  - else
+    = f.hidden_field :category_id, value: @document.tags.include?(Document::PHOTOGRAPH) ? Category.where(name: Document::PHOTOGRAPH).first.id : Category.where(name: Document::QUICKCAPTURE).first.id
+  .attachmentDecisionsBox
+    #lef_content.attachmentDecisionContainer
+    #right_content.attachmentDecisionContainer
+    #file_content.attachmentDecisionContainer.adcLarge
+      .attachmentUploadExplanation Upload your document by clicking the button below.
+      .attachmentUploadContainer
+        .attachmentUploadButtonContainer.orgDocumentUploadBtn
+          Choose file
+          - if @document.new_record?
+            - if @document_definition.name.to_s.downcase.eql?('photograph of child')
+              = f.file_field :source
+            - else
+              = f.file_field :attachment
+          -else
+            - if @document.category.name.eql?(Document::PHOTOGRAPH)
+              = f.file_field :source
+            - else
+              = f.file_field :attachment
+        %span#document_file_name.attachmentUploadStatus
+
+  %div{style: 'text-align:right;width: 600px;'}
+    %span{id: 'share_button'}
+      = submit_tag button_name,disable_with: 'please wait..' ,class: 'link_button'
+    -if params[:action].eql?('new')
+      %span{id: 'share_link'}
+        %a{href: '#',class: 'link_button'} Share
+:css
+  .field_with_errors { display: none; }
+:javascript
+  //hide choose file
+  $('#file_content').hide();
+  $('#share_link').hide();
+  var choose_from_rep = "<a id='choose_from_rep' href='#'><span class='attachmentExistingDocText'>Choose existing document</span>" +
+          "from your<span class='attachmentExistingKLRText'>KidsLink repository</span></a>";
+  var choose_existing = "<a id='choose_existing' href='#'>choose<br />existing</a>";
+  var upload_new_from_com = "<a href='#' id='upload_new_from_com'>" +
+          "<span class='attachmentUploadText'>Upload new document</span>from your computer" +
+          "</a>";
+  var upload_new = "<a href='#' id='upload_new'>upload <br> new</a>"
+
+  var action = "#{params[:action]}"
+
+  if(action == 'new'){
+    $("#lef_content").html(choose_from_rep);
+    $("#right_content").html(upload_new_from_com);
+  }else{
+   $('#lef_content').removeClass('adcLarge').addClass('adcSmall').html(choose_existing);
+   $("#right_content").removeClass('adcSmall').addClass('adcLarge').html($('#file_content').html());
+   $('#replace_with').hide();
+   $('#replace_document').click(function (e){
+     e.preventDefault();
+     $('#replace_with').slideToggle('slow');
+     //uploadNew();
+     //chooseExisting();
+     //triggerFileSelect();
+
+   });
+  }
+
+  uploadNew();
+  chooseExisting();
+  triggerFileSelect();
+
+  function uploadNew(){
+   $('#upload_new_from_com,#upload_new').click(function (e){
+       e.preventDefault();
+       $('#lef_content').removeClass('adcLarge').addClass('adcSmall').html(choose_existing);
+       $(this).parent().removeClass('adcSmall').addClass('adcLarge').html($('#file_content').html());
+       chooseExisting();
+       triggerFileSelect();
+       $('#share_link').hide();
+       $('#share_button').show();
+
+   });
+  }
+
+  function chooseExisting(){
+      $('#choose_from_rep,#choose_existing').click(function(e){
+         e.preventDefault();//Prevent a link from opening the URL
+        var clicked_one = $(this);
+         $.ajax({
+              url: "/#{params[:profile_id]}/documents/existing",
+              type:'get',
+              data: {notification_id: '#{params[:notification_id]}',
+                          id: '#{@document.id}' } ,
+              //dataType: 'json',
+               beforeSend: function() {
+                  clicked_one.parent().removeClass('adcSmall').addClass('adcLarge');
+                  $('#right_content').removeClass('adcLarge').addClass('adcSmall').html(upload_new);
+               },
+              success: function(data){
+                 // hide spinner
+                 clicked_one.parent().html(data);
+               }
+           });
+
+      })
+  }
+
+  function triggerFileSelect(){
+    // $('#choose_file').click(function() {
+    //    $('#document_attachment').trigger('click');
+    // });
+    $('#document_attachment, #document_source').change(function () {
+       //$('#document_file_name').html(this.files[0].name);
+       $('#document_file_name').html('selection made');
+    });
+    // $('#choose_photo').click(function() {
+    //       $('#document_source').trigger('click');
+    // });
+  }
+

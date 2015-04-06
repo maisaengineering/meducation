@@ -1,0 +1,66 @@
+.dashContainer
+  %h1 Attachments to Form: Permission for Screening
+  .attachmentContainer
+    .attachmentText The form you filled out requests that you attach one or more documents:
+    %ul.attachmentList
+      %li Permission for screening (signed)
+      %li Photograph of child
+
+    .attachmentDivider
+    %h2.attachmentStep
+      %span.attachmentStepNum step 1
+      Download templates
+
+    .attachmentText
+      (Templates are optional.  There is no need to download them if you already have the documents
+      in your possession or in the KidsLink repository.)
+      %br
+      %br
+      Click on each of the following links to download a template.  Then print off the document. Adobe Acrobat is required for some templates.
+
+    %ul.attachmentTemplateList
+      %li
+        =link_to "TEMPLATE: Permission for Screening", "#"
+      %li
+        =link_to "TEMPLATE: Photograph of child", "#"
+
+    .attachmentDivider
+    %h2.attachmentStep
+      %span.attachmentStepNum step 2
+      Share or upload documents
+    .attachmentText If you already have a document available in your KidsLink document repository, there is no need to upload it again.  Instead, you simply need to share it.
+    .attachmentBoxName Document: Permission for Screening
+    .attachmentDecisionsBox
+      .attachmentDecisionContainer
+        = link_to "<span class='attachmentExistingDocText'> Choose existing document </span>".html_safe, "#"
+        from your
+        %span.attachmentExistingKLRText KidsLink repository
+      .attachmentDecisionContainer
+        = link_to "<span class='attachmentExistingDocText'> Upload new document </span>".html_safe, "#"
+        from your computer
+        
+      
+    .attachmentBoxName Document: Photograph of child
+    .attachmentDecisionsBox
+      .attachmentDecisionContainer.adcSmall
+        =link_to "choose", "#"        
+        existing
+
+      .attachmentDecisionContainer.adcLarge
+        .attachmentUploadExplanation Upload your document by clicking the button below.
+        .attachmentUploadContainer
+          .attachmentUploadButtonContainer
+            %input{:type => "button", :value => "Choose file"}/
+            %input{:onChange => "javascript: document.getElementById('12345').innerHTML = 'selection made'", :type => "file"}/
+
+          %span#12345.attachmentUploadStatus
+    .attachmentBoxName Document: Photograph of child
+    .attachmentDecisionsBox
+      .attachmentDecisionContainer.adcLarge{:style => "background-image: url(images/tempattachmentexample.png); background-repeat: no-repeat; background-position: 7px 7px;"}
+      .attachmentDecisionContainer.adcSmall
+        =link_to "upload", "#"
+        new
+
+
+    %p  
+= render "child_panel"

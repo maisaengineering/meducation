@@ -1,0 +1,51 @@
+.edit_document.popUpContainer.popUpDocumentsCapture.popUpDocumentsCaptureAddMeta{}
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          = form_for @document,url: document_path(@document.profile_id,@document),html: {method: :put, id: 'edit_document'}, authenticity_token: true do |f|
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureTopText
+                Edit information for the
+                %strong.category_display_name #{@document.tags_array.last}
+                and then click to save.
+              .captureAddMetaFields
+                .captureAddMetaFieldContainer.camfcTextOnly
+                  %span.captureAddMetaLabel document type
+                  %span.category_display_name #{@user_tag ? @user_tag.display_name : @document.display_name}
+                  = f.hidden_field :category_id, id: 'edit_document_category_id'
+                  = f.hidden_field :tags, id: 'edit_document_tags', value:user_defined_tags
+                  -  unless @document.tags.include?(Document::PHOTOGRAPH)
+                    %span.captureAddMetaChangeLink{id:"#{@document.category.root.id}",  onClick:""}
+                      (
+                      %a{:href => "#"}> change type
+                      )
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel org/provider/company
+                  = f.text_field :org_provider
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel description
+                  = f.text_field :description
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel date
+                  = text_field_tag "document[edit_taken_on]",l( @document.taken_on.blank? ? Date.today : @document.taken_on), class: 'edit_taken_on'
+                  = hidden_field_tag "document[edit_taken_on]", @document.taken_on.blank? ? Date.today : @document.taken_on  , id: 'edit_taken_on_alt'
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel expiration date
+                  =text_field_tag "document[edit_expire_on]", !@document.expiration_date.nil? ? l(@document.expiration_date) : nil, class: 'edit_expire_on'
+                  =hidden_field_tag "document[edit_expire_on]", @document.expiration_date, id: "edit_expire_on_alt"
+              #bigSaveButton.submitPhotoId
+                %a{:href => "#"} Save document
+              .captureBottomButtons
+                .captureButton.cbCancel
+                  %a{:href => "#", :onclick => "return false;"} Cancel
+                -#.captureButton.cbCancel{style: 'color: red;margin-right: 12px;', onClick:"$(this).children('a').click();"}
+                = link_to 'Delete document' ,document_path(@document.profile_id,@document),method: :delete ,data: { confirm: 'Are you sure?' }, class:"captureButton cbDelete"
+              .clear
+
+= render 'categories_to_change'
+
+:javascript
+  edit_documents();

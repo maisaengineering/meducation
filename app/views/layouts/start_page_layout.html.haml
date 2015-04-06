@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "user-scalable=no, width=970", :name => "viewport"}/
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title MSchool
+    = stylesheet_link_tag 'global' ,'start_page' , 'data-turbolinks-track' => true
+    /[if lt IE 9]
+      = stylesheet_link_tag 'ie'
+      %noscript
+        %img{:alt => "", :height => "1", :src => "https://www.facebook.com/offsite_event.php?id=6010593914689&amp;value=0&amp;currency=USD", :style => "display:none", :width => "1"}/
+    = javascript_include_tag 'application' , 'data-turbolinks-track' => true
+    :css
+      body,td,th {
+          font-family: "museo-sans-n1", "museo-sans-i1", "museo-sans-n3", "museo-sans-i3", "museo-sans-n5", "museo-sans-i5", "museo-sans-n7", "museo-sans-i7", "museo-sans-n9", museo-sans, "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+      }
+
+  %body.startBody
+    =yield
+    -# load javascripts after page render
+    %script{:src => "//use.typekit.net/wys2fog.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}

@@ -1,0 +1,38 @@
+
+.formSectionDivider
+.formSection Sessions
+.formTopCaptionImportant Note: Changing the name of any current session will alter it for all enrollees who have selected it.
+
+%table#manageSessionsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0", :class => 'atable'}
+  %tr.manageTableHeader
+    %td Session name
+    %td Session open?
+    %td Applied
+    %td Accepted  
+  -@organization.seasons.each do |each_season|
+    -if(each_season.season_year == params[:season])
+      -each_season.sessions.each do |each_session|      
+        %tr.session_details
+      
+          %td
+            = text_field_tag :session_name, value = each_session.session_name, :class => "session_details"
+          %td
+            /= each_session.session_open
+            = check_box_tag("session_open","",each_session.session_open)
+          %td#applied
+            = session_applied_count(each_session.session_name,each_season._id)
+          %td#accepted 
+            = session_accepted_count(each_session.session_name,each_season._id)
+            %span.pointer.delRow
+          
+
+  %tr     
+    %td{:colspan=>4}
+      /%span.pointer.addRow.formSectionPrimaryAction Add additional session
+        
+:javascript
+  $("document").ready(function(){
+    $(".addRow").btnAddRow();
+    $(".delRow").btnDelRow();
+  });
+  

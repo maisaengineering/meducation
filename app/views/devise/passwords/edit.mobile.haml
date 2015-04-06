@@ -1,0 +1,70 @@
+.headerContainer
+  .headerButtonContainer
+  .headerWellnessLogo{:onClick => "window.location.reload(true);", :style => "background-image:url(/assets/m_logo.png)"}
+  .headerPageName
+    Reset password
+
+#scrollContainer.scrollContainer.scrollContainer7Fix
+  .contentContainer.ccOnboardScreen
+    .osFieldsContainer
+      = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => 'standardForm', id:"password_change" }) do |f|
+        .osTopText Select a new password
+
+        .osTopOops{:style => "display: none"}
+          %span.ostoHeader Oops!
+          There was a problem.
+        - if notice
+          .osTopOops
+            %span.ostoHeader Oops!
+            There was a problem.
+            .br
+            = notice
+        .osfcFieldContainer
+          = f.hidden_field :reset_password_token
+          .osfcLabel New password
+          .osfcField
+            = f.password_field :password , class: "osfcInput required password"
+            -#%input.osfcInput{:type => "password", name: "user[password]", class: "required"}/
+        .osfcFieldContainer
+          .osfcLabel Repeat new password
+          .osfcField
+            = f.password_field :password_confirmation , class: "osfcInput required password_confirmation"
+            -#%input.osfcInput{:type => "password", name: "user[password_confirmation]", class: "required"}/
+    .osButtonContainer
+      .osSaveButton{:onclick => ""} Reset password
+    %p &nbsp;
+
+:javascript
+
+
+  $("form#password_change").validate({
+      rules:{
+          password:{
+              required: true,
+              minlength: 6
+          },
+          password_confirmation:{
+              required: true,
+              minlength: 6,
+              equalTo: "#password"
+          }
+      }
+  });
+
+  $('.osSaveButton').click(function(e){
+      e.preventDefault();
+      $("form#password_change").submit();
+  });
+
+
+
+
+:css
+  .scrollContainer7Fix {
+      position: static;
+      margin-top: 94px !important;
+      overflow: auto;
+  }
+  input[type="submit"]{
+    border: none;
+  }

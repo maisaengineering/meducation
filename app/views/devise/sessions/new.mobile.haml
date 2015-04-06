@@ -1,0 +1,23 @@
+.startContainer
+  %table.startTable
+    %tr
+      %td.startTableTopCell
+        .startTopContainer
+          = form_for(resource, :as => resource_name ,:url => session_path(resource_name)) do |f|
+            .stcHeader
+              current users
+              - unless @alert_msg.nil?
+                .stcError
+                  %span.stceTitle Oops!
+                  we can't locate an account with that username and password.
+            = f.text_field :email, :placeholder=> "email address", class: "stcInputEmail"
+            = f.password_field :password, :placeholder=> "password", class: "stcInputPassword"
+            = f.hidden_field "remember_me", value: true
+            .signInButton{:onClick => ""} sign in
+    %tr
+      %td.startTableBottomCell
+        .forgotPasswordButton{:onClick => "window.location.href='#{new_password_path(resource_name)}'"} forgot password
+        .signUpButton{:onClick => "window.location.href='#{m_sign_up_path()}';"} beta sign up
+
+:javascript
+  sign_in()

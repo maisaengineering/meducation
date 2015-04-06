@@ -1,0 +1,29 @@
+#capture_to_change.popUpContainer.popUpDocumentsCapture{:style => "display: none;"}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureTopText What type of document are you capturing?
+              #captureCategoryContainer
+                - @categories.positioned.each do |category|
+                  .captureCategory.clickLink{id: "captureCategory-#{category.id}"}
+                    .captureCategoryTitle{:style => "background-image: url(#{category_icon(category)});"}
+                      = link_to category.name,'#',id: category.id, class: category.children.empty?? 'change_category': nil
+                .captureSkipToQC
+                  or
+                  %a{:href => "#",class: 'choose_document',id: @categories.first.id}
+                    Skip and do
+                    %span#qcPhrase Quick Capture
+              = hidden_field_tag :user_tags, @parent_profile[:user_tags].to_a.join(', ')
+              #captureDocTypeContainer
+
+              .captureBottomButtons
+                .captureButton.cbCancel
+                  %a{:href => "#"} Cancel
+              .clear
+
+= hidden_field_tag :user_tags, @parent_profile[:user_tags].to_a.join(', ')

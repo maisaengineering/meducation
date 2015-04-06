@@ -1,0 +1,10 @@
+- if target.errors.any?
+  .standardForm
+    #headder_error
+      .formTopErrorText
+        %span.formTopErrorHeader Oops!
+        We discovered an error.
+        %ul{style: 'margin: 0px;'}
+          - target.errors.full_messages.each do |msg|
+            %li= msg
+          %li= flash[:error]

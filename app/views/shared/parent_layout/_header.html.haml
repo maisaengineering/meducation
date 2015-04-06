@@ -1,0 +1,33 @@
+.headerBox
+  .logoBox
+    %a{:href => "#{user_dashboard_path}"}
+      %span#klLogo
+  - url= @hospital ? "#{@hospital.logo.url}" : nil
+  .sponsorBox{:style => "background-image: url(#{url})"}
+  - if @kid_profile
+    .childSummaryBox.selected
+      %span.csbPhoto{style: thumb_photo_background(@kid_profile.photograph)}
+      %span.csbName= @kid_profile.nickname
+      %span.csbID KidsLink ID #{@kid_profile.kids_type.kids_id}
+    -#- count = @kid_profile.notifications.requested.count
+    -#%span.csbAlerts.csbAlertsOn= count >= 1 ? "ALERTS: Att'n needed" : '&nbsp'.html_safe
+    - unless  @managed_kids.count ==1
+      .childSummaryBoxShadow
+  - if @managed_kids.length > 4
+    - @managed_kids.in_groups_of(3, false) do |kid_profiles|
+      .multipleChildrenBox
+        - kid_profiles.each do | kid_profile|
+          #childPhotograph.mcbChildBox{:'data-url'=>child_dashboard_path(profile_id: kid_profile.id) }
+            .mcbChildPhotoBox{style: thumb_photo_background(kid_profile.photograph)}
+            .mcbChildName
+              = truncate(kid_profile.kids_type.nickname, length: 10)
+    - if  !@kid_profile and current_page?(:controller => "dashboard",:action=>"index")
+      #tipClickToView= image_tag('t_clicktoview.png',height: 52,width: 136)
+  -else
+    - @managed_kids.each do |kid_profile|
+      - unless kid_profile.eql?(@kid_profile)
+        #childPhotograph.childPhotoBox{style: thumb_photo_background(kid_profile.photograph),:'data-url'=>child_dashboard_path(profile_id: kid_profile.id)}
+          = truncate(kid_profile.kids_type.nickname, length: 10)
+    - if  !@kid_profile and current_page?(:controller => "dashboard",:action=>"index")
+      #tipClickToView= image_tag('t_clicktoview.png',height: 52,width: 136)
+

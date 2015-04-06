@@ -1,0 +1,22 @@
+= form_tag admin_update_email_path, authenticity_token: true do |f|
+  -if flash[:error].present?
+    .standardForm
+      #headder_error
+        .formTopErrorText{style: 'width: 600px;'}
+          %span.formTopErrorHeader ERROR!
+          = flash[:error]
+  #dashEditForm.manageContainer
+    %p.manageExplanation Update existing email to new.
+    #dashEditFormPanel.dashPanel.managePanel
+      %span.panelName= 'Update existing email'
+      %label Old email
+      %input{name: 'old_email', type: 'text', required: true,value: params[:old_email],size: 40, style:"width:auto"}
+      %br
+      %br
+      %label New email
+      %input{name: 'new_email', type:  'email', required: true,value: params[:new_email],size: 40}
+      .clear
+    = submit_tag "Update",confirm: 'Are you sure want to continue?'
+- if flash[:notice].present?
+  :javascript
+    alert("#{flash[:notice]}")

@@ -1,0 +1,32 @@
+/ TODO, optimization needed
+
+- @kid_profile.organization_memberships.each do |organization_membership|
+  - organization_membership.document_definitions.each do |document_definition|
+    = document_definition.name
+  /get season wise documents
+  - organization_membership.seasons.each do |season|
+    - season.notifications.each do |normal_notification|
+    /check if it is document or form
+      - if normal_notification.respond_to?(:json_template_id)
+        %table#panelUniDocList{border: 0, cellpadding: 0, cellspacing => "0"}
+      - else #document definition
+
+
+
+
+- flag  = 0
+- @orgnization_list.first.seasons.each do |each_season|
+  - each_season.notifications.requested.each do |each_doc|
+    - flag = 1
+    %table#panelUniDocList{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+      %tr
+        - @json_tem = JsonTemplate.where(:_id => each_doc.json_template_id).first
+        %td
+          = link_to "#{@json_tem.form_name}", form_data_profiles_path(:child => params[:child], :json_template_id => each_doc.json_template_id, :email =>params[:email], :org_id => each_season._parent.org_id, :season_id => each_season._id)
+
+        %td.panelUniDocDate #{each_doc.created_at.strftime("%m/%d/%y")}
+
+      %br
+
+- if flag == 0
+  No document yet

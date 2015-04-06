@@ -1,0 +1,7 @@
+<%= @recipient.fname %>,
+<p><strong><%= "#{@sender.fname} #{@sender.lname}" %></strong> has indicated that he or she would like to share with you child documents and milestones for <%= @kid_full_names.to_a.map{|n| "<strong>#{n}</strong>"}.to_sentence.html_safe %> and general family documents for the <strong><%= @sender.lname %></strong> family.</p>
+<p>If you believe this is in error, please contact us at support@mykidslink.com.</p>
+<p>If you like, you may also share your <strong><%= @recipient.lname %></strong> family documents with <strong><%= @sender.fname %></strong>.</p>
+<p>To do so, please log into your KidsLink dashboard from a computer or tablet, select "Preferences" in the top right of the screen, and authorize sharing your documents with <strong><%= @sender.fname %></strong>.</p>
+<p>Visit your dashboard from a tablet or computer: <%= @url %></p>
+<p>Note: If you would like to share documents and milestones for specific children of yours with <strong><%= @sender.fname %></strong>, you will need to add him/her as a parent in each child's profile.</p>

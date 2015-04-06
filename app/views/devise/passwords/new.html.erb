@@ -1,0 +1,29 @@
+
+
+  <h1>Reset your KidsLink password</h1>
+  <div id="registrationExplanation">
+    If you've forgotten your KidsLink account information, you can use this form to reset it.  A new password will be emailed to the address with which you previously registered.
+  </div>
+  <% if flash[:notice] %>
+      <div class="formTopErrorText errors_new_signin_page">
+        <span class="formTopErrorHeader">Success</span>
+        <%= flash[:notice] %>
+      </div>
+  <% end %>
+  <% if flash[:alert] %>
+      <div class="formTopErrorText"><span class="formTopErrorHeader">Oops!</span>We can't locate an account with that email address.  Try again?</div>
+  <% end %>
+  <%= form_for(resource, :as => resource_name, :url => password_url(resource_name), :html => { :method => :post, :class => 'standardForm', :autocomplete => "off" }) do |f| %>
+
+  <div class="loginDecisionsBox">
+      <%= f.label :email,"Your (parent) email address" %> 
+      <%= f.text_field :email %>
+  </div>
+  <div><%= f.submit "Reset password" %></div>
+
+  <!-- <div id="registrationExplanation">
+    If your child has a KidsLink ID# (perhaps registered by another parent), but you don't yet have a KidsLink parent account, please use our <a href="#">alternative login page</a>.  There is never an additional charge for extra parent accounts.
+  </div> -->
+<% end %>
+
+    

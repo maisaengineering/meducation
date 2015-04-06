@@ -1,0 +1,11 @@
+/ .bodyContainer
+%h1 KidsLink Home
+.bodyText
+  %p You have multiple roles in KidsLink.  Use the following links to access your KidsLink content and resources:
+  - if current_user.has_role?(:parent)
+    %p.bigLink.blueLink= link_to "My parent dashboard",top_dashboard_path( :profile_id=>params[:profile_id])
+  - if current_user.has_role?(:super_admin)
+    %p.bigLink.blueLink= link_to "My Super administrator access",organizations_path
+  - if current_user.has_role?(:org_admin)
+    - current_user.managed_organizations.each do |organization|
+      %p.bigLink.blueLink= link_to "My administrator access to #{organization.name}", org_enrollees_organizations_path(id: organization.id,clear_session: true)

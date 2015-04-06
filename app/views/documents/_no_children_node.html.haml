@@ -1,0 +1,20 @@
+- documents = documents_vault(level_one)
+- if documents.count > 0
+  - if documents.count == 1
+    = render 'single_document' ,category: level_one,document: documents.first
+  - elsif documents.count > 1
+    .docRow{onclick:"multiple_documents('#{level_one.id}','#{profile.id}');"}
+      .docMain{:onclick => ""}
+        .docTitlePlus
+          .docTitle
+            %a{:href => "#"}= level_one.display_name
+          .docSubTitle
+            %span.dstItemNumber= documents.count.eql?(0) ? '(no documents)' : pluralize(documents.count, 'document')
+      .documentButtons
+        .documentButton.dbCaptureHere.clickLink{:onclick => ""}
+          = link_to "Capture new" ,"#",class: 'capture_new_document_right',id:root_id
+      .clear
+      #demo5a.docList.dlLevelTwo{:style => "display: none;",:class=>"#{level_one.id}"}
+      -#= render 'multiple_documents' ,category: level_one,documents: documents
+
+

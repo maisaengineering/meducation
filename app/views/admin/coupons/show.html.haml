@@ -1,0 +1,16 @@
+%p#notice= notice
+
+%p
+  %b Coupon Code:
+  = @admin_coupon.name
+%p
+  %b Discount(%):
+  = @admin_coupon.discount
+%p
+  %b Organization:
+  - @org = Organization.where(:_id => @admin_coupon.organization_id).first
+  = @org.name
+
+= link_to 'Edit', edit_admin_coupon_path(@admin_coupon)
+\|
+= link_to 'Back', admin_coupons_path

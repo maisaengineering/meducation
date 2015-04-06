@@ -1,0 +1,6 @@
+- title "#{@parent_profile.full_name} | Trending"
+#dashRSS.dashPanel
+  %span.panelName
+    %a{:href => "#"} Trending
+  %dl
+    = render  @feed_entries, max: 20

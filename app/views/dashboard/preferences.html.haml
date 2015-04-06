@@ -1,0 +1,57 @@
+.dashContainerFull
+  #dashPreferencesFull.dashPanel
+    - title "MSchool"
+    %span.panelName
+      %a{:href => "#"} User Preferences
+    .panelInstructions
+      %b Change how you interact with KidsLink here.
+      %br/
+      This only affects you and not any other family members.  Don't forget to click
+      %b Save
+      at the bottom.
+    = form_for(current_user, :as => :user, :url => registration_path(:user), :html => { :method => :put }, authenticity_token: true) do |f|
+      - if notice
+        .formTopErrorText
+          %span.formTopErrorHeader Oops!
+          = notice
+          and try again
+      .prefRow
+        = render 'password_change', f: f
+      -#.prefRow
+      -#  .prefRowName Wellness partner
+      -#  .prefOptions
+      -#    %label.labelWellnessPartner
+      -#      %input{:checked => "", :name => "wellnessRadio", :type => "radio"}/
+      -#      %img{:src => "images/tempsponsorlogo.png"}/
+      -#    %label.labelWellnessPartner
+      -#      %input{:name => "wellnessRadio", :type => "radio"}/
+      -#      %img{:src => "images/tempsponsorlogo_drgreene.png"}/
+      -#  .clear
+      -#.prefRow
+        .prefRowName Milestone sharing
+        .prefOptions
+          %label.labelFlex
+            %span.labelName Opt out of sharing wellness content partner on milestones
+            = check_box_tag "hospital_opt_out",  true, @hospital_memberships.any?{|hm| hm.is_opt_out}
+          %br/
+          %br/
+      - unless @parent_profile.family_profiles.blank?
+        .prefRow
+          .prefRowName Documents sharing
+          .prefOptions
+            - @parent_profile.family_profiles.each do |parent|
+              %label.labelFlex
+                %span.labelName Share family documents with #{parent.full_name}?
+                - val = @parent_profile.docs_shared_to.nil? ? false : @parent_profile.docs_shared_to.include?(parent.id)
+                = check_box_tag 'docs_shared_to_ids[]', parent.id ,val
+              %br/
+              %br/
+            .prefNote Note: this feature only indicates which family-level documents you are sharing with other users.  Individual child documents and milestones will only be shared with users listed as parents in each child's profile.
+      .prefRow
+        = render  'add_new_child', f: f
+      .saveButton{:onclick => ""} Save changes
+      .clear
+
+    .klnote
+      Note: Since your email address serves as your user id, KidsLink does not currently allow users to change the email address.  To request your email address to be changed, please email our support team at
+      =mail_to "support@mykidslink.com", "support@mykidslink.com."

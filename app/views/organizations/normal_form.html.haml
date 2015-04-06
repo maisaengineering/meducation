@@ -1,0 +1,24 @@
+#normal_form
+  .send_form
+    .popUpContainer
+      .popUpBG
+
+      %table.popUpTable
+        %tr
+          %td.popUpTableTD
+            .popUpContent
+              //%form
+              = form_tag popup_send_form_res_organizations_path, :method => 'post', authenticity_token: true do
+                .popUpPanel
+                  %h2 Send form or document request to selected children
+                  %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+                    %tr
+                      %td.formLabel Form/Document
+                      = hidden_field_tag :kids_selected, params[:kids_id]
+                      = hidden_field_tag :season, params[:season]
+
+                      %td.formField
+                        = select_tag :form_need,@org_data
+
+                  = submit_tag "Submit Changes"
+                  %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}

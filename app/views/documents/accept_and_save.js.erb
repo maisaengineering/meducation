@@ -1,0 +1,7 @@
+$('.form_loading').hide();
+<%unless @document.errors.any?%>
+    $('.captureUploadBigNumber').text(<%=(doclist_size)%>);
+    $('.smallNumber').text(<%=(doclist_size+1)%>);
+<%end%>
+
+

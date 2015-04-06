@@ -1,0 +1,13 @@
+- @documents.each do |document|
+  #demo6.docRow.getdoc{data: {'document'=> document.id, 'category'=> @category.id}}
+    .docMain{:onclick => "",style: 'padding-left: 75px;'}
+      .docTitlePlus
+        .docTitle
+          %a{:href => "#"}= l(document.taken_on)
+        .docSubTitle #{document.org_provider} #{document.expiration_date.nil? ? nil: append_dot("exp. " + l(document.expiration_date))} #{append_dot truncate(document.description, length:125)}
+    .documentButtons
+    .clear
+.clear
+
+
+

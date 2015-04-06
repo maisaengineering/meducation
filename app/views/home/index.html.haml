@@ -1,0 +1,23 @@
+
+= link_to "Kidslink Login", new_user_session_path(:kid_login => "new_login")
+
+%br
+%br
+%br
+
+-@organizations.each do |each_org|
+  -each_org.seasons.each do |each_season|
+    -if(each_season['is_current']==1)
+      =link_to "Apply the  #{each_org.name} for season #{each_season['season_year']} (current)", profile_request_organizations_path(:kidslink_network_id => each_org.networkId, :season_year => each_season['season_year'],:season_id => each_season.id,:org_id=>each_org.id)
+      %br
+
+    -else
+      =link_to "Apply the  #{each_org.name} for season #{each_season['season_year']}", profile_request_organizations_path(:kidslink_network_id => each_org.networkId, :season_year => each_season['season_year'],:season_id=> each_season.id,:org_id=>each_org.id)
+      %br
+
+//%br
+//Login as organizer
+//%br
+//-@organizations.each do |each_org|
+//  =link_to "You are administrator of  #{each_org.name}", org_enrollees_organizations_path(:id => each_org.id)
+//  %br

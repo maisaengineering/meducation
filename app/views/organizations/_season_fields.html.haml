@@ -1,0 +1,53 @@
+= hidden_field_tag :season_id,season.id,id: 'season_fields_season_id'
+= fields_for season do |season_fields|
+  %div{id: "season_and_session_elements_#{season_fields.object.id}",class: 'season_and_session_elements'}
+    %label Season name
+    = season_fields.text_field :season_year,class: 'season_year',id: "season_year_#{season_fields.object.id}"
+    %br
+    %br
+    %label Set as current
+    = season_fields.check_box :is_current,disabled: season_fields.object.is_current.eql?(1),class: 'is_current' ,id: "is_current_#{season_fields.object.id}"
+    -#%br
+    -#%label Season fee
+    -#= season_fields.text_field :season_fee, class: 'season_fee'
+
+    .formSectionDivider
+    .formSection Sessions
+    .formTopCaptionImportant Note: Changing the name of any current session will alter it for all enrollees who have selected it.
+    %table#manageSessionsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0", :class => 'atable'}
+      %thead
+        %tr.manageTableHeader
+          %td Session name
+          %td Session open?
+          %td Applied
+          %td Accepted
+      %tbody.sessions
+        = season_fields.fields_for :sessions do |session_fields|
+          - applied =  session_applied_count(organization,season_fields.object._id,session_fields.object.session_name)
+          - accepted = session_accepted_count(organization,season_fields.object._id,session_fields.object.session_name)
+          = render 'session_fields',f: session_fields ,season_fields: season_fields,applied: applied,accepted: accepted
+    .formSectionDivider
+    .formSectionPrimaryAction
+      -#http://stackoverflow.com/questions/10995932/rails-with-simple-form-add-new-table-row-with-link-to-add
+      = link_to_add_association 'Add additional session', season_fields, :sessions, :"data-association-insertion-node" => "tbody.sessions", :"data-association-insertion-method" => "append" ,partial: 'session_fields'
+:javascript
+  $(".is_current").click(function() {
+     var is_current = false;
+
+     var season_year = $(this).prevAll('.season_year').val();
+     //check if season_year contains (current) sub string
+     if(season_year.indexOf('(current)') != -1){
+          is_current = true;
+     }
+     if($(this).prop('checked')){
+        if(is_current==false){
+         $(this).prevAll('.season_year').val(season_year + ' (current)');
+         $('#season_is_current_change').val($(this).attr('id').split('_').pop());
+        }
+     }else{
+      if(is_current==true){
+        $(this).prevAll('.season_year').val(season_year.replace(' (current)' ,''));
+        $('#season_is_current_change').val('');
+      }
+     }
+  });

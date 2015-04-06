@@ -1,0 +1,52 @@
+= form_for [:admin,@hospital], authenticity_token: true do |f|
+  -if @hospital.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hospital.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @hospital.errors.full_messages.each do |msg|
+          %li= msg
+  #dashEditForm.manageContainer
+    %p.manageExplanation Enter or edit the form below.
+    #dashEditFormPanel.dashPanel.managePanel
+      %span.panelName
+        = f.object.new_record? ?  'New Hospital' : 'Edit Hospital'
+      %label is_default?
+      = check_box_tag "hospital[is_default]",  true, @hospital.is_default
+      %label Hospital name
+      = f.text_field :name
+      %label Preferred Name
+      = f.text_field :preferred_name
+      %label Logo #{ @hospital.persisted? and @hospital.logo ? link_to(image_tag(@hospital.logo,height: 25,width: 25),@hospital.logo.url,target: '_blank') : nil }
+      = f.file_field :logo, class: 'fileUploadContainer'
+      %label Logo #{ @hospital.persisted? and @hospital.logo2 ? link_to(image_tag(@hospital.logo2,height: 25,width: 25),@hospital.logo2.url,target: '_blank') : nil }
+      = f.file_field :logo2, class: 'fileUploadContainer'
+      %label Address1
+      = f.text_field :address1
+      %label Address2
+      = f.text_field :address2
+      %label ZipCode
+      = f.text_field :zipcode
+      %label zipcode that need to support (give zipcode with ', ' seperator)
+      = f.text_field :zipcodes, value: !@hospital.new_record? ? @hospital.zipcodes.to_a.join(', '): ""
+      %label Phone Number
+      = f.text_field :phone_no
+      %label Fax
+      = f.text_field :fax_no
+      %label Email
+      = f.text_field :email
+      %label Description
+      = f.text_field :description
+      .formSectionDivider
+      %label Section1
+      = f.text_area :section1
+      %label Section2
+      = f.text_area :section2
+      %label Section3
+      = f.text_area :section3
+      %label Section4
+      = f.text_area :section4
+      %label Mobile Info
+      = f.text_area :mobileinfo
+
+      .clear
+    = submit_tag "Save"

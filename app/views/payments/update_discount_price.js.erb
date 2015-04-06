@@ -1,0 +1,18 @@
+<%unless @discounted_price==0 %>
+
+$('#coupon_error').html("")
+$("#total_amount").html("<b>$<%= h escape_javascript @amount.to_i.to_s %></b>")
+$("#payment_amount").html('<%= escape_javascript(render "payment_amount.html.erb") %>')
+$("#discount").html("<%= escape_javascript @discounted_price.to_i.to_s %>")
+$("#total_amount_check").html("<%= escape_javascript @amount.to_i.to_s %>")
+$("#total_amount_check_second").html("<%= escape_javascript @amount.to_i.to_s %>")
+
+<%else%>
+
+$("#total_amount").html("<b>$<%= h escape_javascript @amount.to_i.to_s %></b>")
+$("#payment_amount").html('<%= escape_javascript(render "payment_amount.html.erb") %>')
+$("#discount").html("<%= escape_javascript @discounted_price.to_i.to_s %>")
+$("#total_amount_check").html("<%= escape_javascript @amount.to_i.to_s %>")
+$("#total_amount_check_second").html("<%= escape_javascript @amount.to_i.to_s %>")
+$('#coupon_error').html("ERROR: Invalid Coupon Code.")
+<%end%>

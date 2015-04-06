@@ -1,0 +1,48 @@
+!!!
+%html
+  %head
+    = stylesheet_link_tag 'global' , 'data-turbolinks-track' => true
+    = javascript_include_tag 'application' , 'data-turbolinks-track' => true
+    -#%title= yield(:title) || 'MSchool'
+    %title= 'MSchool'
+  %body
+    .mainContainer
+      .header
+        = render 'shared/parent_layout/logged_in'
+        = render 'shared/parent_layout/header'
+      .bodyContainer
+        .dashContainer
+          -#= render 'shared/form_loading',progress_bar_id: 'turbolink_indicator'
+          = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
+          = yield
+        .footerContainer
+          = render 'shared/parent_layout/footer'
+    #popUpAlertEvent.popUpContainer.popUpDashAlerts{style: 'display:none;'}
+    -# For users who came in via an application form from an organization, when they see the dashboard for the first time, show them a welcome message telling them how to get to the organization page
+    -# also for second parents who logged in first time,if they have kids organization_memberships
+    - if current_user.sign_in_count.eql?(1)
+      -# cookie checking against current_user id because if both parents uses same browser first time assign different value
+      - unless cookies[:dashboard_visited].present? and cookies[:dashboard_visited].eql?(current_user.id.to_s)
+        - org_memberships = @managed_kids.map(&:organization_memberships).flatten
+        = render 'shared/parent_layout/welcome_message',organization: org_memberships.first.organization if !org_memberships.blank?
+      - if cookies[:visited_start_page].nil?
+        %a.vimeo{:href => "https://www.youtube.com/embed/6DjbvjnOlyk?autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0"}
+          = stylesheet_link_tag 'fancybox'
+          = javascript_include_tag 'fancybox'
+          :javascript
+            $(document).ready(function() {
+             $(".vimeo").fancybox({
+                  width: 900,
+                  height: 510,
+                  type: 'iframe',
+                  fitToView : false
+              });
+              $(".vimeo").click();
+            });
+          - cookies.permanent[:visited_start_page]  = 'yes'
+    .appFooter
+      = render 'shared/parent_layout/footer_overview'
+
+    %script{:src => "//use.typekit.net/wys2fog.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}

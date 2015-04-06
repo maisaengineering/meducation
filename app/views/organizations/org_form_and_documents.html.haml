@@ -1,0 +1,150 @@
+%form{:id => "org_admin_form_id"}
+  .standardForm      
+    #headder_error  
+      .formdisplay         
+        .formTopErrorText            
+          %span.formTopErrorHeader Oops!             
+          We discovered an error.  Please see below for more information.
+  %h1 View/Manage Forms and Documents
+  %table.manageLimitsContainer{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %tr
+      %td Season to manage
+      %td
+        = form_tag(org_form_and_documents_path(params[:id]), :method => "get", :class => "nifty_form", authenticity_token: true) do
+          = select_tag :season, options_from_collection_for_select(@seasons, :id, :current_season_year,@default_season.id), {onchange: "this.form.submit();"}
+          = hidden_field_tag(:id,params[:id])
+  #dashFormsList.dashPanel.managePanel
+    %span.panelName Forms
+    .panelManageContainer
+      %span.panelManageText Select to edit a form or view its data, or identify forms and select an action:
+
+      %span.panelManageButton
+        = link_to "Set as application form", '#', :id => "set_as_app", :class =>"active"
+
+      %span.panelManageButton
+        = link_to "Automate workflow", '#', :id => "set_as_workflow" , :class =>"active"
+
+    #loading
+      %table#manageFormsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr.manageTableHeader
+          %td
+            = check_box_tag('universal',"",false, class: 'form_check')
+          %td Category
+          %td Form Name
+          %td  
+          %td Workflow
+          %td Attachments
+          %td Responses
+          %td Print
+          %td Export
+          %p
+          
+          -if @default_season
+            -@default_season.json_templates.each do |json_template|
+              %tr
+                %td
+                  = check_box_tag("templates[]", json_template.id, false, :class => 'form_check')
+                %td #{json_template.category}
+                %td.manageNameCell #{json_template.form_name}
+                %td.manageEditCell
+                  = link_to "edit form", org_form_organizations_path(:id => @organization, :season => @default_season.id, :form_id =>json_template.id)
+
+                %td #{json_template.workflow}
+                %td
+                %td
+                  -if json_template.workflow == 'Application Form'
+                    = application_count(json_template.id.to_s, params[:id], @default_season._id)
+                  -else
+                    = "#{json_template.submitted_count}/#{json_template.requested_count}"
+                %td
+                  = link_to_if(json_template.submitted_count > 0,"Print",print_profile_data_organizations_path(id: @organization, season_id: @default_season._id, json_template_id: json_template.id), :target => "_blank")
+                %td
+                  = link_to_if(json_template.submitted_count > 0,"Export",export_template_organizations_path(:id => @organization, :season => @default_season._id, :form_id =>json_template.id),remote: true)
+
+      .panelActionContainer
+        %ul
+          %li
+            = link_to "add new form", org_form_organizations_path(is_new: 'yes', id: @organization.id, season: @default_season._id)
+
+
+
+  = render 'document_definitions/list',document_definitions: @document_definitions,organization: @organization,season: @default_season
+
+
+:javascript
+  $(document).ready(function(){
+    $('#set_as_app').live('click', function(e){
+      e.preventDefault();
+      var fields = $('#org_admin_form_id').serializeArray();
+      var season;
+      var templates = [];
+      var count =0;
+      $.each(fields, function(i, field){
+        switch(field.name) {
+          case "season":
+            season = field.value;
+            break;
+          case "templates[]":
+            templates.push(field.value);
+            count = count+1;
+            break;
+        }
+        });
+        if(count>1)
+        {
+          document.getElementById('headder_error').innerHTML = "<div class='formTopErrorText'><span class = 'formTopErrorHeader'>Oops!</span>We discovered an error. Please see below for more information.<br />Please select only one form to set as Application Form</div>";
+          $('html, body').animate({ scrollTop: 0 }, 'slow');
+          return false;
+        }
+        $.ajax({
+        url: "/organizations/change_form",
+        data: { season: season, templates: templates},
+        async: false
+        }).done(function(){window.location.reload();});
+    });
+
+    $('#set_as_workflow').live('click', function(e){
+      e.preventDefault();
+      var fields = $('#org_admin_form_id').serializeArray();
+      var season;
+      var templates = [];
+      $.each(fields, function(i, field){
+        switch(field.name) {
+          case "season":
+            season = field.value;
+            break;
+          case "templates[]":
+            templates.push(field.value);
+            break;
+        }
+        });
+        $.ajax({
+        url: "/organizations/change_workflow",
+        data: { season: season, templates: templates},
+        async: false
+        }).done(function(){window.location.reload();});
+      });
+
+    $("#universal").live('click', function(){
+      if ($('#universal').attr('checked'))
+      {
+        $('.form_check').attr('checked', true)
+        $(".active").css("pointer-events","auto");
+      }
+      else
+      {
+        $('.form_check').attr('checked', false)
+        $(".active").css("pointer-events","none");
+      }
+    });
+    $(".form_check").live('click', function(){
+       var checked_items_length = $('.form_check:checked').length
+       if($(this).attr('checked')){
+          $(".active").css("pointer-events","auto");
+       }else{
+         if(checked_items_length <=0 ){
+          $(".active").css("pointer-events","none");
+         }
+       }
+    });
+  });

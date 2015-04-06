@@ -1,0 +1,41 @@
+.headerContainer
+  .headerButtonContainer
+    .hButton.hbBack.viaTurbo{'data-url'=>root_url}
+      .hbBackOne
+      .hbBackTwo
+      .hbBackThree
+      %span Back
+  .headerWellnessLogo{:onClick => "window.location.reload(true);", :style => "background-image:url(/assets/m_logo.png)"}
+  .headerPageName
+    Forgot password
+
+#scrollContainer.scrollContainer.scrollContainer7Fix
+  .contentContainer.ccOnboardScreen
+    = form_for(resource, :as => resource_name, :url => password_url(resource_name), :html => { :method => :post, :class => 'standardForm', :autocomplete => "off" }) do |f|
+      .osFieldsContainer
+        .osTopText Forgot your password?
+        - if notice
+          .osTopOops
+            %span.ostoHeader Oops!
+            We can't locate an account with that email address.  Try again?
+        .osfcFieldContainer
+          .osfcLabel Enter your email address
+          .osfcField
+            = f.text_field :email, class: "osfcInput"
+      .osButtonContainer
+        .osSaveButton{:onclick => ""} Reset password
+        =# f.submit "Reset password", class: "osSaveButton"
+      %p &nbsp;
+
+:javascript
+  reset_pass_submit()
+
+:css
+  .scrollContainer7Fix {
+      position: static;
+      margin-top: 94px !important;
+      overflow: auto;
+  }
+  input[type="submit"]{
+    border: none;
+  }

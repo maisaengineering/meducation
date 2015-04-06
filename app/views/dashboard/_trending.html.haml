@@ -1,0 +1,9 @@
+#dashRSS.dashPanel
+  %span.panelName
+    %a{:href => "#"} Trending
+  %dl
+    -#= render  @feed_entries, max: 3
+  .panelActionContainer
+    %ul
+      %li
+        = link_to "view all recent trending posts",  trending_path

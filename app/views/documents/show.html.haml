@@ -1,0 +1,35 @@
+.dashContainer
+  = render('shared/error_messages',target: @document) if @document.errors.any?
+  %h1 Document view: #{@document.name}
+  -#if document type is image then link it to converted_pdf else(i.e; pdf) link it to original file
+  - url =  colored_document_url(@document)
+  .documentViewImageBox
+    = link_to image_tag(thumb_document_url(@document),  height: 168, width:115), colored_document_url(@document),target: '_blank'
+  .documentViewLink
+    = link_to 'Click to open document',url,target: '_blank'
+    %br
+      %span.documentViewLinkFilename Original filename "#{@document.display_name}"
+  .documentViewUploadDate Uploaded on #{l(@document.updated_at,format: :long)}
+  .documentViewReplaceLink
+    %a{href: "#",id:'replace_document'} Replace this document
+  .attachmentContainer#replace_with
+    .attachmentText
+    .attachmentBoxName
+    = render 'form',button_name: 'Replace'
+  -unless  @kid_profile.nil?
+    .documentViewShare
+      .documentViewShareHeader Shared with
+      %ul
+        - @document.shared_with.each do |document_definition|
+          %li
+            = document_definition.organization.preffered_name
+            (as #{document_definition.name})
+    %p  
+    -#  .documentViewLink
+        %a{:href => "#"} Click to open document
+        %br/
+        %span.documentViewLinkFilename Original filename "Immunization Record.pdf"
+      .documentViewUploadDate Uploaded on 00/00/00 at 00:00pm EDT
+      .documentViewReplaceLink
+        %a{:href => "#"} Replace this document
+= render 'shared/kid_dash_left',active_class: 'child'

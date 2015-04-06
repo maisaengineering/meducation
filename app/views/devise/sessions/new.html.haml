@@ -1,0 +1,24 @@
+%h1 Login to your MSchool dashboard
+= form_for(resource, :as => resource_name, :html => { :class => 'standardForm',:autocomplete => "off" } ,:url => session_path(resource_name)) do |f|
+  - unless @alert_msg.nil?
+    .formTopErrorText
+      %span.formTopErrorHeader> Oops!
+      We can't locate an account with that combination of email address and password.  Try again?
+  .loginDecisionsBox
+    = f.label :email, "Your (parent) email address"
+    = f.text_field :email
+    = f.label :password, "Your password"
+    = f.password_field :password
+    - if params[:apply_existing].present?
+      = hidden_field_tag :apply_existing ,params[:apply_existing]
+      = hidden_field_tag :org_id ,params[:org_id]
+      = hidden_field_tag :season_id,params[:season_id]
+    .clear
+    = label_tag "Remember Me"
+    = f.check_box "remember_me"
+
+
+  = f.submit "login"
+  = link_to "Forgot your password?", new_user_password_path() ,:class => 'forgotPasswordLink'
+#registrationExplanation
+  / If your child has a KidsLink ID# (perhaps registered by another parent), but you don't yet have a KidsLink parent account, please use our <a href="#">alternative login page</a>.  There is never an additional charge for extra parent accounts.

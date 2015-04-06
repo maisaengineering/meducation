@@ -1,0 +1,32 @@
+%html
+  %head
+    %script{src: "http://use.typekit.com/wys2fog.js", type: "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+    = stylesheet_link_tag  'm_appstyles', media: 'all'
+    = csrf_meta_tag
+    %meta{content: "user-scalable=yes, width=640, height=10000", name: "viewport"}/
+    %script{language: "text/javascript"}
+      :cdata
+        document.addEventListener("touchstart", function() {},false);
+    -#%script{src: "scripts/fastclick.js", type: "application/javascript"}
+    = javascript_include_tag 'm_application'
+    :javascript
+      $( window ).load(function() {
+          $(".loading_indicator").fadeOut('slow');
+      });
+      var myScroll;
+        function loaded() {
+      	  /*myScroll = new iScroll('scrollContainer');*/
+        }
+
+        window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
+        /*document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);*/
+        document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+  %body.externalBody
+    #loading_indicator.loading_indicator{style: 'display: inline;'}
+    .headerContainer
+      .headerButtonContainer
+        = yield :head
+      = yield :page_title
+    = yield

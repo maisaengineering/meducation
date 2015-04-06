@@ -1,0 +1,39 @@
+#dashAlerts.dashPanel
+  %span.panelName
+    = link_to (@kid_profile ? "#{truncate(@kid_profile.nickname, length: 14)}'s " : ' ')+ "Alerts and Events","#"
+  %dl
+    - unless @notifications.blank?
+      -# TODO use mongodb's group aggreagation function(through map-reduce) to group by ae_definition_id,at this time mongoId not supporting group by
+      - duplicates = []
+      - notifications = @notifications.limit(3).to_a
+      - notifications_multi_dimensional = notifications.map{|n| [n.ae_definition_id,n.profile_id]}
+      - managed_kid_ids = @managed_kids.only(:id).map(&:id).to_a
+      - notifications.each do |notification|
+        - profile = notification.profile
+        - if notification.ae_definition
+          - duplicates << notification.ae_definition_id
+          - if duplicates.count(notification.ae_definition_id).eql?(1)
+            - ae_definition = notification.ae_definition
+            %dt
+              = link_to ae_definition.title,alert_or_event_path(@profile,notification),remote: true,class: notification.alert? ? 'panelAlertsAch' : nil
+              -# display kid name if and only if this alert/event belongs to specific kid and not to other(siblings) and not to parent
+              %span.childXRefName=  "(#{(profile.nickname)})" if show_kid_name_on_alert?(managed_kid_ids,notifications_multi_dimensional,@profile,ae_definition,profile)
+            %dd
+              - if ae_definition.scheduled?
+                due by #{l notification.due_by}
+              - else
+                #{ae_definition.sub_line}
+        - elsif notification.json_template or notification.document_definition
+          - document_definition = notification.document_definition
+          - json_template = notification.json_template
+          %dt
+            = link_to json_template.nil? ? document_definition.name : json_template.form_name,alert_or_event_path(@profile,notification),remote: true,class: notification.alert? ? 'panelAlertsAch' : nil
+            %span.childXRefName=  "(#{(profile.nickname)})"  unless @kid_profile
+          %dd Form req'd at #{notification.organization.name}
+    - else
+      .NoAlertsMsgDashboard
+        You have no alerts
+  .panelActionContainer
+    %ul
+      %li
+        =link_to 'view all alerts and events' ,alerts_and_events_path(@profile)

@@ -1,0 +1,48 @@
+.editProfileFieldContainer.editProfileFieldContainerContacts
+  %span.editProfileLabel Parent #{index.to_i + 1}
+
+  = select_tag "parents[#{index}][profiles_manageds][child_relationship]",options_for_select(['Mother', 'Father', "Stepmother", 'Stepfather','Grandmother','Grandfather', 'Guardian'], relationship), class:'epfParentType  required', include_blank: true
+  %br/
+  .epfEnableLoginLabel
+    Allow this person to manage the child?
+    = check_box_tag "parents[#{index}][profiles_manageds][manageable]", true, manageable,  disabled: manageable
+    -#%input{:type => "checkbox", name:"parents[#{index}][manageable]"}/
+  = text_field_tag "parents[#{index}][info][fname]", pre_fills(f, :fname), placeholder:"first name" , class:'epfFirstName required'
+  = text_field_tag "parents[#{index}][info][mname]", pre_fills(f, :mname), placeholder:"mid name(s)" , class:'epfMiddleName'
+  = text_field_tag "parents[#{index}][info][lname]", pre_fills(f, :lname), placeholder:"last name" , class: 'epfLastName required'
+  %br/
+  - phNos=pre_fills(f, :phone_numbers).to_a
+  - i =0
+  - phNos.each do |phNo|
+    = text_field_tag "parents[#{index}][info][phone_numbers][#{i}][contact]", phNo['contact'], placeholder:"phone", class: 'epfContactPhone'
+    = select_tag "parents[#{index}][info][phone_numbers][#{i}][type]",options_for_select(['Mobile', 'Home', 'Work'], phNo["type"]), class:'epfContactPhoneType', include_blank: true
+    = hidden_field_tag "parents[#{index}][info][phone_numbers][#{i}][key]", "phone#{i+1}"
+    - i +=1
+  - (3-phNos.count).times do
+    = text_field_tag "parents[#{index}][info][phone_numbers][#{i}][contact]", nil, placeholder:"phone", class: 'epfContactPhone'
+    = select_tag "parents[#{index}][info][phone_numbers][#{i}][type]",options_for_select(['Mobile', 'Home', 'Work']), class:'epfContactPhoneType', include_blank: true
+    = hidden_field_tag "parents[#{index}][info][phone_numbers][#{i}][key]", "phone#{i+1}"
+    - i +=1
+    %br/
+  = email_field_tag "parents[#{index}][info][email]", pre_fills(f, :email), placeholder:"email", disabled: f.nil? ? false :true
+
+:javascript
+  $(document).ready(function(){
+      $('.epfContactPhone').blur(function() {
+          var pattern = /\d{9,15}/;
+         var space = (($(this).val()).replace(/\s+/g, ""));
+          var current_phone = space.replace(/[^\w\s]/gi, '');
+          if (pattern.test(current_phone)) {
+              if(!isNaN(current_phone))
+              {
+              var a = current_phone.slice(0,3);
+              var b = current_phone.slice(3,6);
+              var c = current_phone.slice(6,$(this).val().length);
+              phone_format = a + "-" + b + "-" + c;
+              $(this).val(phone_format);
+              }
+          }
+
+
+      });
+  });

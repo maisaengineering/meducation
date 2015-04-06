@@ -1,0 +1,8 @@
+$('form#invite-mom').children('span.error').remove();
+$('form#invite-mom .inviteEmail').removeClass('error');
+<%if @invitation.errors.any?%>
+    $('form#invite-mom .inviteEmail').after("<span class='error'>Error:<%= @invitation.errors.first[1]%></span>");
+    $('form#invite-mom .inviteEmail').addClass('error');
+<%else%>
+    $('.popUpInvite').hide();
+<%end%>

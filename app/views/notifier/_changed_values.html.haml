@@ -1,0 +1,21 @@
+- record.each do |attr,val|
+  - if val.is_a? Hash
+    - val.each do |k, v|
+      - if v.is_a? Hash
+        - v.each do |k1, v1|
+          - field_name =  v1[0].blank? ? "#{k1} (newly added)" : k1
+          %b=  t("#{attr}_#{field_name}")
+          \: #{v1[1].blank? ? '(blank)' : v1[1]} (was "#{v1[0].blank? ? '(blank)' : v1[0]}")
+          %br/
+      - else
+        - field_name =  v[0].blank? ? "#{k} (newly added)" : k
+        %b= t("#{attr}_#{field_name}")
+        \: #{v[1].blank? ? '(blank)' : v[1]} (was "#{v[0].blank? ? '(blank)' : v[0]}")
+        %br/
+  - else
+    - unless attr.eql?('updated_at') || attr.eql?('_id') || attr.eql?('_type')
+      - unless val.blank?
+        - field_name =  val[0].blank? ? "#{attr} (newly added)" : attr
+        %b= t(field_name)
+        \: #{val[1].blank? ? '(blank)' : val[1]} (was "#{val[0].blank? ? '(blank)' : val[0]}")
+        %br/

@@ -1,0 +1,22 @@
+#capture_select_profile.popUpContainer.popUpDocumentsCapture.popUpDocumentsCaptureSelectProfile{style: 'display: none;'}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureTopText Whose document are you capturing?
+              .captureSelectProfileButtons
+                .captureSelectProfileButton.clickLink
+                  = link_to "#{@parent_profile.parent_type.fname} Family's" ,"#",id: @parent_profile.id,class: 'capture_profile_id'
+                - @managed_kids.each do |kid_profile|
+                  .captureSelectProfileButton.clickLink
+                    = link_to "#{kid_profile.nickname}'s","#",id: kid_profile.id,class: 'capture_profile_id'
+              .captureBottomButtons
+                .captureButton.cbCancel{:onclick => ""}
+                  %a{:href => "#"} Cancel
+              .clear
+  :javascript
+    capture_select_profile();

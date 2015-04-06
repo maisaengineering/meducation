@@ -1,0 +1,46 @@
+/ below fields holds the sort and direction(previously selected) so we can load the data as it is when season,session,status changes
+= hidden_field_tag 'enrollees_sort',params[:sort]
+= hidden_field_tag 'enrollees_sort_direction',params[:direction]
+= will_paginate @organization_memberships, class: 'enrollees_pagination', inner_window: 4, outer_window: 4, params: {:page => @organization_memberships.current_page}
+
+%table#manageEnrolleesTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %thead
+    %tr.manageTableHeader
+      %td= check_box_tag('universal', value = "", checked = false, :class => 'parent_ckeck')
+      = sortable "lname_downcase" ,'Name'
+      = sortable "nickname_downcase" ,'Pref name'
+      %td Birthdate
+      = sortable "age_group_and_school_days",'Session'
+      = sortable "application_date",'App Date'
+      %td Status
+      %td Alert Status
+      %td Export
+
+
+      =# @organization_memberships.profile.inspect
+  -@organization_memberships.each do |organization_membership|
+    - season = organization_membership['org_season_id']
+    - lname = organization_membership['lname']
+    - fname = organization_membership['fname']
+    - nname = organization_membership['nickname']
+    - profile_id = organization_membership['profile_id']
+    - nname ||= fname
+    - dob = organization_membership['birthdate']
+    %tr
+      %td
+        //TODO pass profile id instead of kids_type id -- for export all its fine
+        = check_box_tag(profile_id, profile_id, checked = false, :class => 'child_ckeck', "data-emails"=>@parent_emails[profile_id.to_s].join(','))
+      %td.manageNameCell
+        = link_to "#{lname}, #{fname}",org_child_profile_organizations_path(:id => params[:org_id], :kid_id => profile_id, :org => params[:org_id])
+      %td #{nname}
+      %td #{dob_con(dob)}
+      %td= organization_membership['age_group_and_school_days']
+      %td= l organization_membership['application_date'].to_date
+      %td= organization_membership['application_status']
+      - if organization_membership['alerts_outstanding'].eql?(true)
+        %td.manageAlertRedCell Alerts Outstanding
+      - else
+        %td No alerts
+      %td= link_to "Export",export_profile_data_csv_organizations_path(id: params[:org_id], profile_id: profile_id,season_id: season)
+
+= will_paginate @organization_memberships, class: 'enrollees_pagination', inner_window: 4, outer_window: 4, params: {:page => @organization_memberships.current_page}

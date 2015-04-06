@@ -1,0 +1,36 @@
+%span.panelName
+  = link_to (@kid_profile ? "#{@kid_profile.nickname}'s " : ' ')+ "Profile","#"
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  %tr
+    %td{:valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td.panelFieldName Full name
+          %td.panelFieldContent #{@kid_profile.full_name}
+        %tr
+          %td.panelFieldName Preferred name
+          %td.panelFieldContent #{@kid_profile.nickname}
+        %tr
+          %td.panelFieldName Age
+          %td.panelFieldContent= accurate_humanize_age(@kid_profile.kids_type.birthdate)
+        %tr
+          %td.panelFieldName Birthdate
+          %td.panelFieldContent #{l(@kid_profile.kids_type.birthdate,format: :birthdate)}
+    %td{:style => "padding-left:10px", :valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        - count =1
+        - @kid_profile.parents_name_and_relation.each do |parent|
+          %tr
+            %td.panelFieldName #{parent[:relation]}
+            %td.panelFieldContent #{parent[:full_name]}
+          - count +=1
+          - break if count>2
+        %tr
+          %td.panelFieldName Food allergies
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:food_allergies)}
+.panelActionContainer
+  %ul
+    %li
+      = link_to "view entire profile", child_profile_path(@kid_profile)
+    %li
+      %a{:href => "#", class:'profileEditButton'} edit #{@kid_profile.nickname}'s profile

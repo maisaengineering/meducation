@@ -1,0 +1,69 @@
+.bodyContainer
+  .dashContainer
+    -ph_count = 0
+    .standardForm
+      = form_tag params[:submit_path], :method => 'post', :html=>{:'data_type' => 'json', :id => "profile_form"}, authenticity_token: true do
+        =hidden_field_tag :notification_id, params[:notification_id]
+        =hidden_field_tag :org_id, @organization.id
+        =hidden_field_tag :season_id, params[:season_id]
+        =hidden_field_tag :profile_id, @kid_profile.id
+        =hidden_field_tag :email,  params[:email]
+
+
+        -if @jsonTemplate && @jsonTemplate['form']
+          %h1
+            Form:
+            =@jsonTemplate['form']['name'].html_safe unless @jsonTemplate['form']['name'].blank?
+          - unless session[:error].blank?
+            #headder_error
+              .formTopErrorText
+                %span.formTopErrorHeader Oops!
+                We discovered an error. Please see below for more information.
+
+          =@jsonTemplate['form']['description'].html_safe unless @jsonTemplate['form']['description'].blank?
+
+          -@jsonTemplate['form']['panel'].each do |each_panel|
+            .formBox
+              .formSection #{each_panel['name']}
+
+              -if !each_panel['description'].blank?
+                .formTopCaptionImportant
+                = each_panel['description'].html_safe
+
+              -if !each_panel['field'].nil?
+                - each_panel['field'].each_with_index do |each_field, index|
+                  - current_value = targetValForField(@storedDataHash,0, each_field['unique'], each_field['id'] )
+                  = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id, :raw_index => index}
+              - if !each_panel['fieldgroup'].nil?
+                - if each_panel['fieldgroup']['multiply']
+                  - each_panel['fieldgroup']['multiply_default'].times do |index|
+                    - each_panel['fieldgroup']['field'].each_with_index do |each_field, inner_index|
+                      - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                      = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][#{index}]", :current_val => current_value, :org_id => @organization.id, :ph_count => ph_count, :raw_index => index}
+                    %div{:class => ("table_hr" if index+1 < each_panel['fieldgroup']['multiply_default'])}
+                    -ph_count +=1
+                  / %span.pointer.addRow #{each_panel['fieldgroup']['multiply_link']}
+
+                - else
+                  - each_panel['fieldgroup']['field'].each_with_index do |each_field, index|
+                    - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                    = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id, :raw_index => index}
+
+
+          - if !params[:form_preview].nil?
+
+            %input{:type => "button", :value => "Save changes"}
+            %input.btnCancel{:type => "reset", :value => "Cancel", :onclick => "goBack()"}
+
+            %span.panelManageButton
+              = link_to "Go to Forms/documents", org_form_and_documents_path(:id => session[:current_org])
+          -else
+            = submit_tag 'submit form'
+            %input.btnCancel{:type => "reset", :value => "Cancel", :onclick => "goBack()"}
+= render 'shared/kid_dash_left' ,active_class: params[:org] || @organization.try(:id).to_s
+
+:javascript
+  function goBack()
+    {
+    history.go(-1);
+    }

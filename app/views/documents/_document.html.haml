@@ -1,0 +1,4 @@
+%dt
+   = link_to  document.display_name, documents_path(profile_id: document.profile.kids_type? ? document.profile_id : @profile.id, clicked_on:document.category_name)
+   %span.childXRefName  #{"(#{document.profile.nickname})" if  current_page?(action: 'index') and document.profile.kids_type}
+%dd #{document.description}

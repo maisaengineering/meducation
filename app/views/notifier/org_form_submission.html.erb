@@ -1,0 +1,39 @@
+<% child_name = "#{@kid.kids_type.fname} (#{@kid.kids_type.nickname}) #{@kid.kids_type.lname}" %>
+
+<h1>New form/document received from <%= child_name %></h1>
+<p>A new form submission has been completed:</p>
+<p>Season: <%= @applied_season.org_season_year %><br />
+  <% if @applied_season.respond_to?(:age_group_and_school_days) %>
+    Session: <%= @applied_season.age_group_and_school_days %><br />
+  <% end %>
+  Child Name: <%= child_name %></p>
+<p><strong>Form/Document: <%= @json_template.form_name %></strong><br />
+  Time of submission: <%= @created_time.strftime('%m/%d/%Y %I:%M%P %Z') %><br />
+  Submitted by: <%= "#{@parent_type_profile.fname} #{@parent_type_profile.lname}" %> (<a href="#"><%= @parent_type_profile.email %></a>) </p>
+<% if @submitted_count > 1 %>
+    <p>This was a resubmission of a previous form. The following data points have changed since the first submission:</p>
+    <p>
+      <% @is_changed = false %>
+      <% buckets = ['univ','org','seas'] %>
+      <% [@kid.kids_type,@organization_membership,@applied_season].each_with_index do |record,index| %>
+          <%= render 'form_changed_values' ,record: record,json_template: @json_template,bucket: buckets[index] %>
+      <% end %>
+      <%#check if any changes made for parent or parent_phone_numbers   %>
+      <% @parent_type_profiles.each do |parent| %>
+          <% relationship = parent.profiles_manageds.where(kids_profile_id: @kid.id).first.child_relationship %>
+          <%= render 'form_changed_values' ,record: parent ,json_template: @json_template,bucket: 'parent',relationship: relationship %>
+          <% parent.phone_numbers.each do |phone| %>
+              <%= render 'form_changed_values' ,record: phone,json_template: @json_template,bucket: 'parent',relationship: relationship %>
+          <% end %>
+      <% end %>
+      <% if @is_changed == false %>
+          <b>None of the fields changed</b>.
+      <% end %>
+    </p>
+<% end %>
+
+<p>
+  <%#= link_to "Click here to view the child's profile",child_dashboard_profiles_url(child: @kid_type_profile.id.to_s, email: @parent_type_profile.email  ) %>
+  <%= link_to "Click here to view the child's profile",org_child_profile_organizations_url(kid_id: @kid.id, org: @organization.id) %>.</p>
+
+<p>For any questions about KidsLink, please reply to this email or visit our web site at <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a></strong> and choose the About Us page.</p>

@@ -1,0 +1,60 @@
+# Change db name in mongoid.yml (optional) then run
+# rake db:demo_setup
+
+
+Total Organizations - 3
+
+Organization1
+------------------------------------------
+has two seasons and each season has 5 sessions(is_open is random)
+Kid-1 applied for first season
+kid-2 applied for all two seasons
+
+
+Organization2
+------------------------------------------
+has two seasons and each season has 5 sessions
+kid-2 applied for seasons
+
+Organization3
+------------------------------------------
+No one applied
+
+Parents - 1
+-----------------------------
+manges 2 kids
+
+
+Kids
+----------------------------------
+kid1 applied first season in first organization
+kid2 applied for each season in two organizations
+
+
+
+Credentials
+---------------------------
+Each organization has 3 admins   
+like,   
+  admin1@org1.com,admin2@org1.com,
+  admin1@org2.com,admin2@org2.com etc ...
+
+Demo User parent:
+ demouser1@maisasolutions.com
+
+For all password is : 123456
+
+Create New Organization:
+--------------------------------------
+after succesfull login go this this url http://localhost:3000/organizations/new
+
+
+---
+Other Issues found while implementing(multi org support)
+UI
+1)In Child-Dashboard || Child-Org-Dashboard if organization bigger than specified <li> width and height then Name overlopping with bottom once
+
+
+
+
+

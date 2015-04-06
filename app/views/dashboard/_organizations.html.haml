@@ -1,0 +1,38 @@
+%span.panelName
+  = link_to (@kid_profile ? "#{@kid_profile.nickname}'s " : ' ')+ "Organizations","#"
+#panelOrgWantToConnect
+  %span#panelOrgWtcTop Want to connect your organizations to your KidsLink dashboard?
+  %span#panelOrgWtcContact
+    Tell them to
+    %a{:href => "http://www.mykidslink.com/about/contact.html", :target => "_blank"} contact us!
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  - i = 0; j=0
+  - @organization_memberships.each do |organization_membership|
+    - organization_membership.seasons.where(status: 'active').each do |season|
+      - application_status = season.application_form_status
+      - display_name,css_class,width = org_status_width_and_class(application_status)
+      - case application_status
+      - when 'Enrolled'
+        - if j == 0
+          %tr
+            %td.panelOrgStatusHeader{:colspan => "3"} Current
+        %tr
+          %td.panelOrgStatusOrg
+            = link_to organization_membership.organization.name, child_org_dashboard_path(profile_id: @kid_profile.id, org: organization_membership.org_id), class: "panelOrgStatusOrgName" ,"data-no-turbolink" =>'yes'
+            %span.panelOrgStatusSeason #{season.org_season_year}
+          %td.panelOrgStatusStatus #{display_name}
+          %td.panelOrgStatusBarholder
+            %span.panelOrgStatusColorbar{class: "colorbar#{css_class}" ,style:"width: #{width}%"}
+        - j +=1
+      - when 'Application submitted','Accepted','Registered'
+        - if i == 0
+          %tr
+            %td.panelOrgStatusHeader{:colspan => "3"} Future
+        %tr
+          %td.panelOrgStatusOrg
+            = link_to organization_membership.organization.name, child_org_dashboard_path(profile_id: @kid_profile.id, org: organization_membership.org_id), class: "panelOrgStatusOrgName" ,"data-no-turbolink" =>'yes'
+            %span.panelOrgStatusSeason #{season.org_season_year}
+          %td.panelOrgStatusStatus #{display_name}
+          %td.panelOrgStatusBarholder
+            %span.panelOrgStatusColorbar{class: "colorbar#{css_class}" ,style:"width: #{width}%"}
+        - i +=1

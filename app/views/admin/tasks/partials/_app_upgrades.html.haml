@@ -1,0 +1,6 @@
+- app_upgrades.to_a.each do |app_upgrade|
+  %tr
+    %td
+      %input{name: "kl_config[app_upgrades][][version]", type: 'text', value:app_upgrade["version"]}
+    %td= select_tag "kl_config[app_upgrades][][required]", options_for_select([["Mandatory", true],["Optional", false]], app_upgrade["required"])
+    %td= link_to "remove", "#", onclick:"delete_version(this);"

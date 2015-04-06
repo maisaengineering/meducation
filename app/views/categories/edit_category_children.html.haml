@@ -1,0 +1,55 @@
+- unless @children.blank?
+  - @children.middle.in_groups_of(5, false) do |row_children|
+    .captureDocTypeColumn
+      - row_children.each do |c|
+        -unless  c.name.eql?(Document::PHOTOGRAPH)
+          .captureDocType
+            = link_to  c.has_children? ? "#{c.display_name}  &#187;".html_safe : c.display_name,'#',class: "docTypeName #{c.children.blank? ? 'change_category' : ''}" ,id: c.id
+            %ul{style: 'display:none;'}
+              - c.children.each do |sc|
+                %li= link_to sc.display_name ,"#",class: 'change_category',id: sc.id
+
+  .captureDocTypeColumn.captureDocTypeColumnLast
+    .captureDocNewContainer
+      %form
+        %input.captureDocNewName.edit_user_tag{:type => "text", :placeholder=> "add new . . .", id: 'tags'}/
+    - unless @children.left.blank?
+      .captureDocOrList
+        Or . .
+        =link_to @children.left.first.display_name,'#',class: "docTypeName change_category" ,id: @children.left.first.id
+        - @children.left.offset(1).each  do |c|
+          •
+          =link_to c.display_name,'#',class: "docTypeName change_category" ,id: c.id
+        - @current_user_profile.user_tags.in(category_ids: @category.id).each do |ut|
+          •
+          =link_to ut.tag,'#',class: "docTypeName change_category_at_user_tag" ,id: @category.id
+
+
+  .clear
+    :javascript
+      $('.docTypeName').click(function(e){
+         e.preventDefault();
+         $(this).siblings("ul").slideToggle();
+         //$("#selected_category").val($(this).attr('id'));
+      }) ;
+
+      $('.change_category').click(function(e) {
+        e.stopPropagation();
+        //set the category_id for choosen
+        $('#edit_document_category_id').val($(this).attr('id'));
+        $('#edit_document_tags').val('');
+        $('.category_display_name').text($(this).text());
+        $('#capture_to_change').hide();
+      });
+
+      $('.change_category_at_user_tag').click(function(e) {
+        e.stopPropagation();
+        //set the category_id for choosen
+        $('#edit_document_category_id').val($(this).attr('id'));
+        //$('.captureDocNewName').val($(this).text());
+        $('#edit_document_tags').val($(this).text());
+        $('.category_display_name').text($(this).text());
+        $('#capture_to_change').hide();
+      });
+
+      tagging_documents();

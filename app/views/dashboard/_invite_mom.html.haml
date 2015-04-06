@@ -1,0 +1,20 @@
+.popUpContainer.popUpInvite{style:"display: none"}
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %span.panelName Spread the word
+            .inviteBig Love KidsLink #{@hospital ? "+ "+@hospital.preferred_name : nil}?
+            .inviteBigSub Think a friend would too?
+            .inviteExplanation Enter your friend's email address below, and we'll send them a note with information on how to sign up for KidsLink, including wellness information from #{@hospital ? @hospital.preferred_name : nil}
+            .inviteExplanationSub Note: this feature invites a friend to a new KidsLink account for his or her own children.  If you would like to join a new family member to your children's profiles, please do so through each child's profile page.  We will never do anything with this email address other than send a single one-time invitation.
+            = form_tag 'invite-mom', remote:true, autocomplete: "off", id:'invite-mom', authenticity_token: true do
+              = email_field_tag  "email" , nil,  placeholder: "friend's email address", class:"inviteEmail required"
+            .inviteButtons
+              .inviteButton.ibInvite
+                %a{:href => "#"} Invite
+              .inviteButton.ibCancel
+                %a{:href => "#"} Cancel
+            .clear

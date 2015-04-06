@@ -1,0 +1,86 @@
+#dashDocsList.dashPanel.managePanel
+  %span.panelName Documents
+  .panelManageContainer
+    %span.panelManageText Select to edit a doc definition or view the data, or identify docs and select an action:
+    %span.panelManageButton      
+      = link_to 'Automate workflow', org_form_and_documents_path(params[:id]), :class => "active_doc", :id => "doc_workflow"
+  #loading_doc
+    %table#manageFormsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+      %tr.manageTableHeader
+        %td        
+          = check_box_tag('universal_doc', value = "", checked = false, :class => 'doc_check')
+        %td Category
+        %td Document Name
+        %td  
+        %td  
+        %td Workflow
+        %td Responses
+    .panelActionContainer
+      %ul
+        %li
+          = link_to "add new document defintion",   new_document_definition_path(organization_id: @organization.id)
+
+
+:javascript
+
+  $(document).ready(function(){
+    $(".doc_check").live('click', function()
+    {
+      var each_id = '#'+this.id;
+      var count = 0;
+      $(".doc_check").each(function()
+      {
+        if ($(each_id).attr('checked'))
+        {
+          count=count+1;
+          $(".active_doc").css("pointer-events","auto");
+        }
+        else
+        {
+          $(".active_doc").css("pointer-events","none");
+        }
+      });
+    });
+
+    $("#universal_doc").live('click', function(){
+      if ($('#universal_doc').attr('checked'))
+      {
+          $('.doc_check').attr('checked', true)
+          $(".active_doc").css("pointer-events","auto");
+      }
+      else
+      {
+          $('.doc_check').attr('checked', false)
+          $(".active_doc").css("pointer-events","none");
+      }
+    });
+
+    $('#doc_workflow').live('click', function(){
+        var IDs = [];
+        $(".doc_check").each(function()
+        {
+          var each_id = '#'+this.id;
+          if ($(each_id).attr('checked'))
+          {
+              IDs.push(this.id);
+              $.ajax({
+                   url: "/organizations/change_workflow_doc",
+                   data: { doc_id: this.id, org_id: $('#org').val(), season: $('#season').val().split(' (')[0]},
+                   cache: false,
+              })
+          }
+        });
+     });
+
+    $('#doc_workflow').live('click', function(){
+      var IDs = [];
+      $(".doc_ckeck").each(function()
+      {
+        var each_id = '#'+this.id;
+        if ($(each_id).attr('checked'))
+        {
+          IDs.push(this.id);
+        }
+      });
+    });
+  });

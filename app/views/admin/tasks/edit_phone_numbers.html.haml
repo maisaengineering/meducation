@@ -1,0 +1,24 @@
+= form_for @parent_type ,url: admin_update_phone_numbers_url,method: :POST, authenticity_token: true do |f|
+  = hidden_field_tag :email,@parent_type.email
+  -if flash[:error].present?
+    .standardForm
+      #headder_error
+        .formTopErrorText{style: 'width: 600px;'}
+          %span.formTopErrorHeader ERROR!
+          = flash[:error].html_safe
+  #dashEditForm.manageContainer
+    %p
+      Update phone numbers for
+      %strong= "#{@parent_type.fname} #{@parent_type.lname}"
+      (#{ @parent_type.email })
+    #dashEditFormPanel.dashPanel.managePanel
+      %span.panelName= 'Update phone numbers'
+      = f.fields_for(:phone_numbers) do |phone_form|
+        = phone_form.text_field :contact,placeholder: 'Phone'
+        = phone_form.select :type,options_for_select(['Mobile', 'Home', 'Work'], phone_form.object.type),include_blank: true
+        .clear
+      .clear
+    = f.submit 'Update',confirm: 'Are you sure want to continue?'
+- if flash[:notice].present?
+  :javascript
+    alert("#{flash[:notice]}")

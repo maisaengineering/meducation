@@ -1,0 +1,73 @@
+%h1 Register / Apply for #{@organization.name} ( #{@season.season_year} ) and a new KidsLink membership
+%br/
+-if @jsonTemplate && @jsonTemplate['form']
+  %b=@jsonTemplate['form']['name'].html_safe unless @jsonTemplate['form']['name'].blank?
+  #registrationExplanation
+    =@jsonTemplate['form']['description'].html_safe unless @jsonTemplate['form']['description'].blank?
+
+#registrationExplanation
+  Using KidsLink, Register / Apply for #{@organization.name} is a snap.  And in the future, when you register for this organization or any other KidsLink member organization, any information you enter now will be saved and automatically copied into your future forms, saving you lots of time and effort!
+  -ph_count = 0
+
+- if @jsonTemplate && @jsonTemplate['form']
+  .standardForm
+    = form_tag params[:submit_path].present? ? params[:submit_path] : create_profile_profiles_path, :method => 'post', :html=>{:'data_type' => 'json', :id => "profile_form"} do
+      - json_template_id =  form.id
+      = hidden_field_tag :form_id, json_template_id
+      = hidden_field_tag :org_id, @organization.id
+      = hidden_field_tag :season_id ,@season.id
+      = hidden_field_tag :season_year ,@season.season_year
+      = hidden_field_tag :profile_id, params[:profile_id]
+      - unless session[:error].blank?
+        #headder_error
+          .formTopErrorText
+            %span.formTopErrorHeader Oops!
+            We discovered an error. Please see below for more information.
+      -@jsonTemplate['form']['panel'].each do |each_panel|
+        .formBox
+          .formSection #{each_panel['name']}
+          - unless each_panel['description'].blank?
+            .klPanelNotes
+              = each_panel['description'].html_safe
+
+          -if !each_panel['field'].nil?
+            - each_panel['field'].each_with_index do |each_field, index|
+              - current_value = targetValForField(@storedDataHash,0, each_field['unique'], each_field['id'] )
+              = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id, :season => @season.id, :raw_index => index}
+          - if !each_panel['fieldgroup'].nil?
+            - if each_panel['fieldgroup']['multiply']
+              - count = 0
+              - each_panel['fieldgroup']['multiply_default'].times do |index|
+
+                - each_panel['fieldgroup']['field'].each_with_index do |each_field, inner_index|
+                  - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                  = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][#{index}]", :current_val => current_value, :org_id => @organization.id, :season => @season.id,:ph_count => ph_count, :raw_index => index}
+                %div{:class => ("table_hr" unless index!=0)}
+                - count += 1
+                - ph_count += 1
+            - else
+              - each_panel['fieldgroup']['field'].each_with_index do |each_field, index|
+                - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                = render :partial => 'form_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id, :season => @season.id, :raw_index => index}
+          - unless each_panel['footer'].blank?
+            .klPanelNotes
+              = each_panel['footer'].html_safe
+      - unless @jsonTemplate['form']['footer'].blank?
+        %br/
+        #registrationExplanation
+          =@jsonTemplate['form']['footer'].html_safe
+      - if !params[:form_preview].nil?
+        %input{:type => "button", :value => "Save changes"}
+        %input.btnCancel{:type => "reset", :value => "Cancel", :onclick => "goBack()"}
+        %span.panelManageButton
+          = link_to "Go to Forms/documents", org_form_and_documents_path(:id => @organization.id)
+      - else
+        = submit_tag 'continue'
+:javascript
+  $(document).ready(function(){
+    $("#profile_form").validate();
+  });
+  function goBack(){
+      window.history.go(-1)
+  }
+

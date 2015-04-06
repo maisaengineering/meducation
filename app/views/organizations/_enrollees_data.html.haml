@@ -1,0 +1,105 @@
+-  @storedDataHash = nil
+- tree_block = lambda{|h,k| h[k] = Hash.new(&tree_block) }
+- @storedDataHash = Hash.new {|h,k| h[k] = Hash.new(&tree_block) }
+
+- @storedDataHash[:univ][0] = kid_profile.kids_type unless kid_profile.nil?
+- @addr = Address.in(profile_id: kid_profile.parent_profiles.map(&:id)).desc(:updated_at).first
+- unless @addr.nil?
+  - @storedDataHash[:univ][0][:address1] = @addr.address1
+  - @storedDataHash[:univ][0][:address2] = @addr.address2
+  - @storedDataHash[:univ][0][:city] = @addr.city
+  - @storedDataHash[:univ][0][:state] = @addr.state
+  - @storedDataHash[:univ][0][:zip] = @addr.zipcode
+
+- kid_profile.parent_profiles.each_with_index do |parent, index|
+  - @storedDataHash[:parent][index] = parent.parent_type
+  - @storedDataHash[:parent][index][:child_relationship] = parent.parent_type.profiles_manageds.where(kids_profile_id: kid_profile.id).first.child_relationship
+  - parent.parent_type.phone_numbers.each_with_index do |val, iindex|
+    - jkey = val[:key]
+    - jkey||="phone#{iindex}"
+    - @storedDataHash[:parent][index][jkey.to_sym] = Hash.new
+    - @storedDataHash[:parent][index][jkey.to_sym]["type".to_sym] = val.type unless val.type.blank?
+    - @storedDataHash[:parent][index][jkey.to_sym]["contact".to_sym] = val.contact unless val.contact.blank?
+- @storedDataHash[:org][0] = organization_membership
+- @storedDataHash[:seas][0] = applied_season
+
+- normal_form = applied_season.notifications.find_by(json_template_id: params[:json_template_id])
+- jsonTemplate = JSON.parse json_template.content
+- ack_keys = json_template.keys_and_labels('seas').keys
+
+/TODO dry up below by passsing to partial or helper
+- kid_profile.kids_type.phone_numbers.each_with_index do |phone_number,index|
+  - jkey = phone_number[:key]
+  - @storedDataHash[:univ][0][jkey.to_sym] = Hash.new
+  - @storedDataHash[:univ][0][jkey.to_sym]["type".to_sym] = phone_number.type unless phone_number.type.blank?
+  - @storedDataHash[:univ][0][jkey.to_sym]["contact".to_sym] = phone_number.contact unless phone_number.contact.blank?
+
+- organization_membership.phone_numbers.each_with_index do |phone_number,index|
+  - jkey = phone_number[:key]
+  - @storedDataHash[:org][0][jkey.to_sym] = Hash.new
+  - @storedDataHash[:org][0][jkey.to_sym]["type".to_sym] = phone_number.type unless phone_number.type.blank?
+  - @storedDataHash[:org][0][jkey.to_sym]["contact".to_sym] = phone_number.contact unless phone_number.contact.blank?
+
+- applied_season.phone_numbers.each_with_index do |phone_number,index|
+  - jkey = phone_number[:key]
+  - @storedDataHash[:seas][0][jkey.to_sym] = Hash.new
+  - @storedDataHash[:seas][0][jkey.to_sym]["type".to_sym] = phone_number.type unless phone_number.type.blank?
+  - @storedDataHash[:seas][0][jkey.to_sym]["contact".to_sym] = phone_number.contact unless phone_number.contact.blank?
+
+%body.printTemplateBody
+  .printLogo
+    = link_to image_tag('h_logo.png', :width=>"102",:height=>"75"), "#"
+    = link_to image_tag(@organization.logo), "#"
+  %table.printTemplateTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    -if jsonTemplate && jsonTemplate['form']
+      %h1
+        Form:
+        =jsonTemplate['form']['name'].html_safe unless jsonTemplate['form']['name'].blank?
+      %h2
+        #{applied_season.org_season_year}
+      =jsonTemplate['form']['description'].html_safe unless jsonTemplate['form']['description'].blank?
+      -jsonTemplate['form']['panel'].each do |each_panel|
+        %tr
+          %td.printSectionName{:colspan => "2"} #{each_panel['name']}
+          // %td }each_panel['description'].html_safe unless each_panel['description'].blank?
+
+          -if !each_panel['field'].nil?
+            - each_panel['field'].each_with_index do |each_field, index|
+              - current_value = targetValForField(@storedDataHash,0, each_field['unique'], each_field['id'] )
+              = render :partial => 'form_edit_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id}
+          - if !each_panel['fieldgroup'].nil?
+            - if each_panel['fieldgroup']['multiply']
+              - each_panel['fieldgroup']['multiply_default'].times do |index|
+                - each_panel['fieldgroup']['field'].each_with_index do |each_field, inner_index|
+                  - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                  = render :partial => 'form_edit_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id}
+            - else
+              - each_panel['fieldgroup']['field'].each_with_index do |each_field, index|
+                - current_value = targetValForField(@storedDataHash, index, each_field['unique'], each_field['id'] )
+                = render :partial => 'form_edit_field',  :locals => {:each_field => each_field, :index => "profile["+ each_field['unique'] +"][]", :current_val => current_value, :org_id => @organization.id}
+
+          -if !each_panel['field'].nil?
+            - each_panel['field'].each_with_index do |each_field, index|
+              - if each_field['type'].eql?('ack')
+                %tr
+                  - if normal_form.acknowledgment_by
+                    - signature = "(acknowledged by #{normal_form.acknowledgment_by.email})"
+                    - acknowledgment_date = normal_form.acknowledgment_date.strftime('%d %B %Y %H:%M:%S %Z')
+                  - else
+                    - signature = '&nbsp;'.html_safe
+                    - acknowledgment_date = '&nbsp;'.html_safe
+                  %tr
+                    %td.printField #{each_field['name']}
+                    - if each_field['id'].eql?('ack_signature')
+                      %td= signature
+                    - elsif each_field['id'].eql?('ack_date')
+                      %td= acknowledgment_date
+
+  %p &nbsp;
+  %p &nbsp;
+
+  :css
+    @media print
+    {
+    table {page-break-after:always}
+    }

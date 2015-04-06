@@ -1,0 +1,6 @@
+- unless session[:error].nil? or session[:error].blank? or !session[:error][each_field['unique']]
+    - if !session[:error][each_field['unique']][index].nil? and session[:error][each_field['unique']][index].kind_of?(Hash)
+        - if session[:error][each_field['unique']][index].has_key?(each_field['id'])
+            .formErrorText#fname_error ERROR: #{each_field['name']} is #{each_field['id'].eql?('birthdate') ? 'invalid' : 'required'}
+    - elsif session[:error][each_field['unique']].include?(each_field['id'])
+        .formErrorText#fname_error ERROR: #{each_field['name']} is #{each_field['id'].eql?('birthdate') ? 'invalid' : 'required'}

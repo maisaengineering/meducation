@@ -1,0 +1,125 @@
+<script type="text/javascript">
+    function fetching() {
+        data = document.getElementById('parent_profile_id').value
+        if (data == "other") {
+            document.getElementById('line').style.display = 'block';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('pwd_details').style.display = 'block';
+        }
+        else {
+            document.getElementById('line').style.display = 'block';
+            document.getElementById('pwd_details').style.display = 'block';
+            document.getElementById('details').style.display = 'none';
+        }
+        var reg_id = new Array("relation", "parent_fname", "parent_lname", "parent_email", "phone_home", "phone_work", "phone_mobile")
+        for (i = 0; i < reg_id.length; i++) {
+            document.getElementById(reg_id[i]).value = ""
+        }
+        //document.getElementById('home_type').value="Home"
+        //document.getElementById('work_type').value="Work"
+        //document.getElementById('mobile_type').value="Mobile"
+    }
+
+    $(document).ready(function () {
+        $('#parent_profile_id').change(function () {
+            // force cross-site scripting (as of jQuery 1.5)
+            if($(this).val().length !=  0){
+                jQuery.support.cors = true;
+                $.get('/users/select_type',
+                        {data: $(this).val(), profile: $('#profile').val()},
+                        function (data) {
+                        }, 'script'
+                );
+            }
+        });
+    });
+</script>
+
+<h1>Register / Apply for <%=  @organization.name %> and a new KidsLink membership</h1>
+<div id="registrationExplanation">Using KidsLink, registering / applying for <%= @organization.name %> is a snap. And in the future,
+  when you register for this organization or any other KidsLink member organization, any information you enter now will
+  be saved and automatically copied into your future forms, saving you lots of time and effort!
+</div>
+<%= form_for(resource, :as => resource_name, :html => {:class => 'standardForm', :autocomplete => "off"}, :url => registration_path(resource_name)) do |f| %>
+
+    <% if resource.errors.any? %>
+        <div class="formTopErrorText" onload="err_fetching()"><span class="formTopErrorHeader">Oops!</span>We discovered
+          an error. Please see below for more information.
+        </div>
+    <% end %>
+    <%= hidden_field_tag :org_id, params[:org_id] %>
+    <%= hidden_field_tag :profile_id, @kid_profile.id, :id => "profile" %>
+    <%= hidden_field_tag :session, params[:session] %>
+    <%= hidden_field_tag :season_id, params[:season_id]%>
+    <%= hidden_field_tag :web, params[:web]%>
+    <%= hidden_field_tag :payment_form, "profile" %>
+    <%= hidden_field_tag :notification_id, params[:notification_id] %>
+    <%= hidden_field_tag :existed_profiles, params[:existed_profiles] %>
+
+    <div class="formBox">
+      <div class="formSection Kidslink membership"> Kidslink membership</div>
+      <div class="formTopCaptionImportant">Now that you've entered your child's application information, we need to
+        create an account for you!
+      </div>
+
+      <% if (params[:parent_profile_id]) %>
+          <% if (params[:parent_profile_id])=="" %>
+              <label>I am
+                <div class='formErrorText' id='exp_error' style='display: block'>ERROR: Relation is required</div>
+              </label>
+              <%= select_tag "parent_profile_id", options_for_select(@value, params[:parent_profile_id]), :include_blank => true, :onchange => "fetching()", :class => "formInputError" %>
+          <% else %>
+              <label>I am
+                <div class='formErrorText' id='exp_error1' style='display: none'>ERROR: Relation is required
+                </div>
+              </label>
+              <%= select_tag "parent_profile_id", options_for_select(@value, params[:parent_profile_id]), :include_blank => true, :onchange => "fetching()" %>
+          <% end %>
+      <% else %>
+          <label>I am </label>
+          <%= select_tag "parent_profile_id", options_for_select(@value, params[:parent_profile_id]), :include_blank => true, :onchange => "fetching()" %>
+      <% end %>
+
+
+      <% if !resource.errors.any? %>
+          <div class="formSectionDivider" id="line" style="display:none;"></div>
+      <% else %>
+          <div class="formSectionDivider" id="line" style="display:block;"></div>
+      <% end %>
+
+
+      <% if resource.errors.messages[:email].nil? %>
+          <div style="display:none;" id="details">
+      <% else %>
+          <% if (params[:parent_profile_id])=="" %>
+              <div style="display:none;" id="details"/>
+          <% else %>
+              <div style="display:block;" id="details"/>
+          <% end %>
+      <% end %>
+
+      <%= render "login", :f => f %>
+      </div>
+
+      <% if !resource.errors.any? %>
+          <div style="display:none;" id="pwd_details">
+            <%= f.label :my_new_password %>
+            <%= f.password_field :password, :class => "standardForm" %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, :class => "standardForm" %>
+          </div>
+      <% else %>
+          <div style="display:block;" id="pwd_details">
+            <%= f.label :my_new_password %>
+            <%= f.password_field :password, class: resource.errors.messages[:password].present? ? 'formInputError' : 'standardForm'    %>
+            <%= org_signup_error_message_for(resource,:password) %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation,class: resource.errors.messages[:password_confirmation].present? ? 'formInputError' : 'standardForm'   %>
+            <%= org_signup_error_message_for(resource,:password_confirmation) %>
+          </div>
+      <% end %>
+      <input type="hidden" value="1" id="payment_form">
+    </div>
+
+    <%= f.submit "apply" %>
+<% end %>

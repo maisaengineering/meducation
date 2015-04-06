@@ -1,0 +1,23 @@
+======== Basic Example of Creating children category if they exists in multiple parent categories
+
+ # -----------  Top Categories ===========================
+    health = Category.create(name: 'Health')
+    id_and_vital_cards = Category.create(name: 'ID & vital records')
+ #---------------------------------------------------------
+    id_card_health = health.children.create(name: "Id card (#{health.name.downcase})")
+    #id_card_health.parent.name =># Health
+    #id_card_health.ancestors.map(&:name) =># ['Health']  only Health
+    #as per doc list 'Id card (health)' also exists in 'ID & vital records', so here just add this as a parent
+    id_card_health.update_attribute(:parent_ids,id_card_health.parent_ids.push(id_and_vital_cards.id))
+    #Now,so now id_card_health  has two parents
+    #id_card_health.ancestors.map(&:name) =># ['Health','ID & vital records']
+    #id_card_health.ancestors_and_self(&:name)=># ['Health','ID & vital records','Id card (health)']
+    #id_card_health.parent.name =># Health  ,still its Health
+
+#usig tagged_with_all we show the documents in tree structure
+
+#Health (count) => @kid_profile.documents.tagged_with_all(['Health']).count
+
+documents = @kid_profile.documents.tagged_with_all(['Health'])
+documents = @kid_profile.documents.tagged_with_all(['Health','Id card (health)']) etc .... depth in to any level
+

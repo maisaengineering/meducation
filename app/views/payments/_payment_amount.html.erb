@@ -1,0 +1,4 @@
+<%= hidden_field_tag :tr_data, Braintree::TransparentRedirect.transaction_data(
+        :redirect_url => confirm_payment_url,
+        :transaction => {:type => "sale", :amount => @amount}
+) %>

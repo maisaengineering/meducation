@@ -1,0 +1,48 @@
+
+- if @latest_activity
+  %div{:style => "width:450px; margin:0 auto; height:auto; overflow:hidden; padding:13px 20px; margin-bottom:40px;font-size:22px; font-family:helveticaneue-light,arial,helvetica,sans-serif; text-align:center; color:#717171;padding-bottom:30px;-webkit-text-size-adjust:none !important;"}
+    %p{:style => "margin:0px; padding:0; text-align:left;"} Hey there,
+    %p{:style => "margin:0px; padding:32px 0 28px 0; text-align:left; "}
+      #{@inv.profile.short_name} posted something to KidsLink and has
+      invited you to see it.
+    %div{:style => "background-color:#f1f1f1; border-radius:20px; -moz-border-radius:20px;-webkit-border-radius:20px;margin:0 auto;text-align:left;margin-bottom:16px;height:auto;overflow:hidden; width:330px; padding:26px;"}
+      %div{:style => "background-image:url(#{@latest_activity.mobile_url}); width:330px; height:329px; background-size:auto 330px; background-position:center; background-repeat:no-repeat;"}
+      %p{:style => "margin:0px; padding:8px 0 0 0; line-height:26px;"}
+        = ""
+        = truncate( @latest_activity.parsed_additional_text, :length =>40,:escape => false, omission: "...")
+      %p{:style => "margin:0px; padding:26px 0 0 0; font-size:19px;"}
+        - commenters = Comment.includes(:commenter).where(activity_id:  @latest_activity.id).map(&:commenter).map(&:short_name).uniq.compact
+        - unless commenters.blank?
+          Comments from #{commenters.to_sentence}
+    %a{:alt => "Comment", :href => m_redemption_via_email_url('e',@inv.token), target:'new'}
+      %img{:alt => "", :height => "39", :src => asset_path('m/native_app/btn_comment_mini-feed.png'), :width => "195"}/
+    %p{:style => "margin:0px; padding:40px 0 0 0; text-align:left;"} See the rest of #{@inv.profile.short_name}'s post on your iPhone:
+    %br
+    %br
+    %a{href: m_redemption_via_email_url('e',@inv.token),:target => "new", :style => "border:none; background-color:#fbaf3f; font-size:24px; color:#ffffff; border-radius:10px;-moz-border-radius:10px; -webkit-border-radius:10px; padding:18px 24px; cursor:pointer; font-family:helveticaneue-medium,arial,helvetica,sans-serif;text-decoration: none;"} Accept invitation and view post
+    %br
+    %br
+    %hr{:style => "border:1px solid #717171;"}
+    %br
+    %p{:style => "text-align:left; margin:0px; padding:0px;"} To learn more about KidsLink, check out what we're all about:
+    %br
+    %a{:href => "http://m.youtube.com/watch?v=WY9iSWQEH5I", :target => "new"}
+      %img{:alt => "", :height => "237", :src => asset_path('m/native_app/klvideo.jpg'), :width => "420"}/
+- else
+  %div{:style => "width:520px; margin:0 auto; height:auto; overflow:hidden; padding:13px 20px; margin-bottom:40px;font-size:22px; font-family:helveticaneue-light,arial,helvetica,sans-serif; text-align:center; color:#717171;padding-bottom:30px;-webkit-text-size-adjust:none !important;"}
+    %p{:style => "margin:0px; padding:0; text-align:left;"} Hey there,
+    %p{:style => "margin:0px; padding:32px 0 28px 0; text-align:left; "}
+      #{@inv.profile.short_name} is using KidsLink, the invitation-only place for
+      parents to connect, protect, and organize their
+      world, and has invited you.
+    %br
+    %a{href: m_redemption_via_email_url('e',@inv.token),:target => "new", :style => "border:none; background-color:#fbaf3f; font-size:24px; color:#ffffff; border-radius:10px;-moz-border-radius:10px; -webkit-border-radius:10px; padding:18px 24px; cursor:pointer; font-family:helveticaneue-medium,arial,helvetica,sans-serif;text-decoration: none;"} Accept invitation and view post
+    %br
+    %br
+    %br
+    %p{:style => "text-align:left; margin:0px; padding:0px;"}
+      Check out what we’re all about and why #{@inv.profile.short_name}
+      (and we) would love for you to be here:
+    %br
+    %a{:href => "http://m.youtube.com/watch?v=WY9iSWQEH5I", :target => "new"}
+      %img{:alt => "", :height => "237", :src => asset_path('m/native_app/klvideo.jpg'), :width => "420"}/

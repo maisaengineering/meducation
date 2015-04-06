@@ -1,0 +1,41 @@
+%br
+%br
+- @form["field"].each do |each_field|
+  -if each_field['type'] == 'select'
+    %label #{each_field['id']} :
+    = select_tag :each_field['name'], options_for_select(each_field['selection_list'])
+
+  -elsif each_field['type'] == 'textarea'
+    %label #{each_field['id']} :
+    = text_area_tag :each_field['name']
+
+  -elsif each_field['type'] == 'date'
+    %label #{each_field['id']} :
+    = text_field_tag :each_field['name']  
+
+  -elsif each_field['type'] == 'radio_button'
+    %label #{each_field['id']} :
+    -each_field['items'].each do |each_checkbox|
+      %label #{each_checkbox['boxLabel']}
+      = radio_button_tag :each_checkbox['boxLabel'],name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+
+  -elsif each_field['type'] == 'check_box'
+    %label #{each_field['id']} :
+    -each_field['items'].each do |each_checkbox|
+      %label #{each_checkbox['boxLabel']}
+      = check_box_tag :each_checkbox['boxLabel'],name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+      %br 
+     
+
+  -elsif each_field['type'] == 'password'
+    %label #{each_field['type']} :
+    = password_field_tag :each_field['name']  
+
+  -elsif each_field['type'] == 'button'
+    = submit_tag :each_field['name']
+
+  -else
+    %label #{each_field['id']} :
+    = text_field_tag :each_field['name']
+  %br
+  %br

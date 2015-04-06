@@ -1,0 +1,10 @@
+%html
+  %head
+    %script{:src => "//use.typekit.com/mpd6krz.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+    = stylesheet_link_tag "application", :media => "all"
+  %body.printTemplateBody
+    - organization_membership = @child.organization_membership(@organization.id)
+    = render 'enrollees_data',json_template: @json_template,applied_season: organization_membership.applied_season(@season._id || params[:season_id]),
+                              kid_profile: @child , organization_membership: organization_membership

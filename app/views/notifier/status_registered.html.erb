@@ -1,0 +1,10 @@
+<h1><%= @nick_name %> is fully registered for <%= @org_name %>!</h1>
+<p>KidsLink is excited to let you know that
+  <strong><%= @nick_name %></strong>
+  is now fully registered for <strong>
+<%= @org_name %></strong> (<%= @season %> <%= @session %>).</p>
+<p>This means that <strong><%= @nick_name %></strong> is ready to appear when the season or year starts.</p>
+<p>For any questions about KidsLink, please reply to this email or visit our web site at 
+  <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a></strong> and choose the About Us page. 
+  For any questions about <%= @org_name %>, please visit their web site at
+  <strong><%= link_to("#{@org_web}", @org_web) unless @org_web.nil? %></strong></p>

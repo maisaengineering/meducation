@@ -1,0 +1,23 @@
+- title "MSchool"
+.dashContainerLeft
+  = render 'alerts_and_events'
+.dashContainerTopRight
+  -#.dashCentralContainer
+    = @hospital.section1.html_safe if @hospital
+    .dashCentralLinks
+      = @hospital.section2.html_safe if @hospital
+      %a#dashCentralLinksInvite{:href => "#"} invite a friend to try KidsLink
+  -#.dashTopMarketingContainer
+    = @hospital.section3.html_safe if @hospital
+-#.dashMilestonesContainer{:style => "display: none;"}
+  .dashMilestonesBGText milestones
+.dashContainerLeft
+  = render 'document_vault'
+.dashContainerRight
+  -#= render 'trending'
+
+.dashSponsorContainer
+  %div{:style => "padding-bottom: 30px"}
+    = image_tag(@hospital.logo) if @hospital and @hospital.logo
+  = @hospital.section4.html_safe if @hospital
+  = render 'invite_mom'

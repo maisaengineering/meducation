@@ -1,0 +1,22 @@
+%span.panelName          
+  = link_to "Alerts", "#"
+
+  %span.panelOptions            
+    = link_to "view details", "#"
+%dl
+  / TODO, optimization needed
+  - flag  = 0
+  - @orgnization_list.each do |each_org|
+    - each_org.seasons.each do |each_season|
+      - each_season.notifications.alerts.requested.each do |each_doc|
+        - flag = 1
+        %dt
+          - @json_tem = JsonTemplate.where(:_id => each_doc.json_template_id).first
+
+          = link_to "#{@json_tem.form_name}", form_data_profiles_path(:child => params[:child], :json_template_id => each_doc.json_template_id, :email =>params[:email], :org_id => each_season._parent.org_id, :season_id => each_season._id)
+
+          -#= link_to "#{each_form.form_name}", form_data_profiles_path(:org_id => each_org.org_id, :form_id => each_form.form_id, :method_name =>'show', :season =>each_season.season_year, :child => params[:child], :org =>each_org.org_id, :email =>params[:email])
+        %dd due by #{each_doc.created_at.strftime("%m/%d/%y")}
+        %br
+  - if flag == 0
+    No alerts

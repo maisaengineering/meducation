@@ -1,0 +1,28 @@
+%h1= heading
+#dashEditForm.manageContainer
+  %p.manageExplanation Enter or edit the document definition below.
+  #dashEditDocDefPanel.dashPanel.managePanel
+    %span.panelName= heading
+    = f.hidden_field :organization_id
+    = f.label :season_id, "Season"
+    = f.collection_select(:season_id, @organization.seasons, :id, :current_season_year,
+                          {selected: f.object.season_id? ? f.object.season_id : DocumentDefinition::TYPE[:organization_wide],
+                           include_blank:  DocumentDefinition::TYPE[:organization_wide] },
+                          {disabled: f.object.new_record? ? false : true})
+    = f.label :workflow, "Workflow"
+    = f.select :workflow, options_for_select(DocumentDefinition::WORKFLOW_TYPES.values,
+                                             selected: f.object.new_record? ? DocumentDefinition::WORKFLOW_TYPES[:normal]  : f.object.workflow )
+    = f.label :name, "Document name"
+    = f.text_field :name
+    .clear
+  = submit_tag "Save changes"
+
+  %a{href: '#'}
+    %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}
+
+:javascript
+  function goBack()
+  {
+    window.location.href = "/organizations/#{@organization.id}/forms_and_documents"
+  }
+

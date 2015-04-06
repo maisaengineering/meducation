@@ -1,0 +1,20 @@
+#dashDocuments.dashPanel
+  %span.panelName
+    = link_to (@kid_profile ? "#{@kid_profile.nickname}'s " : ' ')+ "Document Vault","#"
+  #dashDocumentTabs
+    #dashDocumentTabPopular.dashDocumentTab Popular Items
+    #dashDocumentTabHealth.dashDocumentTab{:onClick => "window.location.href='#{documents_path(profile_id: @profile.id, clicked_on: "Health")}'; return false;"} Health
+    #dashDocumentTabSchool.dashDocumentTab{:onClick => "window.location.href='#{documents_path(profile_id: @profile.id, clicked_on: "School")}'; return false;"} School
+    #dashDocumentTabActivities.dashDocumentTab{:onClick => "window.location.href='#{documents_path(profile_id: @profile.id, clicked_on: "Activities")}'; return false;"} Activities
+    #dashDocumentTabOther.dashDocumentTab{:onClick => "window.location.href='#{documents_path(profile_id: @profile.id, clicked_on: "Other")}'; return false;"} Other
+  .panelInnerPaddingFix
+    .panelInnerContainer
+      %dl
+        = render @documents
+    .panelActionContainer
+      %ul
+        %li
+          = link_to "view all" , documents_path(@profile)
+        %li
+          = link_to "capture new document" , documents_path(profile_id:@profile.id, new_doc_request:true), id: "capture_document_dashboard"
+

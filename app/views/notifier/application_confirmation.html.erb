@@ -1,0 +1,9 @@
+<h1>Registration / Application Submitted for <%= @org_name %></h1>
+<p>  KidsLink has received your registration / application for
+  <strong><%= @child_fname %></strong>
+  to <%= @org_name %> (<%= @season %> <%=  @session%>).</p>
+<p>If the organization accepts
+  <strong><%= @child_fname %></strong>, 
+  you will receive a follow-up email with additional details..</p>
+
+<p>For any questions about KidsLink, please reply to this email or visit our web site at <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a></strong> and choose the About Us page. For any questions about <%= @org_name %>, please visit their web site at <strong><%= link_to("#{@org_web}", @org_web) unless @org_web.nil? %></strong></p>

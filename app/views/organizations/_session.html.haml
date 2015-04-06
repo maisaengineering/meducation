@@ -1,0 +1,18 @@
+-each_season.sessions.each_with_index do |session, index|
+  = season_fields.fields_for "sessions[]", session do |session_fields|                                
+
+    %tr
+      %td
+        = session_fields.text_field :session_name, :value => "#{session['session_name']}", :class => "session_details"
+      %td
+        = check_box_tag('session_open','', checked = true)
+        //= session_fields.check_box :session_open 
+      %td 
+        = session_applied_count("#{session['session_name']}",organization_seasons(@organization).first.split(' (')[0])
+      %td 
+        = session_accepted_count("#{session['session_name']}",organization_seasons(@organization).first.split(' (')[0])
+        %span.pointer.delRow
+
+  %tr     
+    %td{:colspan=>4}
+      %span.pointer.addRow.formSectionPrimaryAction Add additional session

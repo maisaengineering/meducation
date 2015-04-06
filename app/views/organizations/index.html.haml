@@ -1,0 +1,27 @@
+%h1 View/Manage Organizations
+#dashFormsList.dashPanel.managePanel
+  %span.panelName Organizations
+  #loading
+    %table#manageFormsTable.manageTable{border: 0, cellpadding: 0, cellspacing: 0}
+      %tr.manageTableHeader
+        %th Org name
+        %th Preferred name
+        %th
+        %th
+        %th
+      - if @organizations.blank?
+        %tr
+          %td{colspan: '4', align: 'center'} No Organizations defined yet..
+      - else
+        - @organizations.each do |organization|
+          %tr
+            %td= organization.name
+            %td= organization.preffered_name
+            %td= link_to 'Edit', edit_organization_path(organization)
+            -#%td= link_to 'Destroy', organization, data: { :confirm => 'Are you sure?' }, :method => :delete
+            %td= link_to "Admins (#{organization.admins.count})",org_admins_path(organization)
+            %td= link_to "Create New admin",new_org_admin_path(organization)
+    .panelActionContainer
+      %ul
+        %li
+          = link_to 'New Organization', new_organization_path

@@ -1,0 +1,29 @@
+
+- new_hash = Hash.new
+- season.notifications.forms.submitted.each do |e|
+  - season_template = JsonTemplate.find(e.json_template_id)
+
+  - seas_keys_labels = season_template.keys_and_labels('seas')
+  - phone_numbers_keys = season.phone_numbers.map(&:key).map(&:to_s)
+  / delete phone keys if already exists in keys_and_labels(duplicates are occurring),we can get from direct from phone numbers
+  - seas_keys_labels.delete_if {|key, value| phone_numbers_keys.include?(key) }
+  - seas_keys_labels.keys.each do |each_key|
+    - lable =  season_template.label_name('seas',each_key)
+
+    - if new_hash.has_key?(each_key)
+      - new_hash[each_key] +=  " ,#{lable}"  unless new_hash[each_key].include?(lable)
+    - else
+      - new_hash[each_key] =  lable
+
+  - phone_numbers = bucket_phone_numbers_with_label(season,'seas',season_template)
+  - phone_numbers.each do |label,value|
+    %tr
+      %td.panelFieldName= label
+      %td.panelFieldContent= value
+
+- new_hash.each do |key,value|
+  -unless value.eql?('ack_date') || value[0].eql?('ack_signature')
+    %tr
+      - value = more(value,35)
+      %td.panelFieldName= value
+      %td.panelFieldContent= season[key]

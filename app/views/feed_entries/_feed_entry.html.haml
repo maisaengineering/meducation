@@ -1,0 +1,5 @@
+%dt
+  %a{:href => "#{url_with_protocol(feed_entry.url)}", target: "_blank"}#{feed_entry.title}
+%dd.panelRSSBlogName #{feed_entry.author} #{append_parentheses(feed_entry.feed.city)}
+%dd.panelRSSSummary #{max==3 ? truncate(feed_entry.summary, :length =>250){link_to '(continue reading)', url_with_protocol(feed_entry.url)}  : feed_entry.summary.html_safe }
+

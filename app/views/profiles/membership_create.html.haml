@@ -1,0 +1,77 @@
+/ .bodyContainer
+%h1 Apply for Peachtree Presbyterian Preschool using an existing KidsLink membership
+#registrationExplanation
+  Because either you or your child already has a KidsLink membership, applying for Peachtree Presbyterian Preschool will be a snap.  Any information you (or another parent of your child) has previously provided will be automatically copied into your forms, saving you lots of time and effort!
+  
+  -unless @user.nil?
+    -if @user.errors.any?
+      %form.standardForm
+        .formTopErrorText
+          %span.formTopErrorHeader> Oops!
+          %h5 We discovered an error. Please see below for more information.
+          %ul
+            - @user.errors.full_messages.each do |msg|
+              %li= msg
+
+  = form_for @profile, :html =>{ :class => 'standardForm',:autocomplete => "off"}, authenticity_token: true do |f|
+    
+    .formBox
+      .formSection Kidslink membership
+
+      %h5 Now that you've entered your child's application information, we need to create an account for you!
+
+      = f.label :registeredById, 'I am'
+      = f.select :registeredById, options_for_select([['Father','Father'],['Mother','Mother'],['A different parent/guardian','A different parent/guardian']]), :include_blank => true 
+
+      %br
+      %br
+      %div{:class => 'formSectionDivider'}
+
+      -#-@profile.contacts.each_with_index do |contact, index|
+      -#  =f.fields_for "contact_attributes[]", contact do |contact_fields|            
+
+      -#    =contact_fields.label :phone
+      -#    =contact_fields.text_field :phone
+
+      = f.label :m_fname, "My first name"
+      = f.text_field :m_fname
+
+      = f.label :m_lname, "My last name"
+      = f.text_field :m_lname
+
+      = f.label :m_email, "My e-mail address"
+      = f.text_field :m_email
+      %label#email_validate_lbl
+      
+
+      = f.label :m_phone_mobile, "My phone number #1"
+      = f.text_field :m_phone_mobile
+
+      = f.label :m_phone_home, "My phone number #2"
+      = f.text_field :m_phone_home
+
+      = f.label :m_phone_work, "My phone number #3"
+      = f.text_field :m_phone_work
+
+      = f.label :password
+      = f.password_field :password, :placeholder =>"min 6 chars"
+
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation
+
+    = f.submit 'apply'  
+
+:javascript
+  
+  $('#profile_m_email').blur(function() {
+    // force cross-site scripting (as of jQuery 1.5)    
+    jQuery.support.cors = true;    
+    $.get('/profiles/email_validate',
+      {email:$(this).val()},
+      function(data) {
+  
+      }, 'script'
+    );
+  });
+
+     

@@ -1,0 +1,9 @@
+.signUpPopUP{style:   'display: none;'}
+  = form_for (HospitalMembership.new),  html: {:autocomplete => "off", :multipart => true }, authenticity_token: true do|f|
+    = render '/hospital_memberships/parent_form', index: 0, referral_code: referral_code
+    %span.preferred_kids_form
+    = render '/hospital_memberships/onboarding_partner'
+    = render '/hospital_memberships/last_step',  index: 1
+    = hidden_field_tag :referral_code, referral_code
+    = hidden_field_tag :partner, session[:partner], id: 'partner_resource_url'
+

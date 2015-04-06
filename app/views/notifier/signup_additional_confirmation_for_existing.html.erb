@@ -1,0 +1,12 @@
+<h1>  Confirmation of New Account with KidsLink</h1>
+<p>Congratulations! You and your <%= "child".pluralize(@nick_name.to_a.count) %> <%= @nick_name.to_a.map{|n| "<strong>#{n}</strong>"}.to_sentence.html_safe %> have joined KidsLink, the online dashboard for parents.</p>
+  
+<p>You were automatically linked to <%= @nick_name.to_a.map{|n| "<strong>#{n}</strong>"}.to_sentence.html_safe %> account by
+  <strong><%= @other_lname %> <%= @other_fname %></strong>.
+</p>
+<a> 
+	<%#= link_to "Click here to begin using your KidsLink dashboard",child_dashboard_profiles_url(:child => @child_fname, :email =>@email) %>	
+	<%= link_to "Click here to begin using your KidsLink dashboard", "https://me.mykidslink.com/" %>.
+</a>
+
+<p>For any questions, please reply to this email or visit our web site at <a href="http://www.mykidslink.com/"><strong>www.mykidslink.com</strong></a> and choose the Contact Us page.</p>

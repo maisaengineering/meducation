@@ -1,0 +1,69 @@
+//= @form.content
+%br
+%br
+//= JSON.parse(@form.content)['field']
+%br
+%br
+%h1 Preview Form
+#dashPreviewForm.manageContainer
+%p.manageExplanation Below is a preview of how your form will look to your enrollees.  If you'd like to make any changes, please click cancel at the bottom.  Otherwise, click to save the changes.
+    
+.previewContainer
+  .standardForm
+    = form_tag update_form_res_profiles_path, :method => 'post', :html=>{:'data_type' => 'json'}, authenticity_token: true do
+      =hidden_field_tag :form_id, value = params[:form_id]
+      =hidden_field_tag :org_id, value = params[:org_id]
+      =hidden_field_tag :season, value = params[:season]
+
+      .formBox
+        - JSON.parse(@form.content)['field'].each do |each_field|
+        
+          -if each_field['type'] == 'select'
+            %label #{each_field['name']} :
+            = select_tag :"#{each_field['id']}", options_for_select(each_field['selection_list'])
+
+          -elsif each_field['type'] == 'textarea'
+            %label #{each_field['name']} :
+            = text_area_tag :"#{each_field['id']}"
+
+          -elsif each_field['type'] == 'date'
+            %label #{each_field['name']} :
+            = text_field_tag :"#{each_field['id']}"
+
+          -elsif each_field['type'] == 'radio_button'
+            %label #{each_field['name']} :
+            -each_field['items'].each do |each_checkbox|
+              %label #{each_checkbox['boxLabel']}
+              = radio_button_tag :"#{each_checkbox['boxLabel']}",name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+
+          -elsif each_field['type'] == 'check_box'
+            %label #{each_field['name']} :
+            -each_field['items'].each do |each_checkbox|
+              %label #{each_checkbox['boxLabel']}
+              = check_box_tag :"#{each_checkbox['boxLabel']}",name ="each_checkbox['boxLabel']",checked = each_checkbox['checked']
+              %br
+          -elsif each_field['type'] == 'password'
+            %label #{each_field['type']} :
+            = password_field_tag :"#{each_field['name']}"
+          -else
+            %label #{each_field['name']} :       
+            = text_field_tag :"#{each_field['id']}"
+      //= JSON.parse(@form.content)['field']
+.standardForm
+  %input{:type => "submit", :value => "Save changes"}/
+  %input.btnCancel{:type => "reset", :value => "Cancel"}
+         
+  %br
+  %br
+
+  %input{:onclick => "goBack()", :type => "button", :value => "Go back 2 Edit page"}/
+
+  %br
+  %br
+
+  = link_to "Go to Forms/documents", org_form_and_documents_path(:id => session[:current_org])
+
+:javascript
+  function goBack(){
+    window.history.go(-1)
+  }

@@ -1,0 +1,85 @@
+%form
+  %h1 View/Manage Forms and Documents  
+  %table.manageLimitsContainer{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %tr
+      %td Season to manage
+      %td        
+        = form_tag authenticity_token: true do
+          = select_tag :season, options_for_select(organization_seasons(@organization))
+          = hidden_field_tag('org', value= params[:id])
+   
+  #dashFormsList.dashPanel.managePanel
+    %span.panelName Forms
+    .panelManageContainer
+      %span.panelManageText Select to edit a form or view its data, or identify forms and select an action:
+
+      %span.panelManageButton        
+        = link_to 'Set as application form', "#", :class => "active", :id => "set_as_app"
+      %span.panelManageButton        
+        = link_to 'Automate workflow', org_form_and_documents_path(params[:id]), :id => "set_as_workflow", :class => "active"
+
+    #loading
+      %table#manageFormsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr.manageTableHeader
+          %td
+            = check_box_tag('universal', value = "", checked = false, :class => 'form_check')                     
+          %td Category
+          %td Form Name
+          %td  
+          %td  
+          %td Workflow
+          %td Attachments
+          %td Responses
+
+        -@organization.seasons.each do |each_season|
+          -if(each_season.season_year.split(' (')[0] == @organization_seaons[0].split(' (')[0])
+            - if(!each_season.organization_forms.nil?)
+              -each_season.organization_forms.each do |each_form|
+                %tr        
+                  %td
+                    = check_box_tag(each_form.id, '', checked = false, :class => 'form_check')
+                  %td #{each_form.category}
+                  %td.manageNameCell #{each_form.form_name}
+                  %td.manageViewCell          
+                    = link_to "view collected data", "#"
+                  %td.manageEditCell          
+                    = link_to "edit form", org_form_organizations_path(:id => @organization, :category => each_form.category, :form_name => each_form.form_name, :season => organization_seasons(@organization)[0].split(' (')[0], :form_id =>each_form.id) 
+                    
+                  %td #{each_form.workflow}
+                  %td  
+                  %td    
+                    = "#{accepted_forms(each_form.id.to_s, params[:id], each_season.season_year.split(' (')[0])}/#{sent_forms(each_form.id.to_s, params[:id], each_season.season_year.split(' (')[0])}"
+                    
+                  
+        
+
+      .panelActionContainer
+        %ul
+          %li          
+            = link_to "add new form", org_form_organizations_path(:is_new => 'yes', :id => params[:id], :season => organization_seasons(@organization)[0].split(' (')[0])
+
+        
+.popUpContainer
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td
+        .popUpContent
+          = form_tag update_app_organizations_path, :method => 'post', authenticity_token: true do
+            .popUpPanel
+              %h2 Change status of selected form
+              %table
+                %tr
+                  %td Set as Application Form
+                  %td
+                    =check_box_tag('name', value = "1", checked = false, options = {})
+                    = hidden_field_tag :season, params[:season]
+              = submit_tag "Submit changes"
+              %a{:href => org_form_and_documents_path(:id => session[:current_org])}
+                %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}      
+
+:javascript
+  function goBack()
+    {
+    window.history.go(-1)
+    }

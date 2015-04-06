@@ -1,0 +1,34 @@
+= form_for @notification, authenticity_token: true do |f|
+
+  - if @notification.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@notification.errors.count, "error")} prohibited this notification from being saved:"
+      %ul
+        - @notification.errors.full_messages.each do |msg|
+          %li= msg
+  #orgContentPrimary.dashPanel.managePanel
+    %label Notification type
+    =f.select :notification, options_for_select([['Alert'],['Event']])
+
+    =f.label :name, "Name"
+    =f.text_field :name
+
+    %label Notification Type
+    = select_tag 'notification_type', options_for_select([['Normal'],['Schedule'],['Adhoc']])
+    %label Description
+    = text_area_tag "description"
+    #div_schedule{:style => "display:none;"}
+      %label Date
+      = text_field_tag "date"
+    = @org_data
+    = select_tag :form_need,form_details
+    #div_adhoc{:style => "display:none;"}
+      %label Zip Code
+      = text_field_tag "zip"
+      %label Lattitude
+      = text_field_tag "latitude"
+      %label Longitude
+      = text_field_tag "longitude"
+    .actions
+      = f.submit 'Save'
+

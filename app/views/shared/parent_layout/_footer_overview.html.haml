@@ -1,0 +1,63 @@
+.appFooterInside
+  %ul.new-menu
+    %li{class: @kid_profile ?  nil : 'currentClass'}
+      %span.family
+        %a{href: top_dashboard_path(@parent_profile) } family
+      %ul
+        %li
+          %a{href: top_dashboard_path(@parent_profile) ,class: current_page?(top_dashboard_path(@profile)) ? 'active' : nil} dashboard
+        %li
+          %a{href: alerts_and_events_path(@parent_profile) ,class: current_page?(alerts_and_events_path(@profile)) ? 'active' : nil} alerts
+        %li
+          %a{href: documents_path(@parent_profile) ,class: current_page?(documents_path(@profile)) ? 'active' : nil} documents
+    - @managed_kids.each do |kid_profile|
+      - active = nil
+      - if @kid_profile and @kid_profile.id.eql?(kid_profile.id)
+        - active = 'currentClass'
+      %li{class: active}
+        %span.klpaulid
+          %a{href: child_dashboard_path(kid_profile) } #{truncate(kid_profile.nickname, length: 12)}
+        %ul
+          %li
+            %a{href: child_dashboard_path(kid_profile),class: current_page?(child_dashboard_path(@profile)) ? 'active' : nil} dashboard
+          %li
+            %a{href: alerts_and_events_path(kid_profile),class: current_page?(alerts_and_events_path(@profile)) ? 'active' : nil } alerts
+          %li
+            %a{href: documents_path(kid_profile)  ,class: current_page?(documents_path(@profile)) ? 'active' : nil} documents
+          %li
+            %a{href: child_profile_path(@profile)  ,class: current_page?(child_profile_path(@profile)) ? 'active' : nil} profile
+          - unless @organization_memberships.blank?
+            %li
+              %a{href: child_org_dashboard_path(child: kid_profile.kids_type.id, org: @organization_memberships.first.org_id),"data-no-turbolink" =>'yes'} organizations
+-#.appFooterInside
+  %ul.new-menu
+    %li.currentClass
+      %span
+        %a{href: "#{top_dashboard_path(@parent_profile)}"} Family
+      - unless @kid_profile
+        %ul
+          %li
+            %a.active{:href => "#{top_dashboard_path(@parent_profile)}"} dashboard
+          %li
+            %a{:href => "#{alerts_and_events_path(@parent_profile)}"} alerts
+          %li
+            %a{:href =>  "#{documents_path(@parent_profile)}"} documents
+          %li
+            %a{:href =>  "#{trending_path(@parent_profile)}"} trending
+    - @managed_kids.each do |kid_profile|
+      %li
+        %span
+          %a{:href => "#{child_dashboard_path(kid_profile)}"} #{kid_profile.nickname}
+        %ul
+          %li
+            %a{:href=> child_dashboard_path(kid_profile)}} dashboard
+          %li
+            %a{:href =>   alerts_and_events_path(kid_profile) } alerts
+          %li
+            %a{href: documents_path(kid_profile) } documents
+          - unless @organization_memberships.blank?
+            %li
+              %a{:href =>   child_org_dashboard_path(child: kid_profile.kids_type.id, org: @organization_memberships.first.org_id) } organizations
+
+
+

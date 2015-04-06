@@ -1,0 +1,4423 @@
+/*
+ *= require jquery.ui.datepicker
+ *= require jquery.ui.autocomplete
+ *= require rb_set1
+ *= require_self
+*/
+
+html {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: "museo-sans-n1", "museo-sans-i1", "museo-sans-n3", "museo-sans-i3", "museo-sans-n5", "museo-sans-i5", "museo-sans-n7", "museo-sans-i7", "museo-sans-n9", "museo-sans", "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: #555;
+    background-color: #fff;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 10px;
+    height: 100%;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+}
+
+img {
+    border: none;
+}
+a {
+    color: inherit;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 40px;
+}
+
+form {
+    padding: 0px;
+    margin: 0px;
+}
+
+input, select, textarea {
+    font-family: "museo-sans", "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.clear {
+    clear: both;
+}
+
+b {
+    font-weight: 700;
+    font-size: inherit;
+}
+
+b.bBlue {
+    color: #13a3de !important;
+}
+
+b.bOrange {
+    color: #fab138 !important;
+}
+
+strong.bBlue {
+    color: #13a3de !important;
+}
+
+strong.bOrange {
+    color: #fab138 !important;
+}
+
+i {
+    font-style: italic;
+    font-size: inherit;
+}
+
+.vMid {
+    display: inline-block;
+    vertical-align: middle;
+    /*line-height: normal;*/
+}
+
+.vMidOuter:after {
+    content: " ";
+    white-space: pre-wrap;
+}
+
+.mobileLink {
+    text-decoration: underline;
+}
+
+    /* install screen */
+
+.installContainer {
+    height: 100%;
+    position: relative;
+    margin-left: -5px;
+    margin-right: -10px;
+    background-color: #464646;
+}
+
+.installTable {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.installTableTopCell {
+    height: 339px;
+}
+
+.installTableMiddleCell {
+    background-color: #464646;
+    color: #fff;
+    text-align: center;
+    height: 15%;
+}
+
+.installTableBottomCell {
+    min-height: 300px;
+    background-color: #464646;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    height: 95%;
+}
+
+.installTableBottomCell table {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.installTopContainer {
+    height: 339px;
+    width: 100%;
+    background-color: #fff;
+    background-image: url(<%= asset_path('m_install_topbg.png')%>);
+    background-position: top left;
+    background-repeat: repeat-x;
+    display: table;
+}
+
+.itcHeader {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: normal;
+    font-size: 40px;
+    color: #777;
+    font-weight: 100;
+    text-align: center;
+}
+
+.itchSub {
+    font-size: 34px;
+    margin-top: -4px;
+}
+
+.itchLogo {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.ibcHeader {
+    font-size: 54px;
+    font-weight: 100;
+}
+
+.ibchSub {
+    font-size: 24px;
+    font-weight: 100;
+    margin-top: -5px;
+}
+
+.ibcscLeftContainer {
+    width: 48%;
+    display: inline-block;
+    /*vertical-align: top;*/
+    height: 100%;
+}
+
+.ibcscRightContainer {
+    width: 48%;
+    display: inline-block;
+    /*vertical-align: top;*/
+    border-left: solid 2px #ddd;
+    height: 100%;
+}
+
+.ibcStep {
+    color: #96daf8;
+    font-size: 35px;
+    font-weight: 100;
+    margin-bottom: 5px;
+}
+
+.ibcStepSub {
+    font-size: 28px;
+    line-height: 28px;
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+.ibcscAddTo {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.installAddedContainer {
+    background-color: #464646;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    text-align: center;
+    margin-left: -5px;
+    margin-right: -10px;
+}
+
+.iacLinks {
+    color: #ccc;
+    font-size: 24px;
+}
+
+.iacLinks a {
+    color: #ccc;
+}
+
+.iacLinks a:active{
+    color: #fff;
+}
+
+
+
+    /* start screen */
+
+.startContainer {
+    height: 100%;
+    position: relative;
+    margin-left: -5px;
+    margin-right: -5px;
+    background-color: #fff;
+}
+
+.startTable {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+.startTableTopCell {
+    background-image: url(<%= asset_path('m_start_topbg.png')%>);
+    background-position: top left;
+    background-repeat: repeat;
+    min-height: 388px;
+}
+
+.startTableBottomCell {
+    background-color: #fff;
+    background-image: url(<%= asset_path('m_start_bottomgraphic.jpg')%>);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    height: 558px;
+    position: relative;
+}
+
+.startTopContainer {
+    background-color: #fff;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-top: solid 2px #c4eafa;
+    border-bottom: solid 2px #c4eafa;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.startTopContainer .stcHeader {
+    color: #13a3de;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.startTopContainer .stcError {
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+    width: 310px;
+    border-radius: 12px;
+    box-shadow: 3px 3px 5px #777;
+    background-color: #fab138;
+    overflow: hidden;
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 20px;
+    color: #000;
+    font-weight: 300;
+}
+
+.startTopContainer .stceTitle {
+    color: #fff;
+    font-size: 34px;
+    font-weight: 500;
+    display: block;
+}
+
+.startContainer input {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+    color: #555;
+    -webkit-user-select: auto;
+}
+
+.startContainer input.stcInputPassword {
+    width: 370px;
+}
+
+.startContainer .signInButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 70px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 20px;
+    position: relative;
+    top: -4px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: -webkit-linear-gradient(top, #90d9f7, #31b0e4);
+}
+
+.startContainer .signInButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.startContainer .signUpButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 92px;
+    width: 367px;
+    overflow: hidden;
+    font-size: 40px;
+    font-weight: 700;
+    color: #13a3de;
+    text-align: center;
+    line-height: 92px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    bottom: 45px;
+    left: 25px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: -webkit-linear-gradient(top, #f0fafe, #daf9ff);
+}
+
+.startContainer .signUpButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.startContainer .forgotPasswordButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 55px;
+    width: 250px;
+    overflow: hidden;
+    font-size: 28px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    line-height: 55px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    bottom: 155px;
+    left: 82px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: rgba(255,255,255,.7);
+}
+
+.startContainer .forgotPasswordButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+    /* main shell */
+
+.headerContainer {
+    height: 94px;
+    background-color: #fff;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    box-shadow: 4px 4px 7px #777;
+    width: 100%;
+    z-index: 3;
+}
+
+.headerWellnessLogo {
+    float: right;
+    margin-right: 30px;
+    height: 94px;
+    width: 130px;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.headerButtonContainer {
+    float: left;
+    padding-top: 16px;
+    margin-left: 20px;
+}
+
+.headerButtonContainer .hButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 700;
+    color: #555;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 15px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.headerButtonContainer .hButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.headerButtonContainer .hbLogout {
+    background: -webkit-linear-gradient(top, #e5f5fd, #c0e7ff);
+    background: -linear-gradient(top, #e5f5fd, #c0e7ff);
+}
+
+    /* START Back Button Hack */
+
+.headerButtonContainer .hbBack {
+    position: relative;
+    overflow: visible;
+    margin-left: 20px;
+    border-radius: 0px 16px 16px 0px;
+    background-color: #fff;
+}
+
+.headerButtonContainer .hbBackOne {
+    position: absolute;
+    display: inline-block;
+    left: -21.5px;
+    top: 8.8px;
+    width: 42.4px;
+    height: 42.4px;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    box-shadow: 3px 3px 5px #aaa;
+    z-index: 4;
+}
+
+.headerButtonContainer .hbBack:active .hbBackOne {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.headerButtonContainer .hbBackTwo {
+    position: absolute;
+    z-index: 5;
+    width: 40px;
+    height: 60px;
+    background-color: #fff;
+    left: -1px;
+    border-radius: 4px;
+}
+
+.headerButtonContainer .hbBack:active .hbBackTwo {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.headerButtonContainer .hbBackThree {
+    position: absolute;
+    display: inline-block;
+    left: -40px;
+    top: -15px;
+    z-index: 3;
+    background-color: #fff;
+    width: 40px;
+    height: 90px;
+}
+
+.headerButtonContainer .hbBack span {
+    position: relative;
+    z-index: 6;
+    left: -5px;
+}
+
+    /* END Back Button Hack */
+
+.headerPageName {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    text-align: center;
+    font-weight: 100;
+    font-size: 45px;
+    height: 94px;
+    line-height: 94px;
+    color: #13a3de;
+    text-transform: lowercase;
+    overflow: hidden;
+    letter-spacing: -.05em;
+}
+
+.headerPageNameSmall {
+    font-size: 32px;
+}
+
+.scrollContainer {
+    position:absolute; z-index:1;
+    top:94px;
+    left:0;
+    bottom: 166px;
+    width:100%;
+    overflow:auto;
+}
+
+.scrollContainer7Fix {
+    position: static;
+    margin-top: 94px;
+    /*bottom: ;*/
+    overflow: auto;
+}
+
+.contentContainer {
+    min-height: 850px;
+    position:absolute; z-index:1;
+    width: 100%;
+    -webkit-user-select: none;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 100%), url(<%= asset_path('l_start_bg_kids.png')%>) repeat 0 0;
+    /*height: 100%;*/
+}
+
+.footerContainer {
+    height: 166px;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    box-shadow: 4px 4px 7px #777;
+    width: 100%;
+    z-index: 3;
+}
+
+.footerContainer7Fix {
+    display: none;
+}
+
+.footerGradient {
+    height: 66px;
+    position: absolute;
+    top: -66px;
+    left: 0px;
+    width: 100%;
+    pointer-events: none;
+    background: -webkit-linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.7));
+    background: -linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.7));
+}
+
+.fgOff {
+    display: none;
+}
+
+.footerContainer table {
+    height: 166px;
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+}
+
+.footerContainer .footerLogoTD {
+    height: 100%;
+    min-width: 145px;
+    vertical-align: top;
+}
+
+.footerContainer .footerLogoTD div {
+    background-image: url(<%= asset_path('m_logo.png')%>);
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 166px;
+}
+
+.footerContainer .footerChildListTD {
+    text-align: center;
+    vertical-align: top;
+}
+
+.footerContainer .footerChildListContainer {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    white-space: nowrap;
+}
+
+.footerContainer .footerChildOptionSelected {
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 16px 16px 0px 0px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 188px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 700;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 17px;
+    padding-right: 17px;
+    background-color: #fff;
+    margin-right: 5px;
+    background-position: center 17px;
+    background-repeat: no-repeat;
+    width: 82px;
+    top: -22px;
+    position: relative;
+    white-space: normal;
+}
+
+.footerContainer .footerChildOptionSelected span {
+    display: block;
+    position: relative;
+    top: 144px;
+}
+
+.footerContainer .footerChildOptionSelected:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.footerContainer .footerChildOption {
+    vertical-align: top;
+    display: inline-block;
+    height: 166px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 700;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right: -1px;
+    background-position: center 48px;
+    background-repeat: no-repeat;
+    width: 82px;
+    white-space: normal;
+}
+
+.footerContainer .footerChildOption span {
+    display: block;
+    position: relative;
+    top: 10px;
+}
+
+.footerContainer .footerChildOption:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.footerContainer .footerFamilyOption {
+    vertical-align: top;
+    display: inline-block;
+    height: 166px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 700;
+    color: #13a3de;
+    text-align: center;
+    margin-left: 2px;
+    width: 82px;
+    white-space: normal;
+}
+
+.footerContainer .footerFamilyOption span {
+    display: block;
+    position: relative;
+    background-color: #daf2fd;
+    height: 90px;
+    margin-top: 47px;
+    padding-top: 29px;
+}
+
+.footerContainer .footerFamilyOption:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.footerContainer .footerFamilyOption:active span {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.footerContainer .footerFamilyOptionSelected {
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 16px 16px 0px 0px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 188px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 700;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 17px;
+    padding-right: 17px;
+    background-color: #fff;
+    margin-right: 5px;
+    width: 82px;
+    top: -22px;
+    position: relative;
+    white-space: normal;
+}
+
+.footerContainer .footerFamilyOptionSelected span {
+    display: block;
+    position: relative;
+    background-color: #daf2fd;
+    height: 90px;
+    margin-top: 17px;
+    padding-top: 29px;
+}
+
+.footerContainer .footerFamilyOptionSelected:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+
+
+    /* dash pages */
+
+.contentContainer .alertContainer {
+    height: 50px;
+    font-weight: 500;
+    color: #FFFFFF; /*#fff*/
+    background-color: #ed1c24; /*#3994e9;*/
+    font-size: 26px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.contentContainer .dashFeatureRow {
+    background-color: #fff;
+    height: 90px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.contentContainer .dfrName {
+    float: left;
+    font-weight: 300;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+    line-height: 90px;
+}
+
+.contentContainer .dfrCaption {
+    float: right;
+    font-weight: 300;
+    font-size: 22px;
+    color: #13a3de;
+    margin-right: 30px;
+    width: 180px;
+    line-height: 1.1em;
+    margin-top: 20px;
+    text-align: right;
+    display: none;
+}
+
+.contentContainer .dashFeatureRow:active {
+    background-color: #e3f4fd;
+}
+
+.contentContainer .dashMilestonesRow {
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+    /*background: -webkit-linear-gradient(top, #fff 35%, #94d5f0);
+    background: -linear-gradient(top, #fff 35%, #94d5f0);*/
+    background: -webkit-linear-gradient(top, #fff 5%, #94d5f0);
+}
+
+.contentContainer .dashMilestonesRow .dfrName {
+    background-image: url(<%= asset_path('m_featurename_milestones.png')%>);
+    background-position: 5px 31px;
+    background-repeat: no-repeat;
+    height: 100%;
+    padding-left: 140px;
+    color: #9ba112;
+}
+
+.contentContainer .dashMilestonesRow .dfrCaption {
+    width: auto;
+    margin-top: 32px;
+    font-weight: 500;
+    display: block;
+}
+
+.contentContainer .dashMilestonesRow .dmrTop:active {
+    background-color: #e3f4fd;
+}
+
+.contentContainer .dashMilestonesRow .dmrDetailContainer {
+    border-top: dotted 2px #ceedfa;
+    margin-left: 20px;
+    margin-right: 30px;
+    padding-top: 18px;
+    padding-bottom: 6px;
+}
+
+.contentContainer .dashMilestonesRow .dmrMilestone {
+    width: 343px;
+    height: 244px;
+    box-shadow: 4px 4px 7px #777;
+    float: left;
+    border-radius: 5px;
+    margin-right: 20px;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+}
+
+.contentContainer .dashMilestonesRow .dmrMilestone:active {
+    width: 337px;
+    height: 237px;
+    border: solid 3px #4fbce9;
+    background-position: -3px -3px;
+}
+
+
+.contentContainer .dashMilestonesRow .dmrPromptBox {
+    border: dashed #fff 4px;
+    box-shadow: 4px 4px 7px #777;
+    background-color: #60c1e9;
+    width: 217px;
+    height: 107px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.1em;
+    margin-bottom: 13px;
+}
+
+.contentContainer .dashMilestonesRow .dmrPromptBox:active {
+    border-width: 6px;
+    border-radius: 6px;
+    width: 213px;
+    height: 103px;
+}
+
+.contentContainer .dashMilestonesRow .dmrPromptBox table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+    /* alerts page */
+
+.ccAlerts .alertRow {
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccAlerts .alertRow:first-child {
+    padding-top: 25px;
+}
+
+.ccAlerts .arAlert {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccAlerts .alertRowOn .arAlert {
+    color: #ed1c24;
+}
+
+.ccAlerts .arAlert .arChildName {
+    font-weight: 100;
+    color: #13a3de;
+}
+
+.ccAlerts .arSub {
+    font-weight: 300;
+    font-size: 16px;
+    color: #898989;
+    margin-left: 20px;
+}
+
+.ccAlerts .alertRow:active {
+    background-color: #e3f4fd;
+}
+
+    /* alerts detail page */
+
+.ccAlertDetail {
+    background: url(<%= asset_path('l_start_bg_kids.png')%>) repeat 0 0;
+    min-height: 100%;
+}
+
+.ccAlertDetail .alertDetailPanel {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    min-height: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: -125px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 25px;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 300px;
+}
+
+.ccAlertDetail .alertDetailAlert {
+    font-weight: 700;
+    font-size: 36px;
+    color: #13a3de;
+}
+
+.ccAlertDetail .alertDetailAlertRed {
+    color: #ed1c24;
+}
+
+.ccAlertDetail .alertDetailAlert .adaChildName {
+    font-weight: 100;
+    color: #13a3de;
+}
+
+.ccAlertDetail .alertDetailSub {
+    font-weight: 300;
+    font-size: 30px;
+    color: #898989;
+}
+
+.ccAlertDetail .adpButtonContainer {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.ccAlertDetail .adpButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #555;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+}
+
+.ccAlertDetail .adpbIveDoneIt {
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccAlertDetail .adpbIgnore {
+    background: -webkit-linear-gradient(top, #fcfeff, #f7fcfe);
+}
+
+.ccAlertDetail .adpbSubmitDocument {
+    background: -webkit-linear-gradient(top, #f0fafe, #d3effb);
+    color: #13a3de;
+}
+
+.ccAlertDetail .adpButton:active {
+    background: none !important;
+    background-color: #13a3de !important;
+    color: #fff !important;
+}
+
+.ccAlertDetail .alertDetailText {
+    color: #555;
+    font-size: 30px;
+    line-height: 1.2em;
+}
+
+.ccAlertDetail .alertDetailIssued {
+    font-size: 26px;
+    margin-top: 30px;
+    color: #898989;
+}
+
+
+    /* documents page */
+
+.ccDocuments .categoryRow {
+    background-color: #fff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccDocuments .crInnerContainer {
+    background-position: 20px 8px;
+    background-repeat: no-repeat;
+    padding-left: 82px;
+}
+
+.ccDocuments .categoryRowNone .crInnerContainer {
+    opacity: .3;
+}
+
+.ccDocuments .categoryRow:first-child {
+    padding-top: 25px;
+}
+
+.ccDocuments .crCategoryName {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccDocuments .crCategoryNameQC {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.ccDocuments .crNumber {
+    font-weight: 300;
+    font-size: 16px;
+    color: #898989;
+    margin-left: 20px;
+}
+
+.ccDocuments .categoryRow:active {
+    background-color: #e3f4fd;
+}
+
+.ccDocuments .docTypeRow {
+    background-color: #fff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccDocuments .docTypeRow:active {
+    background-color: #e3f4fd;
+}
+
+.ccDocuments .dtrTypeName {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccDocuments .dtrNumber {
+    font-weight: 300;
+    font-size: 16px;
+    color: #898989;
+    margin-left: 20px;
+}
+
+.ccDocuments .dtrDetails {
+    font-weight: 300;
+    font-size: 16px;
+    color: #898989;
+    margin-left: 20px;
+}
+
+.ccDocuments .dtrDate {
+    font-weight: 700;
+}
+
+.ccDocuments .dtrSubTypeIcon {
+    float: right;
+    position: relative;
+}
+
+.ccDocuments .dtrSubTypeIcon:before {
+    content: "\00BB";
+    font-size: 80px;
+    font-weight: 100;
+    color: #13a3de;
+    margin-right: 30px;
+    line-height: 56px;
+    position: relative;
+    opacity: .6;
+}
+
+.ccDocuments .documentsTopButtonContainer {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.ccDocuments .documentsTopButtonContainer .bigCaptureButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+    display: inline-block;
+}
+
+.ccDocuments .documentsTopButtonContainer .bigCaptureButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccDocuments .documentsHeaderVault {
+    font-size: 42px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: lowercase;
+    /*padding-bottom: 20px;*/
+    border-bottom: solid 4px #a9dff5;
+    /*	color: #13a3de;
+        background: -webkit-linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.3));
+        background: -linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.3));*/
+    color: #fff;
+    background-color: #a9dff5;
+    padding-bottom: 2px;
+    padding-top: 4px;
+}
+
+
+    /* document view detail page */
+
+.ccDocDetail {
+    background: url(<%= asset_path('l_start_bg_kids.png')%>) repeat 0 0;
+    min-height: 100%;
+}
+
+.ccDocDetail .docDetailPanel {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    min-height: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: -125px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 25px;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 300px;
+}
+
+.ccDocDetail .docDetailDocType {
+    font-weight: 700;
+    font-size: 36px;
+    color: #13a3de;
+}
+
+.ccDocDetail .docDetailDate {
+    font-weight: 300;
+    font-size: 30px;
+    color: #13a3de;
+    margin-top: 5px;
+}
+
+.ccDocDetail .docDetailOrg {
+    font-weight: 300;
+    font-size: 30px;
+    color: #898989;
+    margin-top: 15px;
+}
+
+.ccDocDetail .docDetailDesc {
+    font-weight: 300;
+    font-size: 30px;
+    color: #898989;
+    margin-top: 15px;
+}
+
+.ccDocDetail .docDetailExp {
+    font-weight: 300;
+    font-size: 30px;
+    color: #898989;
+    margin-top: 15px;
+}
+
+.ccDocDetail .ddpButtonContainer {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.ccDocDetail .ddpButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #555;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+}
+
+.ccDocDetail .ddpbView {
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccDocDetail .ddpbFullView {
+    /*background: -webkit-linear-gradient(top, #fcfeff, #f7fcfe);*/
+    background: -webkit-linear-gradient(top, #f0fafe, #d3effb);
+    color: #13a3de;
+    margin-top: 30px;
+}
+
+.ccDocDetail .ddpbEdit {
+    background: -webkit-linear-gradient(top, #fff, #fff);
+    color: #13a3de;
+    margin-top: 60px;
+}
+
+.ccDocDetail .ddpButton:active {
+    background: none !important;
+    background-color: #13a3de !important;
+    color: #fff !important;
+}
+
+    /* document edit -- relies mostly on meta capture definitions */
+
+.ccDocuments .editDocMetaFieldsContainer {
+    margin-top: 30px;
+}
+
+.ccDocuments .editDocMetaFieldsContainer .edmfcTextLabel {
+    display: block;
+    float: left;
+    clear: both;
+    font-size: 30px;
+    padding-right: 20px;
+    width: 240px;
+    color: #666;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.ccDocuments .editDocMetaFieldsContainer .edmfcTextField {
+    font-size: 30px;
+    font-weight: 500;
+    width: 300px;
+    float: right;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.ccDocuments .editDocMetaFieldsContainer .edmfcChangeTypeButton {
+    display: inline-block;
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 50px;
+    background-color: #fff;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    color: #13a3de;
+}
+
+.ccDocuments .editDocMetaFieldsContainer .edmfcChangeTypeButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccDocuments .editDocButtonContainer .edbcDeleteButton {
+    height: 50px;
+    font-size: 24px;
+    font-weight: 500;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 50px;
+    background: none;
+    color: #e33;
+    background-color: #fee;
+    margin-top: 25px;
+}
+
+    /* documents capture: all */
+
+.ccDocuments .captureModeBar {
+    height: 50px;
+    font-weight: 500;
+    color: #603913;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    font-size: 26px;
+    text-align: center;
+    line-height: 50px;
+    text-transform: lowercase;
+    padding-top: 4px;
+    display: none;
+}
+
+.ccDocuments b.dhDark {
+    color: #603913;
+}
+
+    /* documents first capture page: whose */
+
+.ccDocuments .documentsHeaderWho {
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    /*border-bottom: solid 4px #a9dff5;
+    color: #13a3de;
+    background: -webkit-linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.3));
+    background: -linear-gradient(top, rgba(148,213,240,0), rgba(148,213,240,.3));*/
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccDocuments .whoRow {
+    background-color: #fff;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+    height: 90px;
+}
+
+.ccDocuments .wrName {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+    padding-top: 24px;
+}
+
+.ccDocuments .whoRow:active {
+    background-color: #e3f4fd;
+}
+
+
+    /* documents second capture page: categories */
+
+.ccDocuments .documentsHeaderCapCat {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccDocuments .capCatRow {
+    background-color: #fff;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccDocuments .ccrInnerContainer {
+    background-position: 20px 20px;
+    background-repeat: no-repeat;
+    padding-left: 82px;
+    padding-top: 26px;
+    padding-bottom: 26px;
+}
+
+.ccDocuments .ccrCategoryName {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccDocuments .ccrCategoryNameQC {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.ccDocuments .ccrCameraIcon {
+    float: right;
+    position: relative;
+    margin-right: 25px;
+    width: 50px;
+    height: 37px;
+    margin-top: 4px;
+    background-image: url(<%= asset_path('m_icon_camera.png')%>);
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: .4;
+}
+
+.ccDocuments .capCatRow:active {
+    background-color: #e3f4fd;
+}
+
+    /* documents third/fourth capture page: tags */
+
+.ccDocuments .documentsHeaderCapTag {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccDocuments .capTagRow {
+    background-color: #fff;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccDocuments .ctrInnerContainer {
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+
+.ccDocuments .ctrTagName {
+    font-weight: 300;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccDocuments .ctrSubTagIcon {
+    float: right;
+    position: relative;
+}
+
+.ccDocuments .ctrSubTagIcon:before {
+    content: "\00BB";
+    font-size: 80px;
+    font-weight: 100;
+    color: #13a3de;
+    margin-right: 30px;
+    line-height: 36px;
+    position: relative;
+    opacity: .6;
+}
+
+.ccDocuments .ctrCameraIcon {
+    float: right;
+    position: relative;
+    margin-right: 25px;
+    width: 50px;
+    height: 37px;
+    margin-top: 4px;
+    background-image: url(<%= asset_path('m_icon_camera.png')%>);
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: .4;
+}
+
+.ccDocuments .capTagRow:active {
+    background-color: #e3f4fd;
+}
+
+.ccDocuments .captureTagOtherPanel {
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 20px;
+}
+
+.ccDocuments .ctopHeader {
+    font-size: 34px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 60px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #fff;
+    height: 60px;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-top: -25px;
+    padding-top: 2px;
+}
+
+.ccDocuments .ctopOtherTypesContainer {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.ccDocuments .ctopOTButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 26px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    line-height: 70px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: 14px;
+    margin-left: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    -webkit-transform: translateZ(0);
+}
+
+.ccDocuments .ctopOTButton:active {
+    background-color: #e3f4fd;
+}
+
+.ccDocuments .ctopInputAddNew {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #555;
+    display: block;
+    -webkit-user-select: auto;
+}
+
+    /* documents capture upload page */
+
+.ccDocuments .documentsHeaderUpload {
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccDocuments .captureUploadCountContainer {
+    text-align: center;
+    padding-bottom: 30px;
+    padding-top: 56px;
+}
+
+.ccDocuments .cuccCount {
+    text-align: center;
+    color: #666;
+    font-size: 250px;
+    font-weight: 100;
+    display: inline-block;
+    line-height: 180px;
+    vertical-align: middle;
+    padding-right: 30px;
+    letter-spacing: -.05em;
+}
+
+.ccDocuments .cuccPagesChosen {
+    display: inline-block;
+    text-align: center;
+    color: #666;
+    font-size: 45px;
+    font-weight: 100;
+    vertical-align: middle;
+    line-height: 1em;
+    max-width: 350px;
+    letter-spacing: -.05em;
+}
+
+.ccDocuments .cuccDocumentType {
+    display: block;
+    font-weight: 500;
+    text-transform: lowercase;
+}
+
+.ccDocuments .captureUploadButtonContainer {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.ccDocuments .cubcButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    -webkit-transform: translateZ(0);
+}
+
+.ccDocuments .cubcButtonMore {
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+    padding-right: 30px;
+}
+
+.ccDocuments .cubcButtonMore:after {
+    content: "";
+    background-image: url(<%= asset_path('m_icon_camera.png')%>);
+    background-position: right center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 37px;
+    opacity: .6;
+    float: right;
+    padding-right: 25px;
+    padding-top: 40px;
+}
+
+.ccDocuments .cubcButtonMore:active:after {
+    -webkit-filter: invert(100%);
+}
+
+.ccDocuments .cubcButtonSave {
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccDocuments .cubcButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccDocuments .captureUploadMethodContainer {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.ccDocuments .cumcCurrent {
+    display: inline-block;
+    font-size: 26px;
+    color: #666;
+    font-weight: 300;
+}
+
+.ccDocuments .cumcButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-transform: translateZ(0);
+}
+
+.ccDocuments .cumcButton:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+    /* documents capture meta page */
+
+.ccDocuments .documentsHeaderMeta {
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccDocuments .captureSaveButtonContainer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    clear: both;
+}
+
+.ccDocuments .csbcButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccDocuments .csbcButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccDocuments .captureMetaFieldsContainer {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.ccDocuments .cmfcInput {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    /*display: block;*/
+    -webkit-user-select: auto;
+}
+
+.ccDocuments .cmfcInput[type=date] {
+    /*width: 300px;*/
+    float: right;
+}
+
+.ccDocuments .cmfcDateLabel {
+    display: block;
+    float: left;
+    clear: both;
+    font-size: 30px;
+    padding-right: 20px;
+    line-height: 80px;
+    width: 240px;
+    color: #666;
+}
+
+    /* profile page */
+
+.ccProfile {
+    background: url(<%= asset_path('l_start_bg_kids.png')%>) repeat 0 0;
+    min-height: 100%;
+}
+
+.ccProfile .profilePanel {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    min-height: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: -125px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 25px;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 300px;
+}
+
+.ccProfile .profileSectionHeader {
+    color: #13a3de;
+    font-size: 50px;
+    font-weight: 100;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+    padding-top: 20px;
+}
+
+.ccProfile .profileSectionHeader:first-child {
+    padding-top: 0px;
+}
+
+.ccProfile .profileLabel {
+    float: left;
+    width: 140px;
+    color: #999;
+    font-size: 26px;
+    font-weight: 300;
+    line-height: .9em;
+    clear: both;
+    padding-bottom: 26px;
+    padding-top: 4px;
+    margin-right: 16px;
+}
+
+.ccProfile .profileField {
+    float: left;
+    width: 360px;
+    color: #333;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.1em;
+    padding-bottom: 26px;
+}
+
+.ccProfile .profileButtonContainer {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.ccProfile .pbcButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #555;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+}
+
+.ccProfile .pbcbEdit {
+    /*background: -webkit-linear-gradient(top, #9aa012, #7d820a);*/
+    /*color: #fff;*/
+    color: #13a3de;
+}
+
+.ccProfile .pbcButton:active {
+    background: none !important;
+    background-color: #13a3de !important;
+    color: #fff !important;
+}
+
+    /* profile edit */
+
+.ccProfileEdit {
+    /*background: url(../images/l_start_bg_kids.png) repeat 0 0;*/
+    min-height: 100%;
+}
+
+.ccProfileEdit .peFieldsContainer {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+}
+
+.ccProfileEdit .peSectionHeader {
+    color: #13a3de;
+    font-size: 50px;
+    font-weight: 300;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+    padding-top: 20px;
+}
+
+.ccProfileEdit .pefcFieldContainer {
+    background-color: #fff;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 2px #c4eafa;
+    border-bottom: solid 2px #c4eafa;
+}
+
+.ccProfileEdit .peFieldsContainer .pefcLabel {
+    display: block;
+    font-size: 35px;
+    font-weight: 300;
+    padding-right: 20px;
+    color: #999;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.ccProfileEdit .peFieldsContainer .pefcField {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccProfileEdit .pefcInput {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    /*display: block;*/
+    -webkit-user-select: auto;
+}
+
+.ccProfileEdit .pefcInput[type=date] {
+    /*width: 300px;*/
+}
+
+.ccProfileEdit textarea.pefcInput {
+    height: 150px;
+}
+
+.ccProfileEdit .pefcInput[type=checkbox] {
+    width: 60px;
+    height: 60px;
+    vertical-align: baseline;
+    margin-bottom: 50px;
+    margin-top: 0px;
+    margin-left: 10px;
+    position: relative;
+    bottom: -20px;
+}
+
+.ccProfileEdit .pefcFieldText {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.ccProfileEdit .pefcInputFirstName {
+    width: 180px;
+}
+
+.ccProfileEdit .pefcInputMidName {
+    width: 150px;
+}
+
+.ccProfileEdit .pefcInputLastName {
+    width: 240px;
+}
+
+.ccProfileEdit .pefcInputCity {
+    width: 240px;
+}
+
+.ccProfileEdit .pefcInputState {
+    width: 110px;
+}
+
+.ccProfileEdit .pefcInputZip {
+    width: 160px;
+}
+
+.ccProfileEdit .pefcInputShortPhone {
+    width: 400px;
+}
+
+.ccProfileEdit .pefcInputPhoneType {
+    width: 150px;
+}
+
+.ccProfileEdit .peshAddParentButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    /*margin-top: 10px;
+    margin-bottom: 20px;*/
+    -webkit-transform: translateZ(0);
+    /*background: -webkit-linear-gradient(top, #9aa012, #7d820a);*/
+    color: #13a3de;
+    position: relative;
+    top: -10px;
+}
+
+.ccProfileEdit .peshAddParentButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccProfileEdit .peButtonContainer {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccProfileEdit .peSaveButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccProfileEdit .peSaveButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+    /* miletones list page */
+
+.ccMilestoneNewList .milestonesHeaderCapNew {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+
+.ccMilestoneNewList .milestonesSearchRow {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    background-color: #febe55;
+    color: #603913;
+    padding-bottom: 20px;
+}
+
+.ccMilestoneNewList .msrField {
+    width: 90%;
+    font-size: 40px;
+    border-radius: 14px;
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+.ccMilestoneNewList .milestoneNewRow {
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+    padding-left: 20px;
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+}
+
+.ccMilestoneNewList .mnrFeatured {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+
+.ccMilestoneNewList .mnrFeaturedName {
+    height: 244px;
+    width: 250px;
+    line-height: 244px;
+    text-align: center;
+    float: left;
+}
+
+.ccMilestoneNewList .milestoneNewRow:active {
+    background-color: #e3f4fd;
+}
+
+.ccMilestoneNewList .mnrFeaturedBox {
+    width: 343px;
+    height: 244px;
+    float: left;
+    margin-left: 0px;
+    margin-right: 20px;
+}
+
+.ccMilestoneNewList .milestonesNewOtherContainer {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.ccMilestoneNewList .mnocButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 26px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    line-height: 70px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: 14px;
+    margin-left: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    -webkit-transform: translateZ(0);
+}
+
+.ccMilestoneNewList .mnocButton:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+
+    /* milestone edit */
+
+.ccMilestoneEdit .milestonesHeaderCapEdit {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccMilestoneEdit {
+    /*background: url(../images/l_start_bg_kids.png) repeat 0 0;*/
+    min-height: 100%;
+}
+
+.ccMilestoneEdit .meFieldsContainer {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+}
+
+.ccMilestoneEdit .meSectionHeader {
+    color: #13a3de;
+    font-size: 50px;
+    font-weight: 300;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+    padding-top: 20px;
+}
+
+.ccMilestoneEdit .mefcFieldContainer {
+    background-color: #fff;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 2px #c4eafa;
+    border-bottom: solid 2px #c4eafa;
+}
+
+.ccMilestoneEdit .meFieldsContainer .mefcLabel {
+    display: block;
+    font-size: 35px;
+    font-weight: 300;
+    padding-right: 20px;
+    color: #999;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.ccMilestoneEdit .meFieldsContainer .mefcField {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccMilestoneEdit .mefcInput {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    /*display: block;*/
+    -webkit-user-select: auto;
+}
+
+.ccMilestoneEdit .mefcInput[type=date] {
+    /*width: 300px;*/
+}
+
+.ccMilestoneEdit textarea.mefcInput {
+    height: 150px;
+}
+
+.ccMilestoneEdit .mefcInput[type=checkbox] {
+    width: 60px;
+    height: 60px;
+    vertical-align: baseline;
+    margin-bottom: 50px;
+    margin-top: 0px;
+    margin-left: 10px;
+    position: relative;
+    bottom: -20px;
+}
+
+.ccMilestoneEdit .mefcFieldText {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.ccMilestoneEdit .mefcInputFirstName {
+    width: 180px;
+}
+
+.ccMilestoneEdit .mefcInputMidName {
+    width: 150px;
+}
+
+.ccMilestoneEdit .mefcInputLastName {
+    width: 240px;
+}
+
+.ccMilestoneEdit .mefcInputCity {
+    width: 240px;
+}
+
+.ccMilestoneEdit .mefcInputState {
+    width: 110px;
+}
+
+.ccMilestoneEdit .mefcInputZip {
+    width: 160px;
+}
+
+.ccMilestoneEdit .mefcInputShortPhone {
+    width: 400px;
+}
+
+.ccMilestoneEdit .mefcInputPhoneType {
+    width: 150px;
+}
+
+.ccMilestoneEdit .meshAddParentButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    /*margin-top: 10px;
+    margin-bottom: 20px;*/
+    -webkit-transform: translateZ(0);
+    /*background: -webkit-linear-gradient(top, #9aa012, #7d820a);*/
+    color: #13a3de;
+    position: relative;
+    top: -10px;
+}
+
+.ccMilestoneEdit .meshAddParentButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccMilestoneEdit .meButtonContainer {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccMilestoneEdit .meSaveButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccMilestoneEdit .meSaveButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccMilestoneEdit .mePhotoCaptureButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 0px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+    display: inline-block;
+}
+
+.ccMilestoneEdit .mePhotoCaptureButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+    /* milestone customize */
+
+.ccMilestoneCustomize {
+    /*background: url(../images/l_start_bg_kids.png) repeat 0 0;*/
+    min-height: 100%;
+}
+
+.ccMilestoneCustomize .milestonesHeaderCapCustomize {
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: lowercase;
+    line-height: 80px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55 70%);
+    background: -linear-gradient(top, #ffdda5, #febe55 70%);
+    color: #603913;
+    height: 80px;
+    padding-top: 4px;
+}
+
+.ccMilestoneCustomize .milestoneSwipeContainer {
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.ccMilestoneCustomize .mscTile {
+    width: 588px;
+    height: 419px;
+    display: inline-block;
+}
+
+.ccMilestoneCustomize .mcButtonContainer {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccMilestoneCustomize .mcSaveButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccMilestoneCustomize .mcSaveButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccMilestoneCustomize .mcPhotoCaptureButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+}
+
+.ccMilestoneCustomize .mcPhotoCaptureButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+
+.ccMilestoneCustomize .mcImageOptions {
+    display: inline-block;
+    text-align: center;
+    margin-left: 0px;
+    margin-right: 15px;
+    margin-top: 18px;
+    vertical-align: top;
+}
+
+.ccMilestoneCustomize .mcioRotateCCW {
+    background-image: url(<%= asset_path('m_icon_rotate_ccw.png')%>);
+}
+
+.ccMilestoneCustomize .mcioRotateCW {
+    background-image: url(<%=asset_path('m_icon_rotate_cw.png') %>);
+}
+
+.ccMilestoneCustomize .mcioRotate {
+    width: 65px;
+    height: 60px;
+    background-position: 0px 0px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.ccMilestoneCustomize .mcioRotate:hover {
+    background-position: 0px 60px;
+}
+
+.ccMilestoneCustomize .mcioRotate:active {
+    background-position: 0px 60px;
+}
+
+.ccMilestoneCustomize .mcioRotateText {
+    font-size: 13px;
+    font-weight: 300;
+    /*display: inline-block;*/
+    display: none;
+    position: relative;
+    top: -7px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+
+
+    /* milestone view list */
+
+.scMilestones {
+    background: -webkit-linear-gradient(top, #f4fbfe, #94d5f0);
+    background: -linear-gradient(top, #f4fbfe, #94d5f0);
+    position: fixed;
+}
+
+.ccMilestones {
+    background: none;
+    min-height: 100%;
+    position: relative;
+}
+
+.ccMilestones .mlcDark {
+    background-color: #6f6f6f;
+    z-index: -5;
+    top: -250px;
+    bottom: -250px;
+    left: 277px;
+    width: 363px;
+    position: absolute;
+}
+
+.ccMilestones .mlcMilestoneRow {
+    clear: both;
+    position: relative;
+}
+
+.ccMilestones .mlcmrAge {
+    width: 277px;
+    height: 244px;
+    float: left;
+    line-height: 244px;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 300;
+    color: #13a3de;
+}
+
+.ccMilestones .mlcmrBox {
+    width: 343px;
+    height: 244px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    float: left;
+}
+
+.ccMilestones .mlcmrBox:active {
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.ccMilestones .mlcCaptureButtonContainer {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 277px;
+}
+
+.ccMilestones .mlcCaptureButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+    display: inline-block;
+}
+
+.ccMilestones .mlcCaptureButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccMilestones .mlcZoomIn {
+    width: 204px;
+    height: 80px;
+    position: absolute;
+    left: 27px;
+    bottom: -60px;
+    background-image: url(<%= asset_path('m_milestones_timezoom.png')%>);
+    background-repeat: no-repeat;
+    background-position: 0 20px;
+    opacity: .4;
+    z-index: 2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.ccMilestones .mlcZoomIn:active {
+    opacity: 1;
+}
+
+.ccMilestones .mlcZoomOut {
+    width: 180px;
+    height: 80px;
+    position: absolute;
+    left: 0px;
+    background-image: url(<%= asset_path('m_milestones_zoomout.png')%>);
+    background-repeat: no-repeat;
+    background-position: 20px 10px;
+    opacity: .8;
+    z-index: 2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 0px;
+    padding-left: 50px;
+
+    border-radius: 0px 16px 16px 0px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+}
+
+.ccMilestones .mlcZoomOut:active {
+    opacity: 1;
+    background-color: #fff;
+}
+
+.ccMilestones .mlczoTop {
+    top: -45px;
+}
+
+.ccMilestones .mlczoBot {
+    bottom: -50px;
+}
+
+
+    /* milestone view */
+
+.ccMilestonesView {
+    /*background: url(../images/l_start_bg_kids.png) repeat 0 0;*/
+    background: none;
+    background-color: #333;
+    min-height: 100%;
+}
+
+.ccMilestonesView .milestoneViewContainer {
+    background-color: rgba(0,0,0,0.6);
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.ccMilestonesView .mscTile {
+    width: 588px;
+    height: 419px;
+    display: inline-block;
+}
+
+.ccMilestonesView .mvButtonContainer {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccMilestonesView .mvEditButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #000;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    -webkit-transform: translateZ(0);
+}
+
+.ccMilestonesView .mvEditButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccMilestonesView .mvShareButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #000;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #e5f5fd, #c0e7ff);
+    background: -linear-gradient(top, #e5f5fd, #c0e7ff);
+}
+
+.ccMilestonesView .mvsbFacebook {
+    background-image: url(<%=asset_path('m_milestones_fbicon.png')%>);
+    width: 51px;
+    height: 51px;
+    display: inline-block;
+    vertical-align: center;
+    position: relative;
+    bottom: -15px;
+    margin-left: 8px;
+    margin-right: -10px;
+}
+
+.ccMilestonesView .mvShareButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+
+    /* onboarding screens */
+
+.ccOnboardScreen {
+    /*background: url(../images/l_start_bg_kids.png) repeat 0 0;*/
+    min-height: 100%;
+}
+
+.ccOnboardScreen .osFieldsContainer {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+}
+
+.ccOnboardScreen .osTopText {
+    color: #666;
+    font-size: 40px;
+    font-weight: 500;
+    /*text-transform: lowercase;*/
+    padding-bottom: 20px;
+    clear: both;
+    padding-top: 20px;
+}
+
+.ccOnboardScreen .osttLight {
+    font-weight: 100;
+}
+
+.ccOnboardScreen .osttSmaller {
+    font-size: 34px;
+}
+
+.ccOnboardScreen .osTopOops {
+    border-radius: 12px;
+    box-shadow: 3px 3px 5px #777;
+    background-color: #fab138;
+    overflow: hidden;
+    padding: 10px;
+    font-size: 30px;
+    color: #000;
+    font-weight: 300;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    clear: both;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.ccOnboardScreen .ostoHeader {
+    font-size: 45px;
+    color: #fff;
+    display: block;
+}
+
+
+
+
+.ccOnboardScreen .osSectionHeader {
+    color: #13a3de;
+    font-size: 50px;
+    font-weight: 300;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+    padding-top: 20px;
+}
+
+.ccOnboardScreen .osfcFieldContainer {
+    background-color: #fff;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 2px #c4eafa;
+    border-bottom: solid 2px #c4eafa;
+}
+
+.ccOnboardScreen .osFieldsContainer .osfcLabel {
+    display: block;
+    font-size: 35px;
+    font-weight: 300;
+    padding-right: 20px;
+    color: #999;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.ccOnboardScreen .osFieldsContainer .osfcLabelWellness {
+    font-size: 32px;
+}
+
+.ccOnboardScreen .osFieldsContainer .osfcField {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccOnboardScreen .osfcInput {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    /*display: block;*/
+    -webkit-user-select: auto;
+}
+
+.ccOnboardScreen .osfcInput[type=date] {
+    /*width: 300px;*/
+}
+
+.ccOnboardScreen textarea.osfcInput {
+    height: 150px;
+}
+
+.ccOnboardScreen .osfcInput[type=checkbox] {
+    width: 60px;
+    height: 60px;
+    vertical-align: baseline;
+    margin-bottom: 50px;
+    margin-top: 0px;
+    margin-left: 10px;
+    position: relative;
+    bottom: -20px;
+}
+
+.ccOnboardScreen .osfcFieldText {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.ccOnboardScreen .osfcInputFirstName {
+    width: 180px;
+}
+
+.ccOnboardScreen .osfcInputMidName {
+    width: 150px;
+}
+
+.ccOnboardScreen .osfcInputLastName {
+    width: 240px;
+}
+
+.ccOnboardScreen .osfcInputCity {
+    width: 240px;
+}
+
+.ccOnboardScreen .osfcInputState {
+    width: 110px;
+}
+
+.ccOnboardScreen .osfcInputZip {
+    width: 160px;
+}
+
+.ccOnboardScreen .osfcInputShortPhone {
+    width: 400px;
+}
+
+.ccOnboardScreen .osfcInputPhoneType {
+    width: 150px;
+}
+
+.ccOnboardScreen .osfcAddChildButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    -webkit-transform: translateZ(0);
+    /*background: -webkit-linear-gradient(top, #9aa012, #7d820a);*/
+    color: #13a3de;
+    position: relative;
+    top: -10px;
+}
+
+.ccOnboardScreen .osfcAddChildButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.osfcSelectPhotoButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    margin-right: 10px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+    position: relative;
+    top: -10px;
+    vertical-align: middle;
+}
+
+.ccOnboardScreen .osfcSelectPhotoButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccOnboardScreen .osButtonContainer {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ccOnboardScreen .osSaveButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.ccOnboardScreen .osSaveButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccOnboardScreen .osPartnerButtonContainer {
+    text-align: center;
+}
+
+.ccOnboardScreen .osPartnerButton {
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 140px;
+    width: 230px;
+    overflow: hidden;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 180px auto;
+    display: inline-block;
+}
+
+.ccOnboardScreen .osPartnerButton:active {
+    background-color: #13a3de;
+    color: #fff;
+}
+
+    /* EULA */
+
+.ccOnboardEula {
+    background: none;
+    background-color: #fff;
+    min-height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ccOnboardEula strong {
+    font-weight: 700;
+}
+
+.ccOnboardEula li {
+    margin-bottom: 7px;
+    margin-top: 7px;
+}
+
+.ccOnboardEula ol {
+    list-style-type: decimal;
+}
+
+.ccOnboardEula ol ol {
+    list-style-type: lower-alpha;
+}
+
+    /* external web sites -- iOS 7 fix */
+
+.externalBody {
+    overflow: hidden;
+}
+
+.externalBody iframe {
+    width: 100%;
+    height: 100%;
+    margin-top: 94px;
+    margin-left: -5px;
+    margin-right: -20px;
+}
+
+    /*  m_app overrides start   */
+.text_input_wrapper input, .minviteEmail {
+    border: medium none;
+    background-color: #FFFFFF;
+    border: 0.1em solid #CCCCCC;
+    border-radius: 0.8em 0.8em 0.8em 0.8em;
+    box-shadow: 0 0 0.1em 0 rgba(255, 255, 255, 0.9), 0 0.2em 0.3em #E7E6E7 inset;
+    padding: 1em;
+    position: relative;
+    font-size: 1.8em;
+    width: 100% !important;
+}
+
+.remember_checkbox{
+    width: 50px;
+    height: 50px;
+    margin-top: 0px;
+    margin-left: 10px;
+    position: relative;
+    bottom: -15px;
+    border-radius: 15px !important;
+}
+.forget_pass{
+    margin-left: 15px;
+}
+
+.minviteButtons {
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+
+.mibInvite {
+    background-image: url(<%=asset_path('d_button_bg_dkgreen.png')%>);
+    background-position: top;
+    color: #fff;
+}
+
+.mibCancel {
+    /*background-image: url(../images/d_button_bg_ltblue.png);*/
+    background-color: #fff;
+    background-position: bottom;
+}
+
+.minviteButton a {
+    text-decoration: none;
+}
+form#invite-mom div.error, .m_error{
+    color: #e3981c;
+    height: 30px !important;
+    display: block;
+    font-size: 25px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+#registrationExplanation{
+    font-size: 30px;
+}
+
+.inviteBig {
+    color: #fab138;
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.inviteBigSub {
+    color: #13a3de;
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.m_kl_logo{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    display: block;
+    text-align: center;
+}
+
+.inviteButton {
+    background-repeat: repeat-x;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #AAAAAA;
+    color: #555555;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 700;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+    padding-left: 17px;
+    padding-right: 17px;
+    text-align: center;
+}
+
+.ibInvite{
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+}
+
+.ibCancel{
+    background: -webkit-linear-gradient(top, #fcfeff, #f7fcfe);
+}
+
+.resetPass .adpButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #555;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+    border: none;
+}
+
+.resetPass .adpbIveDoneIt {
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.resetPass .adpbIgnore {
+    background: -webkit-linear-gradient(top, #fcfeff, #f7fcfe);
+}
+
+.errorFileField{
+    color: #e3981c;
+    font-size: 25px;
+    font-weight: 700;
+    display: block;
+}
+
+.ccAlertDetail .adpbThanks {
+    background: -webkit-linear-gradient(top, #f0fafe, #d3effb);
+    color: #13a3de;
+}
+
+a {
+    text-decoration: none;
+}
+
+.pefcLabel .error{
+    color: #E3981C;
+    display: block;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+select.error, input.error {
+    background-color: #FFDD99;
+    border-color: #FAB138 !important;
+}
+.mnrFeaturedBox2{
+    -webkit-transform:scale(.763, .757);
+    -webkit-transform-origin: left top;
+    -ms-transform: scale(.763,.757);
+    -ms-transform-origin: left top;
+    -moz-transform: scale(.381,.38);
+    -moz-transform-origin: left top;
+    -transform: scale(.763, .757);
+    -transform-origin: left top;
+}
+
+.mscTile2{
+    -webkit-transform:scale(1.3, 1.303);
+    -webkit-transform-origin: left top;
+    -ms-transform: scale(1.3,1.303);
+    -ms-transform-origin: left top;
+    -moz-transform: scale(0.658, .652);
+    -moz-transform-origin: left top;
+    -transform: scale(1.3, 1.303);
+    -transform-origin: left top;
+}
+/*width: 343px;*/
+/*height: 244px;*/
+/*float: left;*/
+/*margin-left: 0px;*/
+/*margin-right: 20px;*/
+
+.contentContainer .dashMilestonesRow .dmrPromptBox table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+    font-size: 28px;
+}
+
+.dmrMilestonetransform{
+    -webkit-transform:scale(.763, .757);
+    -webkit-transform-origin: left top;
+    -ms-transform: scale(.763,.757);
+    -ms-transform-origin: left top;
+    -moz-transform: scale(.381,.38);
+    -moz-transform-origin: left top;
+    -transform: scale(.763, .757);
+    -transform-origin: left top;
+}
+
+.dmrMilestonetransform:active{
+    -webkit-transform:scale(.749, .737);
+    -webkit-transform-origin: left top;
+    -ms-transform: scale(.749,.737);
+    -ms-transform-origin: left top;
+    -moz-transform: scale(.375,.38);
+    -moz-transform-origin: left top;
+    -transform: scale(.749, .737);
+    -transform-origin: left top;
+}
+
+
+.installTableBottomCell td{
+    min-height: 300px;
+    background-color: #464646;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    height: 95%;
+}
+
+.mscTileTransform{
+    -webkit-transform:scale(1.305, 1.303);
+    -webkit-transform-origin: left top;
+    -ms-transform: scale(1.305,1.303);
+    -ms-transform-origin: left top;
+    -moz-transform: scale(0.658, .652);
+    -moz-transform-origin: left top;
+    -transform: scale(1.305, 1.303);
+    -transform-origin: left top;
+}
+
+.headerWellnessLogoTransform{
+    height: 96px;
+    width: 160px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    -webkit-transform:scale(.903, .947);
+    -webkit-transform-origin: left center;
+    -ms-transform: scale(.903,.947);
+    -ms-transform-origin: left center;
+    -moz-transform: scale(.381,.38);
+    -moz-transform-origin: left center;
+    -transform: scale(.903, .947);
+    -transform-origin: left center;
+}
+
+fieldset{
+    border:none;
+    margin:0px !important;
+    padding: 0px !important;
+}
+
+fieldset .formErrorText, .error{
+    color: #e3981c;
+    /*font-size: 12px;*/
+    font-weight: 700;
+    padding-bottom: 10px;
+    padding-top: 2px;
+    display: block;
+}
+
+.stcInfo{
+    background-color: #FAB138;
+    border-radius: 12px 12px 12px 12px;
+    bottom: 5px;
+    box-shadow: 3px 3px 5px #777777;
+    color: #000000;
+    font-size: 20px;
+    font-weight: 300;
+    padding: 10px 10px 10px 20px;
+    right: 0;
+}
+.loading_indicator {
+    background-color: #FFFFFF;
+    background: rgba(0,0,0,.5) url(<%= asset_path('ajax-loader_blue.gif')%>) no-repeat 50% 50%;
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    display: none;
+}
+
+input, select, textarea {
+    -webkit-user-select: auto;
+}
+
+.scrollContainer7Fix {
+    position: static;
+    margin-top: 0px !important;
+    bottom: 0px !important;
+    overflow: auto;
+}
+
+/* Prefrence page */
+
+.prefernceContainer {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    min-height: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: -125px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 25px;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 300px;
+}
+
+.prefernceHeader {
+    color: #13a3de;
+    font-size: 50px;
+    font-weight: 100;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+}
+
+.prefernceText {
+    float: left;
+    color: #333;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.1em;
+}
+
+.preferenceInput {
+    width: 100%;
+    height: 80px;
+    border: solid 2px #ccc;
+    font-size: 30px;
+    border-radius: 14px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    -webkit-user-select: auto;
+}
+
+.preferenceChangeButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 70px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    top: 5px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: -webkit-linear-gradient(top, #90d9f7, #31b0e4);
+}
+
+.preferenceChangeButton:active {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 70px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    top: 5px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.preferenceFieldContainer{
+    margin-top:30px !important;
+    padding-top:20px;
+}
+
+.preferenceFieldErrorContainer{
+    position: relative;
+    margin-top:10px;
+    padding-top: 30px;
+    height: 60px;
+}
+
+
+/* Prefrence page End */
+
+.inviteHeader{
+    color: #13a3de;
+    font-size: 32px;
+    font-weight: 100;
+    text-transform: lowercase;
+    padding-bottom: 20px;
+    clear: both;
+}
+
+.minviteButton{
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 70px;
+    background-color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    top: 5px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: -webkit-linear-gradient(top, #90d9f7, #31b0e4);
+
+}
+
+.minviteButton:active{
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 70px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 70px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    top: 5px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+
+.footerChildOptionSelected, .footerChildOption{
+    background-size: 82px auto;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.mstMilestoneText td{
+    font-size: 25px !important;
+    color: #777;
+}
+
+.formErrorText {
+    color: #e3981c;
+    font-weight: 700;
+    padding-bottom: 10px;
+    padding-top: 2px;
+    display: block;
+}
+
+    /* Use Safari popup */
+
+.popUpContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0px;
+    margin-top: -5px;
+    z-index: 500;
+}
+
+.popUpBG {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0px;
+    /*background-color: #09C;*/
+    background-color: #2d677f;
+    opacity: .6;
+}
+
+.popUpContainer .popUpTable {
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 501;
+}
+
+.popUpContainer .popUpTableTD {
+    vertical-align: middle;
+    align: center;
+}
+
+.popUpContent {
+    width: 90%;
+    margin: auto;
+}
+
+.popUpPanel {
+    border-radius: 10px;
+    box-shadow: 4px 4px 7px #777;
+    background-color: #fff;
+    /* overflow: hidden; */
+    margin-bottom: 35px;
+    padding: 15px;
+    position: relative;
+}
+
+.popUpContainer .osSaveButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    -webkit-transform: translateZ(0);
+    /*background: -webkit-linear-gradient(top, #f0fafe, #daf9ff);*/
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+
+.popUpContainer .osSaveButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.popUpContainer .osButtonContainer{
+    clear: both;
+    float: right;
+}
+
+.popUpMessage .popUpPanel {
+    padding: 25px;
+}
+
+.popUpMessage .popUpMessageTopText {
+    color: #13a3de;
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.popUpMessage .popUpMessageText {
+    font-size: 30px;
+    font-weight: 300;
+    padding-bottom: 10px;
+}
+
+.mefcFieldContainer .mvDeleteButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #000;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #e33;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #fee;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 20px;
+    -webkit-transform: translateZ(0);
+    float: right;
+
+}
+
+.mefcFieldContainer .mvDeleteButton:active {
+    background: none;
+    background-color: #fee;
+    color: #e33;
+}
+
+.osfcFieldContainer .wellParChange a{
+    color:#13a3de ;
+}
+
+/* smooth swipe */
+#wrapper1 {
+    width: 588px;
+    height: 419px;
+    margin:0 auto;
+    position:relative;	/* On older OS versions "position" and "z-index" must be defined, */
+    z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
+    overflow:hidden;
+    background:#aaa;
+    background:#e3e3e3;
+}
+
+#wrapper1 ul {
+    list-style:none;
+    display:block;
+    float:left;
+    width:15000px;
+    padding:0;
+    margin:0;
+    text-align:left;
+}
+
+#wrapper1 li {
+    display:block; float:left;
+    text-align:center;
+    font-family:georgia;
+    font-size:18px;
+    line-height:140%;
+}
+
+.popUpContainer1 .captureButton1 {
+    float: left;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 25px;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 700;
+    color: #555;
+    text-align: center;
+    padding-left: 17px;
+    padding-right: 17px;
+    line-height: 25px;
+    background-repeat: repeat-x;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.popUpContainer .captureButton {
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 60px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.popUpContainer .cbCancel {
+    background-color: #fff;
+    background-position: bottom;
+    margin-right: 0px;
+    float: right;
+}
+
+/*  end smooth swipe */
+
+.ccProfilePhoto .profilePhoto{
+    background-size: auto 240px !important;
+    background-position: center !important;
+}
+
+form#change_photo_id_form{
+       display: none;
+}
+
+/*  end m_app overrides   */
+
+
+    /* wellness links page */
+.ccLinks .linkRow {
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 2px #a9dff5;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+.ccLinks .linkRow:first-child {
+    padding-top: 25px;
+}
+
+.ccLinks .lrName {
+    font-weight: 500;
+    font-size: 36px;
+    color: #13a3de;
+    margin-left: 20px;
+}
+
+.ccLinks .linkRowOn .lrName {
+    font-weight: 700;
+}
+
+.ccLinks .lrSub {
+    font-weight: 300;
+    font-size: 24px;
+    color: #898989;
+    margin-left: 20px;
+}
+
+.ccLinks .linkRow:active {
+    background-color: #e3f4fd;
+}
+
+#swipeArea{
+    height: 418px;
+    width: 610px;
+     overflow: hidden;
+    display: inline-block
+}
+.preloadTemp{
+    height: 418px;
+    width: 610px;
+    position: absolute;
+}
+
+    /* error message */
+.capture_error_message .captureTopText {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.capture_error_message .popUpContent {
+    width: 860px;
+}
+.capture_error_message .popUpPanel {
+    padding: 25px;
+}
+.capture_error_message .captureBottomButtons {
+    padding-top: 5px;
+    clear: both;
+}
+.capture_error_message .cbCancel {
+    /*background-image: url(../images/d_button_bg_ltblue.png);*/
+    background-color: #fff;
+    background-position: bottom;
+    margin-right: 0px;
+    float: right;
+}
+.capture_error_message .captureButton a {
+    text-decoration: none;
+}
+.capture_error_message .captureButton {
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #aaa;
+    height: 25px;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 700;
+    color: #555;
+    text-align: center;
+    padding-left: 17px;
+    padding-right: 17px;
+    line-height: 25px;
+    background-repeat: repeat-x;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+    /* error message */
+
+  /* capture id photo */
+
+.ccProfilePhoto .profilePhotoPanel {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    min-height: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: -125px;
+    box-shadow: 4px 4px 7px #777;
+    padding: 25px;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 300px;
+}
+
+.ccProfilePhoto .profilePhoto {
+    width: 180px;
+    height: 240px;
+    background-size: 180px auto;
+    background-repeat: no-repeat;
+    background-position: middle;
+    border: solid 16px #fff;
+    border-radius: 20px;
+    box-shadow: 4px 4px 7px #777;
+    float: left;
+    margin-bottom: 26px;
+}
+
+.ccProfilePhoto .profilePhotoEditContainer {
+    padding-left: 250px;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.ccProfilePhoto .ppecImageOptions {
+    text-align: center;
+    margin-left: 0px;
+    margin-right: 15px;
+    margin-top: 38px;
+    vertical-align: top;
+}
+
+.ccProfilePhoto .ppecButton {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 3px 3px 5px #aaa;
+    border-radius: 15px;
+    background-color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 0px;
+    margin-right: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 65px;
+    height: 65px;
+    background: -webkit-linear-gradient(top, #ffdda5, #febe55);
+    color: #603913;
+}
+
+.ccProfilePhoto .ppecButton:active {
+    background: none;
+    background-color: #13a3de;
+    color: #fff;
+}
+
+.ccProfilePhoto .ppecioRotateCCW {
+    background-image: url(/assets/m_icon_rotate_ccw.png);
+
+}
+
+.ccProfilePhoto .ppecioRotateCW {
+    background-image: url(/assets/m_icon_rotate_cw.png);
+}
+
+.ccProfilePhoto .ppecioRotate {
+    width: 65px;
+    height: 60px;
+    background-position: 0px 0px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.ccProfilePhoto .ppecioRotate:hover {
+    background-position: 0px 60px;
+}
+
+.ccProfilePhoto .ppecioRotate:active {
+    background-position: 0px 60px;
+}
+
+.ccProfilePhoto .ppecioRotateText {
+    font-size: 40px;
+    font-weight: 300;
+    /*display: inline-block;*/
+    display: none;
+    position: relative;
+    top: -16px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.ccProfilePhoto .pbcbSave {
+    background: -webkit-linear-gradient(top, #9aa012, #7d820a);
+    color: #fff;
+}
+    /* capture id photo */
+
+
+/* autocomplete css override */
+.ui-widget-content {
+    border: 2px solid #999 !important;
+}
+.ui-menu .ui-menu-item a {
+    /*border-bottom: 2px solid #999 !important;*/
+}
+
+.ui-menu .ui-menu-item {
+    border-bottom: 2px solid #999 !important;
+}
+
+
+
+
+.ui-menu {
+    padding: 0px !important;
+    z-index: 1111 !important;
+}
+.ui-widget {
+    font-size: 1.8em !important;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    -moz-border-radius-bottomright: 0px !important;
+    -webkit-border-bottom-right-radius: 0px !important;
+    -khtml-border-bottom-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl{
+    -moz-border-radius-bottomleft: 0px !important;
+    -webkit-border-bottom-left-radius: 0px !important;
+    -khtml-border-bottom-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+
+.ui-corner-all,.ui-corner-top, .ui-corner-left, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.ui-corner-all,.ui-corner-bottom, .ui-corner-left, .ui-corner-right, .ui-corner-tr {
+    border-bottom-right-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+
+
+.ui-menu .ui-menu-item:hover {
+    border-bottom: 0px !important;
+}
+
+.contentContainer .alertContainer2 {
+    height: 50px;
+    font-weight: 500;
+    color: #FFFFFF; /*#fff*/
+    background-color: #13a3de; /*#3994e9;*/
+    font-size: 26px;
+    text-align: center;
+    line-height: 50px;
+}
+
+
+/*END autocomplete css override */
+
+
+/* Overrides ---------------------------------------*/
+/* turbolinks are working on cursor pointer in mobile */
+.footerContainer .footerChildOption,.footerChildOptionSelected,.footerFamilyOption,.footerFamilyOptionSelected{
+    cursor: pointer;
+}
+
+
+.acenter{ text-align:center !important}
+
+.display{ display:none}
+.inputOne{ width:40% !important;}
+.inputTwo{ width:58% !important;}
+
+.downloadButton {
+
+    height: 60px !important;
+    font-size: 39px !important;
+    line-height: 58px !important;
+    position:relative;
+
+}
+.downloadButton img{ position:relative; right: -5px;
+     }
+.startLogo_forDownload {
+    width: 322px;
+    height: 210px;
+    background-image: url(<%= asset_path('l_start_nov13_logo.png')%>);
+    /*background-size: 161px 105px;*/
+    background-repeat: no-repeat;
+    margin:0 auto;
+    left: 8px;
+    position: relative;
+    top:-20px;
+
+}
+
+.stcHeader p{
+    color: #898989;
+    font-size: 30px;
+}
+/*END overrides ----------------------------------- */
+
+
+.topHeading {
+    color: #717171 !important;
+    font-size: 31px
+}
+.noBorder {
+    border-top: 0px !important;
+    padding-top: 0 !important; display:inherit;
+}
+.topHeadingBorder {
+    border-bottom: 1px solid #cccccc !important;
+    padding: 10px 0 15px 0;
+    background: #fcfcfb !important;
+}
+.signInButtonNew {
+    border-radius: 3px;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    color: #13a3de;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: #48bbea;
+    color: #fff;
+    cursor: pointer;
+}
+
+.downloadKlAppButton {
+    border-radius: 3px;
+    height: 80px;
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 80px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    -webkit-transform: translateZ(0);
+    background: #48bbea;
+    color: #fff;
+    cursor: pointer;
+}
+
+.displayInline{
+    display: inline !important;
+    margin-left:20px;
+}
+.downloadIcon {
+    position:relative;
+    top:0px;
+    right:-5px;
+}
+
+.passwordPageStyles{
+    outline: 1px solid #ccc !important;
+    margin: 15px;
+    background: #FCFCFC;
+}
+hr{
+    border-top:1px solid #CCC;
+    border-bottom:0;
+    border-right:0;
+    border-left:0;
+}
+
+.newBackground{
+    background-color: #f1efed !important;
+    border: 1px solid #f1efed!important;
+}
+.clear{ clear:both}
+
+.referralCodeStyle{
+    font-size:30px;
+    line-height:40px;
+    padding:0px 0 5px 0;
+}
+.startTable form div{
+    border:1px solid #f1efed !important;
+}
+
+/*-----over writes --- */
+.InvitationSignUpContainer input{
+    width: 100%;
+    height: 80px;
+    border: solid 0px #ccc !important;
+    font-size: 30px;
+    border-radius: 3px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 0px;
+    color: #555;
+    -webkit-user-select: auto;
+}
+
+.InvitationSignUpContainer input:focus {
+    outline: none;
+}
+
+.ConfirmHeading{
+    font-size:36px;
+    font-weight: 700;
+    color: #666;
+}
+.apptopText p {
+    color: #666;
+    font-size: 30px;
+    font-weight: 500;
+    padding-bottom: 0px;
+    clear: both;
+    padding-top: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: left;
+}
+
+.startTopContainer {
+    border: 0 !important;
+    padding-top:30px !important;
+}
+.InvitationSignUpContainer .stcInputPassword {
+    width: 100% !important;
+}
+.inputOne {
+    width: 49.5% !important;
+}
+
+.inputTwo {
+    width: 49.5% !important;
+}
+
+.InvitationSignUpContainer .error{
+    font-size: 30px !important;
+}
+
+.ForgetPWDLink{
+    line-height:80px;
+    font-size: 30px;
+    font-weight: 500;
+    text-decoration: underline;
+}

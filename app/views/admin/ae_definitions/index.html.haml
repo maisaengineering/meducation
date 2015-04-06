@@ -1,0 +1,58 @@
+%h1 View/Manage AeDefinitions
+#dashFormsList.dashPanel.managePanel
+  %span.panelName AeDefinitions (#{@ae_definitions.count})
+  #loading
+    %table#manageFormsTable.manageTable{border: 0, cellpadding: 0, cellspacing: 0}
+      %tr.manageTableHeader
+        %th Type
+        %th Alert/Event
+        %th Title
+        %th Activity
+        %th status
+        %th Actions
+        %th
+      - if @ae_definitions.blank?
+        %tr
+          %td{colspan: '6', align: 'center'} No AeDefinitions yet..
+      - else
+        - @ae_definitions.each do |ae_definition|
+          %tr
+            %td= ae_definition._type
+            %td= ae_definition.definition_type
+            %td= ae_definition.title
+            %td= ae_definition.notifications_count
+            %td= select_tag "status", options_for_select(AeDefinition::STATUS, ae_definition.status), onchange: "change_status(this)", data: {url:admin_ae_definition_path(ae_definition) }
+            %td
+              = link_to 'Edit', edit_admin_ae_definition_path(ae_definition)
+              &nbsp;&nbsp;
+              = link_to 'Show', admin_ae_definition_path(ae_definition)
+              &nbsp;&nbsp;
+              = link_to 'Delete', admin_ae_definition_path(ae_definition),method: :delete, data: {confirm: 'Are you sure? This would delete all notification related to this AeDefination, what ever the state'}
+    .panelActionContainer
+      %ul
+        %li
+          = link_to 'New AdHoc AeDefinition', new_admin_ae_definition_path(type: AdHocAeDefinition.to_s)
+        %li
+          = link_to 'New Scheduled AeDefinition', new_admin_ae_definition_path(type: ScheduledAeDefinition.to_s)
+
+:javascript
+  change_status= function(element){
+     value = element.value;
+     url = $(element).attr("data-url");
+     $.ajax({
+       type: 'PUT',
+       url: url,
+       dataType: 'script',
+         data: {
+        status: value
+       },
+       success: function(data){
+        alert('Successfully Updated')
+       },
+       error: function(data){
+        alert('Cannot update right now, Please try it later')
+       }
+
+     });
+
+  }

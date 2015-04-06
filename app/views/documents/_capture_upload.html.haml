@@ -1,0 +1,35 @@
+#capture_upload.popUpContainer.popUpDocumentsCapture.popUpDocumentsCaptureUpload{:style => "display: none;"}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureUploadContainer
+                .captureUploadNumberStatus
+                  .captureUploadBigNumber #{(doclist_size)}
+                  .capturePagesSelected
+                    page
+                    %br>/
+                    chosen
+                .captureUploadButtons
+                  .captureUploadButton.cubAccept.clickLink.needsclick{:onclick => ""}
+                    %a{:href => "#", id: 'accept_and_capture', class: "needsclick"}
+                      Accept
+                      %span.cubUnBold and
+                      capture page
+                      %span.smallNumber #{doclist_size+1}
+                  #accept_and_save.captureUploadButton.cubSave{:onclick => ""}
+                    %a{:href => "#"}
+                      Accept
+                      %span.cubUnBold and
+                      save
+              .captureBottomButtons
+                .captureButton.cbCancel{:onclick => "window.location.href='#{documents_path(@parent_profile)}'; return false;"}
+                  %a{:href => "#"} Cancel
+                .captureFileSize
+                  Faster upload method selected &#8226;
+                  %a{:href => "#"} Switch to higher quality
+              .clear

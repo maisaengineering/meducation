@@ -1,0 +1,50 @@
+
+= field_set_tag  "", id:"#{index}" do
+  .popUpContainer.popUpOnboard.popUpOnboardChild
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Sign up
+              .onboardTopText
+                Get
+                %strong.bBlue{class: "head_#{index}"}
+                started:
+              .onboardFields
+                .onboardFieldContainer.onboardFieldContainerChildrenFullName
+                  %span.onboardLabel Child's full name
+                  = hidden_field_tag  "kids[#{index}][nickname]", nil, class:'nickname'
+                  = text_field_tag  "kids[#{index}][fname]", nil, class: 'required', :placeholder => "first name"
+                  = text_field_tag  "kids[#{index}][mname]", nil, :placeholder => "mid name(s)"
+                  = text_field_tag  "kids[#{index}][lname]", nil, class: 'required', :placeholder => "last name"
+                  = select_tag  "kids[#{index}][prefix]", options_for_select(['Jr.', 'II', 'III', 'IV', 'V', 'VI', 'VII']), include_blank: true
+                .onboardFieldContainer
+                  %span.onboardLabel Birthday
+                  = text_field_tag "kids[#{index}][birthdate]", nil,  class: 'birthdate required',  :placeholder => "mm/dd/yyyy", "max-date"=> Date.today
+                .onboardFieldContainer
+                  %span.onboardLabel Gender
+                  = select_tag  "kids[#{index}][gender]", options_for_select([['Boy', 'Male'], ['Girl','Female']]), include_blank: true, class: 'required'
+                .onboardFieldContainer
+                  %span.onboardLabel Identity photo
+                  .onboardButton.obPhoto.needsclick{onClick: "", data:{index: index} }
+                    %a{:href => "#", class: "needsclick",  :onClick => "return false;"} Select photo
+                  .onboardImageOptions.rotationEss{style: "display: none;"}
+                    .oioRotate.oioRotateCCW{:onclick => ""}
+                    .oioRotateText rotate
+                    .oioRotate.oioRotateCW{:onclick => ""}
+                  .onboardPhoto.rotationEss{:style => "display: none;"}
+                %span{:style => "display:none;"}
+                  = file_field_tag "kids[#{index}][photograph][source]", id: "kids_#{index}_photograph", onchange: "updateTempPhoto(this);"
+                  = hidden_field_tag "kids[#{index}][photograph][canvas_url]", "", id: "photoCanvasData"
+                  = hidden_field_tag "kids[#{index}][photograph][rotate]", 0
+                  %canvas#myCanvas{style:" border:2px solid;"}/
+              .bigNextButton{:onclick => "$(this).find('a').click();"}
+                %span.bigNextButtonSubline{id: "head_#{index.to_i+1}"}
+
+              .onboardBottomButtons
+                .onboardButton.obCancel{:onClick => ""}
+                  %a{:href => "#", :onClick => "return false;"} Cancel
+                .onboardButton.obPrevious{:onClick => "$(this).find('a').click();"}
+              .clear

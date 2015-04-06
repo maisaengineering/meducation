@@ -1,0 +1,16 @@
+%h1 You are #{@organization.display_action.html_safe} for #{@organization.name} (#{params[:season_year]})
+#registrationExplanation
+  =  @organization.description.html_safe unless @organization.description.nil?
+#registrationExplanation
+  At KidsLink, our vision is to be the complete gateway for parents to manage the daily aspects of their children’s lives.  Today's parents are overwhelmed and stressed with the complexity of managing their kids lives, and the Kidslink network helps parents organize their world and better enjoy their life experiences.  Instead of juggling hundreds of pages of redundant forms and documents, the Kidslink Network helps parents and organizations save time and effort by managing their world through a centralized dashboard, while also addressing today's security and compliance concerns with young children. 
+
+- if @season
+  .rwkLoginDecisionsBox
+    .rwkLoginDecisionContainer
+      = link_to "Apply using</br> <span id='rwkExistingText'> existing </span> KidsLink membership".html_safe,
+           current_user ? profile_path(id: current_user.id,org_id: @organization.id,season_id: @season.id) : new_user_session_path(org_id: @organization.id,apply_existing: 'yes',season_id: @season.id)
+    .rwkLoginDecisionContainer
+      = link_to "Register for</br> <span id='rwkExistingText'> new </span> KidsLink membership".html_safe,
+          current_user ? new_logged_in_profiles_path(org_id: @organization.id,season_id: @season.id) : new_profile_path(org_id: @organization.id, season_id: @season.id,season_year: @season.season_year)
+      <span id="rwkAndapplyText">and apply to this organization</span>
+

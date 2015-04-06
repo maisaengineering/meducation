@@ -1,0 +1,2 @@
+= form_for @document_definition,url: document_definitions_path(@organization.id,@document_definition), authenticity_token: true  do |f|
+  = render 'form',heading: 'New Document Definition',f: f

@@ -1,0 +1,17 @@
+/ TODO, optimization needed
+- flag  = 0
+- @orgnization_list.first.seasons.each do |each_season|
+  - each_season.notifications.requested.each do |each_doc|
+    - flag = 1
+    %table#panelUniDocList{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+      %tr
+        - @json_tem = JsonTemplate.where(:_id => each_doc.json_template_id).first
+        %td
+          = link_to "#{@json_tem.form_name}", form_data_organizations_path(:child => params[:kid_id], :json_template_id => each_doc.json_template_id, :email =>params[:email], :org_id => each_season._parent.org_id, :season_id => each_season.id)
+
+        %td.panelUniDocDate #{each_doc.created_at.strftime("%m/%d/%y")}
+
+    %br
+
+- if flag == 0
+  No document yet

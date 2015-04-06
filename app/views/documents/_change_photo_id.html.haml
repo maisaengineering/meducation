@@ -1,0 +1,53 @@
+#additional_information.popUpContainer.popUpDocumentsCapture.popUpDocumentsCaptureAddMeta{:style => "display: none;"}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            - document = @kid_profile.photograph ? @kid_profile.photograph : Document.new
+            = form_for document,url: change_photo_id_documents_path(@kid_profile),html: {method: :post,id: 'change_photo_id_form'}, authenticity_token: true do |f|
+              .popUpPanel
+                %span.panelName Capture new document
+                .captureTopT7ext
+                  Enter optional information for the
+                  %strong Photo Identity
+                  and then click to save.
+                .captureAddMetaFields
+                  .captureAddMetaFieldContainer
+                    %span.captureAddMetaLabel org/provider/company
+                    = f.text_field :org_provider
+                  .captureAddMetaFieldContainer
+                    %span.captureAddMetaLabel description
+                    = f.text_field :description
+                  .captureAddMetaFieldContainer
+                    %span.captureAddMetaLabel date
+                    = f.text_field :taken_on, value: Date.today
+                  .captureAddMetaFieldContainer
+                    %span.captureAddMetaLabel expiration date
+                    =f.text_field :expiration_date
+                  %span{style: 'display:none;'}
+                    = f.text_field :category_id  ,value: Category.find_by(name: Document::PHOTOGRAPH).id.to_s
+                    = f.file_field :source, id: "photograph_source"
+                #bigSaveButton.submitPhotoId
+                  %a{:href => "#"} Save document
+                .captureBottomButtons
+                  .captureButton.cbCancel{:onclick => "window.location.href='#{child_dashboard_path(@kid_profile)}'; return false;"}
+                    %a{:href => "#", :onclick => "return false;"} Cancel
+                .clear
+  :javascript
+    $('.profileChildPhotoOptionsContainer ul li a#change_photo_id').click(function(e){
+       e.preventDefault();
+       $('#photograph_source').trigger('click');
+         //show next page if and only if file selected
+       $('#photograph_source').change(function(e){
+         $('.form_loading').show();
+          if($('#photograph_source').val()!=''){
+          $('#change_photo_id_form').submit(); //show the div to accept_and_save or accept_and_capture
+          }else{
+              $('.form_loading').hide();
+          }
+       });
+
+    });
+

@@ -1,0 +1,41 @@
+%h3 Search parents by email,fname or lname
+
+= form_tag admin_search_parents_path,method: :get, authenticity_token: true do |f|
+  #dashEditForm.manageContainer
+    %p.manageExplanation
+    #dashEditFormPanel.dashPanel
+      %span.panelName
+        = 'Search Parents'
+      = text_field_tag "query",params[:query], size: 50 ,placeholder: 'Enter email/fname/lname with chars'
+      = submit_tag 'Search',style: 'margin-top: -7px;',disable_with: 'wait...'
+      .clear
+- if params[:query].present?
+  #dashFormsList.dashPanel.managePanel
+    %span.panelName Result
+    - if @parents.blank?
+      No results found for '#{params[:query]}'
+    - else
+      %table#manageEnrolleesTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %thead
+          %tr.manageTableHeader
+            %td First Name
+            %td Last Name
+            %td Email
+            %td Created At
+            %td
+            -#%td
+            %td
+            %p
+        - @parents.each do |profile|
+          - parent = profile.parent_type
+          %tr
+            %td= highlight(parent.fname.to_s, @name.first.to_s)
+            %td= highlight(parent.lname.to_s, @name.last.to_s)
+            %td= @name.count==1 ? highlight(parent.email.to_s, @name.first.to_s ) : parent.email.to_s
+            %td= (profile.created_at || profile.id.generation_time).utc
+            %td= link_to 'update email',admin_edit_email_path(old_email: parent.email)
+            -#%td= link_to 'update phone numbers',admin_edit_phone_numbers_path(email: parent.email)
+            %td= link_to 'update user data',admin_edit_user_data_path(email: parent.email), remote:true
+- if flash[:notice].present?
+  :javascript
+    alert("#{flash[:notice]}")

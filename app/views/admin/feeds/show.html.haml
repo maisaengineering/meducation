@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @feed.title
+%p
+  %b Url:
+  = @feed.url
+%p
+  %b Author:
+  = @feed.author
+%p
+  %b City
+  =@feed.city
+%p
+  %b State
+  =@feed.state
+%p
+  %b Frequency
+  =@feed.frequency
+%p
+  %b Note's
+  =@feed.notes
+
+  = link_to 'Edit', edit_admin_feed_path(@feed)
+  \|
+  = link_to 'Back', admin_feeds_path

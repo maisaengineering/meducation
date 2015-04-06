@@ -1,0 +1,47 @@
+.dashContainer
+  %h1 Document share/upload: Tell us about your child (3 year olds)
+
+  .attachmentContainer
+    %h2.attachmentStep
+      %span.attachmentStepNum step 1
+      Download templates
+
+    .attachmentText
+      (Templates are optional.  There is no need to download them if you already have the documents
+      in your possession or in the KidsLink repository.)
+      %br
+      %br
+      Click on the following link to download a template.  Then print off the document. Adobe Acrobat is required for some templates.
+
+    %ul.attachmentTemplateList
+      %li
+        = link_to "TEMPLATE: Tell us about your child (3 year olds)", "#"
+        %br
+        %span.attachmentTemplateListNote
+          (linked to form
+          = succeed "." do
+            = link_to "Tell us about your child", "#"            
+          Click that link to modify the form first if edits are necessary)
+
+    .attachmentDivider
+    %h2.attachmentStep
+      %span.attachmentStepNum step 2
+      Share or upload document
+    .attachmentText If you already have a document available in your KidsLink document repository, there is no need to upload it again.  Instead, you simply need to share it.
+    .attachmentBoxName Document: Tell us about your child (3 year olds)
+    .attachmentDecisionsBox
+      .attachmentDecisionContainer
+
+        = link_to "<span class='attachmentExistingDocText'> Choose existing document </span>".html_safe, "#"
+        from your
+        %span.attachmentExistingKLRText KidsLink repository
+
+      .attachmentDecisionContainer
+        = link_to "<span class='attachmentUploadText'> Upload new document </span>".html_safe, "#"
+        from your computer
+
+
+
+
+    %p  
+= render "child_panel"

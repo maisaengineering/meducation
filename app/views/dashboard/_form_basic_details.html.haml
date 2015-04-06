@@ -1,0 +1,14 @@
+.editProfileFieldContainer
+  %span.editProfileLabel Full name
+  = text_field_tag "kid[fname]", f.pre_fill(:fname), placeholder:"first name" , class:'epfFirstName  required'
+  = text_field_tag "kid[mname]", f.pre_fill(:mname),  placeholder:"mid name" , class:'epfMiddleName'
+  = text_field_tag "kid[lname]", f.pre_fill(:lname), placeholder:"last name" , class: 'epfLastName  required'
+.editProfileFieldContainer
+  %span.editProfileLabel Preferred name
+  = text_field_tag "kid[nickname]", f.pre_fill(:nickname), class: 'required'
+.editProfileFieldContainer
+  %span.editProfileLabel Birthday
+  = text_field_tag "kid[birthdate]", l(@kid_profile.kids_type.birthdate), class: 'birthdate', placeholder:"mm/dd/yyyy"
+.editProfileFieldContainer
+  %span.editProfileLabel Gender
+  = select_tag  "kid[gender]", options_for_select([['Boy', 'Male'], ['Girl','Female']], f.pre_fill(:gender)), include_blank:true, class: ' required'

@@ -1,0 +1,25 @@
+<div id="new_selection_id_<%= params[:val] %>">
+
+  <table>
+    <td>
+      <%= text_field "one_way_#{params[:val]}", 'name' %>
+    </td>
+    <td>
+      <%= text_field "one_way_#{params[:val]}", 'value' %>
+    </td>
+    <td>
+      <a onclick='delete_boxes(<%= params[:val]%>)' href="javascript:void(0)" class="deleteicon" id="deleteicon<%= params[:val] %>"><b>Delete</b></a>
+    </td>
+  </table>
+</div>
+
+<script type="text/javascript">
+
+    function delete_boxes(id) {
+        $("#new_selection_id_" + id).remove();
+        $("#deleteicon" + id).empty();
+        decre = parseInt($("#total_service_count").val());
+        value = decre - 1;
+        $("#total_service_count").val(value);
+    }
+</script>

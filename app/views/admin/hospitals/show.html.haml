@@ -1,0 +1,36 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @hospital.name
+
+%p
+  %b Preferred Name:
+  = @hospital.preferred_name
+
+%p
+  %b Email:
+  = @hospital.email
+
+%p
+  %b Phone:
+  = @hospital.phone_no
+
+%p
+  %b Description:
+  = @hospital.description
+%p
+  %b zipcodes:
+  = @hospital.zipcodes.to_a.join(', ')
+
+
+%p
+  %b Partner URL:
+  = link_to partner_ref_url(@hospital) ,partner_ref_url(@hospital) ,target: '_blank'
+%p
+  %b Logo:
+  = image_tag @hospital.logo  if @hospital.logo
+
+= link_to 'Edit', edit_admin_hospital_path(@hospital)
+\|
+= link_to 'Back', admin_hospitals_path

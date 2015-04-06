@@ -1,0 +1,2 @@
+var count= $('.parent_forms .editProfileFieldContainer').length;
+$('.parent_forms').append('<%=escape_javascript( render 'form_parent_info', index:count, f:nil)%>')

@@ -1,0 +1,21 @@
+<h1>  Confirmation of New Account with KidsLink</h1>
+<p>Congratulations! You and your <%= "child".pluralize(@nick_name.to_a.count) %>
+  <%= @nick_name.to_a.map{|n| "<strong>#{n}</strong>"}.to_sentence.html_safe %>
+  have joined KidsLink, the online dashboard for parents.</p>
+<!-- <p>During your sign-up process, you also provided access for 
+  <strong>OtherFirstName OLastName</strong> 
+  [and <strong>OtherFirstName OtherLastName</strong> (or) 
+  [, <strong>Other1FirstName Other1LastName</strong>, and 
+  <strong>Other2FirstName Other2LastName</strong>] to access this child's records with KidsLink.</p> -->
+<p><a> <%#= link_to "Click here to begin using your KidsLink dashboard",child_dashboard_profiles_url(:child => @child_fname, :email =>@parent_email) %></a></p>
+
+<p>If you also applied for membership for <strong><%=  @child_fname %></strong> with any KidsLink-affiliated organization, you will be receiving an additional email when that has been confirmed.</p>
+<div class="accountStatusBox">
+  <p><strong>Premium account status</strong></p>
+  <p>Child: <%=  @child_fname %> (<%= @nick_name.to_a.map{|n| "#{n}"}.to_sentence.html_safe %>) <%=  @child_lname %><br />
+    Cost: $0<%#= @amount %> <!--[(or) free for one year (or) $DiscountedCost after discounts--><br />
+  Term: <%=  Date.today.strftime("%m/%d/%Y") %>  through <%=  (Date.today+1.year).strftime("%m/%d/%Y") %></p>
+</div>
+<!--<p>Please note that KidsLink may charge your credit card at the end of your term to renew your membership unless you notify us at least 30 days in advance.</p>-->
+<p>For any questions, please reply to this email or visit our web site at <a href="http://www.mykidslink.com/"><strong>www.mykidslink.com</strong></a> and choose the Contact Us page.</p>
+

@@ -1,0 +1,33 @@
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  %tr
+    %td.profileInnerTDContainer{:valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td.panelFieldName Primary doctor
+          %td.panelFieldContent
+            #{append_line_break @kid_profile.get_kid_value(:doctor_name)}
+            #{append_line_break @kid_profile.get_kid_value(:doctor_phone)}
+            %a{:href => "mailto:#{@kid_profile.get_kid_value(:doctor_email)}"} #{@kid_profile.get_kid_value(:doctor_email)}
+        %tr
+          %td.panelFieldName Dentist
+          %td.panelFieldContent
+            #{append_line_break @kid_profile.get_kid_value(:dentist_name)}
+            #{append_line_break @kid_profile.get_kid_value(:dentist_phone)}
+            %a{:href => "mailto:#{@kid_profile.get_kid_value(:dentist_email)}"} #{@kid_profile.get_kid_value(:dentist_email)}
+        %tr
+          %td.panelFieldName Medicines
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:medicines )}
+    %td.profileInnerTDContainer{:valign => "top"}
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td.panelFieldName Food allergies
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:food_allergies)}
+        %tr
+          %td.panelFieldName Medical issues
+          %td.panelFieldContent   #{@kid_profile.get_kid_value(:medical_issues)}
+        %tr
+          %td.panelFieldName Special needs
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:special_needs)}
+        %tr
+          %td.panelFieldName Other health/wellness
+          %td.panelFieldContent #{@kid_profile.get_kid_value(:other_concerns)}

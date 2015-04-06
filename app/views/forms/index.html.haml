@@ -1,0 +1,21 @@
+%h1 Listing forms
+
+%table
+  %tr
+    %th Name
+    %th Content
+    %th
+    %th
+    %th
+
+  - @forms.each do |form|
+    %tr
+      %td= form.name
+      %td= form.content
+      %td= link_to 'Show', form
+      %td= link_to 'Edit', edit_form_path(form)
+      %td= link_to 'Destroy', form, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Form', new_form_path

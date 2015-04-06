@@ -1,0 +1,18 @@
+/ .bodyContainer
+.dashContainer
+  .dashContainerLeft
+    = render 'shared/kid_document_alerts',bucket: 'univ' ,organization_memberships: @organization_memberships,kid_profile: @kid_profile,is_admin: false
+    -#= render 'shared/kid_document_alerts',bucket: 'univ',organization_memberships: @organization_memberships,kid_profile: @kid_profile,is_admin: false
+    %org=""
+    %season_acc=""
+    #dashOrgStatus.dashPanel
+      = render 'organization_status'
+  .dashContainerRight
+    #dashProfileData.dashPanel
+      = render 'profile_data', :season => @orgnization_season[0].seasons
+      -#= render 'shared/kid_univ_docs',documents: @kid_profile.documents, kid_profile: @kid_profile,is_admin: false
+    = render 'shared/kid_univ_docs',documents: @kid_profile.documents, kid_profile: @kid_profile,is_admin: false
+
+
+= render 'shared/kid_dash_left' ,active_class: 'child'
+

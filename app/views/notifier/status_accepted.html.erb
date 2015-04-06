@@ -1,0 +1,22 @@
+<h1><%= @nick_name %> has been accepted by <%= @org_name %>!</h1>
+<p>KidsLink is excited to let you know that  <%= @org_name %> has accepted
+  <%= @nick_name.map{|n| "<strong>#{n}</strong>"}.to_sentence.html_safe %>
+  for  <%= @season %> <%= @session %>.</p>
+<p>Please note that although <%= @nick_name.map{|n| "#{n}"}.to_sentence.html_safe %> has been accepted, he or she is
+  <strong class="redText">not fully registered</strong>
+  until <%= @org_prefered_name %> confirms that it has received all documents and forms from you.</p>
+<p>At this time, the following forms and documents are ready for your completion in your 
+  <strong><a href="#">KidsLink dashboard</a></strong>:</p>
+<ul>
+<%  @alert_forms.each do |each_form|%>
+  <li><%= each_form %></li>
+  <%end%>
+  <!-- <li>Document itemTwo</li> -->
+</ul>
+<p>[(or) At this time, there are no additional forms or documents ready for your completion. Stay tuned from KidsLink and <%= @org_prefered_name %>.]</p>
+<p>For any questions about KidsLink, please reply to this email or visit our web site at 
+  <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a>
+  </strong> and choose the Contact Us page. For any questions about OrganizationLongName,
+  please visit their web site at <strong><%= link_to("#{@org_web}", @org_web) unless @org_web.nil? %></strong></p>
+
+

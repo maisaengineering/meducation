@@ -1,0 +1,41 @@
+- title "#{@profile.full_name} | Documents"
+.dashContainerDocumentsLeft
+  #documentsCaptureButton.clickLink
+    %a{:href => "#",id: 'capture_new_document'}
+      %span#dcbCaptureLine Capture
+      new document
+  #documentsQuickCaptureButtonContainer
+    #dcbOr or
+    #documentsQuickCaptureButton.clickLink.needsclick{:onClick => ""}
+      = link_to "Quick Capture" ,"#",class: 'choose_document needsclick',id: @categories.first.id
+.dashContainerDocumentsRight
+  #dashDocumentsFull.dashPanel
+    %span.panelName
+      - vault = @kid_profile.nil? ? 'Family' : @kid_profile.nickname
+      = link_to "#{vault}'s document vault","#"
+    .panelInstructions
+      Find your document below.
+      = render 'shared/switch_to'
+    - @categories.each do |category|
+      - documents_count = documents_vault(category).count
+      #demo1.categoryRow{class: documents_count.eql?(0) ?  'categoryRowEmpty' : nil, data: {'category-id'=> category.id, 'profile-id'=>@profile.id},id: is_clicked?(category.name)? "selected_category" : nil}
+        .categoryMain{:onclick => "", style: "background-image: url(#{category_icon(category)});"}
+          .categoryTitlePlus
+            .categoryTitle{id: category.name.eql?(Document::QUICKCAPTURE)? "crQuickCaptures" : nil}
+              %a{:href => "#"} #{category.name}
+            .categoryItemNumber{id:"#{category.name.delete(' ')}#{@profile.id}"}= documents_count.eql?(0) ? '(no documents)' : pluralize(documents_count, 'document')
+        .documentButtons.categoryButtons
+          .documentButton.dbCaptureHere.clickLink{:onclick => ""}
+            = link_to "Capture new" ,"#",class: 'capture_new_document_right ',id:category.id
+        #demo1a.docList.dlLevelOne{:class=>"#{category.id}",:style => "display:none;"}
+        .clear
+= hidden_field_tag 'capture_new_doc', params[:new_doc_request]
+= hidden_field_tag 'capture_doc_for', (@kid_profile.nil? ? 'Family' : 'Kid')
+= render 'capture_select_profile'
+= render 'capture_type_of_category'
+= render 'capture_upload'
+= render 'additional_information'
+= render '/shared/form_loading'
+= render '/shared/errormessage'
+
+

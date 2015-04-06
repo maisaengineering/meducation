@@ -1,0 +1,17 @@
+.prefRowName Add new child
+.prefOptions
+  %label
+    %span.labelName.onboardLabel Preferred name
+    = text_field_tag "user[kid][nickname]", nil, class: 'required_if'
+  %label
+    %span.labelName.onboardLabel First name
+    = text_field_tag "user[kid][fname]", nil, class: 'required_if'
+  %label
+    %span.labelName.onboardLabel Last name
+    = text_field_tag  "user[kid][lname]", nil, class:'required_if'
+  %label
+    %span.labelName.onboardLabel Birthdate
+    = text_field_tag "user[kid][birthdate]", nil, class: 'birthdate required_if', :placeholder => "MM/DD/YYYY"
+  %label
+    %span.labelName.onboardLabel Gender
+    = select_tag  "user[kid][gender]", options_for_select([['Boy', 'Male'], ['Girl','Female']]), include_blank:true, class: 'required_if'

@@ -1,0 +1,14 @@
+- message_dom_id ||= 'capture_error_message'
+.popUpContainer.capture_error_message{id: message_dom_id ,style: 'display: none;'}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              .captureTopTextError
+              .captureBottomButtons
+                .captureButton.cbCancel{:onclick => ""}
+                  %a{:href => "#"} Okay
+              .clear

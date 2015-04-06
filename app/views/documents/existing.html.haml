@@ -1,0 +1,38 @@
+:css
+  .attachmentDecisionsBox{
+     height: 170px;
+  }
+
+.scrollable_docs
+  - if @documents.blank?
+    %div{style: 'height:150px;'}
+      No Documents uploaded yet.
+  %table
+    %tr
+      - @documents.each do |document|
+        %td.choose_existing_document{id: document.id,align:'center'}
+          %p.text_in_doc= truncate(document.name, :length => 35)
+          -#%p.text_in_doc= document.name
+          = link_to image_tag(thumb_document_url(document),"data-original" =>thumb_document_url(document), width: 75, height: 70 ,class: 'lazy', :title => document.display_name, :href => "javascript:void(0)")
+        %td.space
+:javascript
+  loadLazy();
+  $('#share_button').hide();
+  uploadNew();
+  $('.choose_existing_document').click(function(e){
+    e.preventDefault();//Prevent a link from opening the URL
+    $(this).siblings().removeClass('active');
+    $(this).addClass('active');
+    //get the selected documet id and form a url for sharing the doc
+    $("#share_link a:first-child").attr("href", "/#{params[:profile_id]}/documents/"+$(this).attr("id") +"/share?notification_id=#{params[:notification_id]}");
+    $("#share_link").show();
+
+  })
+
+  $(document).ready(function(){
+     $('.scrollable_docs').jScrollPane();
+    //var x = $('.choose_existing_document').height();
+    //    var y = x + 40 + "px";
+    //
+    //    $('.attachmentDecisionsBox').css('height', y);
+  });

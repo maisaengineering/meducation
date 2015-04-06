@@ -1,0 +1,48 @@
+= form_for(@organization, :html => { :autocomplete => "off", :id=>"form", :multipart => true }, authenticity_token: true) do |f|
+  -if @organization.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@organization.errors.count, "error")} prohibited this organization from being saved:"
+
+      %ul
+        - @organization.errors.full_messages.each do |msg|
+          %li= msg
+  %h1 Edit Organization Content and Configuration
+  #orgContentPage.manageContainer
+    %p.manageExplanation Any changes you make here will take effect immediately for all your enrollees.  Be sure to click "Save Changes" at the bottom of the page, or your changes will be lost.
+    = hidden_field_tag('org',  params[:id])
+    -if !@organization.new_record?
+      = f.hidden_field :networkId, :value => "#{@organization.networkId}"
+      = hidden_field_tag :season_is_current_change,nil
+    -else
+      = f.hidden_field :networkId, :value => Organization.generate_network_id
+    #orgContentPrimary.dashPanel.managePanel
+      = render 'primary_information', :f => f
+    #orgContentWeblinks.dashPanel.managePanel
+      %span.panelName Web links
+      = render 'web_links', :f => f
+    #orgContentSeasons.dashPanel.managePanel
+      %span.panelName Seasons and sessions
+
+      = render "season", season: (@organization.new_record?) ? @season : @organization.seasons.first, organization: @organization
+
+    = f.submit 'Save changes'
+    =# f.reset 'Reset without saving'
+    %input.btnCancel{:type => "reset", :value => "Reset without saving", :id => "reset"}
+
+:javascript
+   $(document).ready(function(){
+      $("#select_season_year").change(function() {
+        var season_id = $(this).val();
+      	$.ajax({
+            url: "/organizations/get_season_fields?org_id=#{@organization.id}&season_id="+season_id,
+            success: function (data) {
+            }
+            //error: function () { document.getElementById("displayerrors").innerHTML = "Could not load the page."; }
+        });
+
+      });
+      $("#reset").click(function(){
+             location.reload();
+      });
+
+    });

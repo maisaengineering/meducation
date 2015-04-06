@@ -1,0 +1,13 @@
+= f.fields_for :kids_type do |child_extra_care_fields|
+  =child_extra_care_fields.label :food_allergies
+  =child_extra_care_fields.text_area :food_allergies, :value => "#{@existing_profile.kids_type.food_allergies unless @existing_profile.nil?}"
+  
+  =child_extra_care_fields.label :medical_issues
+  =child_extra_care_fields.text_area :medical_issues, :value => "#{@existing_profile.kids_type.medical_issues unless @existing_profile.nil?}"
+
+  =child_extra_care_fields.label :special_needs
+  =child_extra_care_fields.text_area :special_needs, :value => "#{@existing_profile.kids_type.special_needs unless @existing_profile.nil?}"
+
+  =child_extra_care_fields.label :other_concerns
+  =child_extra_care_fields.text_area :other_concerns, :value => "#{@existing_profile.kids_type.other_concerns unless @existing_profile.nil?}"
+	

@@ -1,0 +1,26 @@
+-title "#{@kid_profile.full_name} | Profile"
+.dashContainerProfileLeft
+  #profileEditButton{:onClick => ""}
+    %a{:href => "#"}
+      %span#pebEditLine Edit
+      #{@kid_profile.nickname}'s profile
+  .profilePhotoContainer
+    .profileChildPhotoBox{:style => thumb_photo_background(@kid_profile.photograph)}
+      -#= thumb_photo(@kid_profile.photograph)
+    .profileChildPhotoOptionsContainer
+      %ul
+        %li
+          %a{:href => "#",id: 'change_photo_id'} change ID photo
+.dashContainerProfileRight
+  #dashProfileFull.dashPanel
+    %span.panelName
+      %a{:href => "#"} #{@kid_profile.nickname}'s Profile
+    %h2.dashProfileSectionHeader Basic details
+    = render  'basic_details'
+    %h2.dashProfileSectionHeader Health & wellness
+    = render 'health_and_wellness'
+    %h2.dashProfileSectionHeader Parents
+    = render 'parents_details'
+  = render 'documents/change_photo_id'
+= render '/shared/form_loading'
+= render '/shared/errormessage'

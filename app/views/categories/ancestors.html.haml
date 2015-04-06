@@ -1,0 +1,70 @@
+- unless @children.blank?
+  - @children.middle.in_groups_of(5,false) do |row_children|
+    .captureDocTypeColumn
+      - row_children.each do |c|
+        .captureDocType
+          = link_to  c.has_children? ? "#{c.display_name}  &#187;".html_safe : c.display_name,'#',class: "docTypeName #{c.children.blank? ?  (c.name.eql?(Document::PHOTOGRAPH)? 'choose_photograph' : 'choose_document') : ''}" ,id: c.id
+          %ul{style: 'display:none;'}
+            - c.children.each do |sc|
+              %li= link_to sc.display_name ,"#",class: 'choose_document',id: sc.id
+
+  .captureDocTypeColumn.captureDocTypeColumnLast
+    .captureDocNewContainer
+      %form
+        %input.captureDocNewName{:type => "text", :placeholder=> "add new . . .", id: 'tags'}/
+    - unless @children.left.blank?
+      .captureDocOrList
+        Or . .
+        =link_to @children.left.first.display_name,'#',class: "docTypeName choose_document" ,id: @children.left.first.id
+        - @children.left.offset(1).each  do |c|
+          •
+          =link_to c.display_name,'#',class: "docTypeName choose_document" ,id: c.id
+        - @current_user_profile.user_tags.in(category_ids: @category.id).each do |ut|
+          •
+          =link_to ut.tag,'#',class: "docTypeName choose_document_at_user_tag" ,id: @category.id
+
+
+
+
+  .clear
+    :javascript
+      $('.docTypeName').click(function(e){
+         e.preventDefault();
+         $(this).siblings("ul").slideToggle();
+         //$("#selected_category").val($(this).attr('id'));
+      }) ;
+
+      $('.choose_document').unbind("click").click(function(e) {
+        e.stopPropagation();
+        $('.captureUploadBigNumber').text(0);
+        $('.smallNumber').text(1);
+        //set the category_id for choosen
+        $('input[id=document_category_id]').val($(this).attr('id'));
+        $('#add_info_category_name').html($(this).text()); //add category_name in additional information
+        $('#document_attachment').trigger('click');
+      });
+
+      $('.choose_document_at_user_tag').unbind("click").click(function(e){
+           e.stopPropagation();
+          $('.captureUploadBigNumber').text(0);
+          $('.smallNumber').text(1);
+          //set the category_id for choosen
+          $('input[id=document_category_id]').val($(this).attr('id'));
+          $('.captureDocNewName').val($(this).text());
+            $('#document_tags').val($(this).text());
+          $('#add_info_category_name').html($(this).text()); //add category_name in additional information
+          $('#document_attachment').trigger('click');
+      });
+
+       $('.choose_photograph').unbind("click").click(function(e) {
+              e.stopPropagation();
+              e.preventDefault();
+              $('.captureUploadBigNumber').text(0);
+              $('.smallNumber').text(1);
+              //set the category_id for choosen
+              $('input[id=document_category_id]').val($(this).attr('id'));
+               $('#add_info_category_name').html($(this).text());
+              $('#document_source').trigger('click');
+          });
+      tagging_documents();
+      addNeedsClick();

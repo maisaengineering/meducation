@@ -1,0 +1,12 @@
+<%= hidden_field_tag :relation, :id => "relation"%>
+<%= f.hidden_field :fname, :id =>"parent_fname" %>
+<%= f.hidden_field :lname , :id => "parent_lname"%>
+<%= f.label :email, "My e-mail address" %>
+<%= f.text_field :email, :id =>"parent_email", :readonly => true%>
+<%= org_signup_error_message_for(resource,:email) %>
+<%= f.hidden_field :phone_mobile, :id =>"phone_mobile" %>
+<%= hidden_field_tag :mobile_type, :id => "mobile_type"%>
+<%= f.hidden_field :phone_home, :id =>"phone_home" %>
+<%= hidden_field_tag :mobile_type, :id => "mobile_type"%>
+<%= f.hidden_field :phone_work, :id =>"phone_work" %>
+<%= hidden_field_tag :work_type, :id => "work_type"%>

@@ -1,0 +1,22 @@
+%h1 Preferences
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'standardForm' }) do |f|
+  - if notice
+    .formTopErrorText
+      %span.formTopErrorHeader Oops!
+      = notice
+      and try again
+  = devise_error_messages!
+  .formBox
+    .formSection Change password
+    .formTopCaptionImportant
+      Please enter the information requested below to change your password:
+    = f.label :current_password
+    = f.password_field :current_password
+    = f.label :password, "New password"
+    = f.password_field :password, :autocomplete => "off"
+    = f.label :password_confirmation, "New password (confirm)"
+    = f.password_field :password_confirmation
+  %div= f.submit "change password"
+-#- if current_user.has_role?(:parent)
+-#  %label.opt{:for => "opt_out"} Opt out of Partner Branding
+-#  = check_box_tag "opt_out",  true,  !@hospital_memberships.blank?, class: @profiles.id

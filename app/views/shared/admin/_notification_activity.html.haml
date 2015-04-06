@@ -1,0 +1,17 @@
+Notification user activity
+%br
+%table.printTemplateTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+
+
+  - adhoc_count.each do |each_adhoc|
+    %tr
+      %td.printSectionName #{each_adhoc.title}
+      %td.printSectionName #{each_adhoc._type}
+      %td.printSectionName #{each_adhoc.notifications_count}
+
+
+  - schedule_ae.each do |each_schedule|
+    %tr
+      %td.printSectionName #{each_schedule.title}
+      %td.printSectionName #{each_schedule._type}
+      %td.printSectionName #{each_schedule.notifications_count}

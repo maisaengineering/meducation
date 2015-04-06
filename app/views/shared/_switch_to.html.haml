@@ -1,0 +1,7 @@
+.panelSwitchTo
+  %span.panelSwitchPrompt Switch to
+  %span.panelSwitchItem{class: @parent_profile.id.to_s.eql?(params[:profile_id]) ? 'selected' : ''}
+    = link_to 'Family',current_page?(controller: 'documents') ? documents_path(@parent_profile) : alerts_and_events_path(@parent_profile)
+  - @managed_kids.each do |kid_profile|
+    %span.panelSwitchItem{class: kid_profile.id.to_s.eql?(params[:profile_id]) ? 'selected' : ''}
+      = link_to(kid_profile.nickname, current_page?(controller: 'documents') ? documents_path(kid_profile) : alerts_and_events_path(kid_profile))

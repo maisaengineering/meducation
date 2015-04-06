@@ -1,0 +1,22 @@
+.childDashLeft
+  .cdlHome
+    = link_to "kidslink home", top_dashboard_path(@parent_profile)
+  %ul.cdlOrgList
+    %li{class: active_class.eql?('child') ? 'selected' : nil }
+      /TODO if kid applied for multiple seasons for one organization we need to rework on this
+      = link_to "#{@kid_profile.nickname.capitalize}"" overview", child_dashboard_path(profile_id: @kid_profile.id)
+      - @kid_profile.organization_memberships.each do |organization_membership|
+        - org_name  = organization_membership.organization.preffered_name
+        - if organization_membership.seasons.detect{|season| season.application_form_status == "Application submitted" }
+          - org_name += "<span> (@appl) </span>" unless org_name.nil?
+          - cssclass = "atApp"
+        - season_ids = organization_membership.seasons.active.map(&:id)
+        - count =  organization_membership.notifications.where(:season_id.in=> season_ids,:is_accepted.nin=>['Rejected','Withdrawn']).count
+        - if  count >= 1
+          %li{:class => "#{cssclass} #{active_class.eql?(organization_membership.org_id.to_s) ? 'selected' : nil }" }
+            = link_to "#{org_name}".html_safe, child_org_dashboard_path(profile_id: @kid_profile.id, org: organization_membership.org_id)
+
+
+  .cdlApplyAnotherBox
+    = link_to "Apply", "#", :class => 'cdlApplyLink'
+    for another KidsLink affiliated organization

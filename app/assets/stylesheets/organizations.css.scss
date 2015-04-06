@@ -1,0 +1,293 @@
+// Place all the styles related to the profile controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.alternativeRow{
+    text-align: center;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    margin-left: 35%;
+    text-decoration: underline;
+    font-size: 13px;
+    color: #555;
+}
+
+.delRow{
+    margin-left: 35%;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: #555;
+}
+
+
+
+.table_hr
+{   
+    height: 10px;
+    border-bottom: 1px solid #999;
+    margin-bottom: 20px;
+    clear: both;
+  
+}
+
+.addRow:hover {    
+    cursor: pointer
+}
+
+.session_new
+{
+    display:none;
+}
+
+.active {
+   pointer-events:none;
+   }
+
+.displayoption{
+    display: none;
+}
+.send_form{
+    display: none;
+}
+
+
+
+// Place all the styles related to the profile controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#profile_parent_attributes__email{
+ border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 200px;
+}
+
+//#profile_parent_attributes___phone_numbers__contact{
+//    border: 1px solid #CCCCCC;
+//    display: block;
+//    float: left;
+//    font-size: 14px;
+//    height: 23px;
+//    margin-bottom: 7px;
+//    margin-right: 7px;
+//    width: 100px;
+//}
+
+#profile_parent_attributes___phone_numbers__type{
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 92px;
+}
+
+#home_type,#work_type,#mobile_type{
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 92px;
+}
+#phone_home,#phone_work,#phone_mobile{
+border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 100px;
+}
+
+
+/* Registration Pages */
+
+#registrationExplanation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 600px;
+    line-height: 1.3em;
+    font-size: .9em;
+    color: #888;
+}
+
+.registrationMessageFromOrg {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 600px;
+    font-size: 1.2em;
+    line-height: 1.6em;
+}
+
+/* Register with Key: Login Decision Page */
+
+.rwkLoginDecisionsBox {
+    width: 400px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 7px #777;
+    background-color: #fff;
+    overflow: hidden;
+    margin-top: 25px;
+    border-top: 5px solid #68c4ea;
+}
+
+.rwkLoginDecisionContainer {
+    padding: 10px;
+    padding-top: 32px;
+    float: left;
+    width: 175px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #eaf9fe;
+    height: 100%;
+    font-weight: 500;
+}
+
+.rwkLoginDecisionContainer + .rwkLoginDecisionContainer {
+    border-left: 2px dotted #13a3de;
+    background-color: #fff;
+    padding-top: 25px;
+}
+
+.rwkLoginDecisionContainer a {
+    text-decoration: none;
+}
+
+.rwkLoginDecisionContainer a:hover {
+    text-decoration: underline;
+}
+
+.rwkLoginDecisionContainer #rwkExistingText {
+    font-size: 1.3em;
+    display: block;
+    font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkNewText {
+    font-size: 1.3em;
+    display: block;
+    font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkAndapplyText {
+    font-size: .8em;
+    display: block;
+    font-weight: 300;
+    margin-top: 4px;
+}
+
+
+.alternativeRow{
+    text-align: center;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    margin-left: 35%;
+    text-decoration: underline;
+    font-size: 13px;
+    color: #555;
+}
+
+.delRow{
+    margin-left: 35%;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: #555;
+}
+
+.addRow{
+    margin-left: 35%;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: #555;
+}
+
+.table_hr
+{   
+    height: 10px;
+    border-bottom: 1px solid #999;
+    clear: both;
+    padding-left:1px;
+    padding-top:10px;
+    
+}
+
+
+#profile_parent_attributes___phone_numbers__type{
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 92px;
+}
+
+.enrollees_pagination {
+  cursor: default;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.enrollees_pagination a, .enrollees_pagination span, .enrollees_pagination em {
+  padding: 0.2em 0.5em;
+  display: inline-block;
+  margin-right: 1px;
+}
+
+.enrollees_pagination .current {
+  font-style: normal;
+  font-weight: bold;
+  background: #13a3de;
+  color: #FFF;
+  border-radius: 5px;
+}
+
+.enrollees_pagination a {
+  text-decoration: none;
+  color: #13a3de;
+}
+
+.enrollees_pagination a:hover, .enrollees_pagination a:focus {
+  color: #000033;
+}
+
+.enrollees_pagination:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+* html .enrollees_pagination {
+  height: 1%;
+}
+
+*:first-child + html .enrollees_pagination {
+  overflow: hidden;
+}

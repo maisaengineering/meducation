@@ -1,0 +1,9 @@
+%table{ :class => 'atable'}
+  %tbody#weblinks
+    = f.fields_for :weblinks do |weblink_fields|
+      = render 'weblink_fields',f: weblink_fields
+
+
+.formSectionPrimaryAction
+  -#http://stackoverflow.com/questions/10995932/rails-with-simple-form-add-new-table-row-with-link-to-add
+  = link_to_add_association 'Add additional link', f, :weblinks, :"data-association-insertion-node" => "tbody#weblinks", :"data-association-insertion-method" => "append" ,partial: 'weblink_fields'

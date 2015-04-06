@@ -1,0 +1,2 @@
+module M::RegistrationsHelper
+end

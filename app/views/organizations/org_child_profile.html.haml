@@ -1,0 +1,17 @@
+%form
+  #orgChildProfileRight.dashContainer    
+    %h1 #{@kid_profile.kids_type.fname} ("#{@kid_profile.kids_type.nickname}") #{@kid_profile.kids_type.lname}
+    - @all_form.seasons.in(status:"active").desc(:created_at).each do |each_season|
+      .dashMembershipSeasonBox
+        %h2 #{each_season.org_season_year} (#{each_season.application_form_status})
+      .dashContainerLeft
+        = render 'shared/kid_document_alerts',bucket: 'seas' ,season: each_season,kid_profile: @kid_profile ,is_admin: true
+        = render 'shared/kid_documents',season: each_season,kid_profile: @kid_profile,bucket: 'seas' ,bucket_name: 'Season' ,is_admin: true
+      .dashContainerRight
+        #dashProfileData.dashPanel
+          %span.panelName
+            Season Data
+          = render "season_data", season: each_season, kid_profile: @kid_profile
+  #orgChildProfileLeft.childDashLeft
+    .orgChildProfilePhoto
+      = avatar(@kid_profile,:thumb,true)

@@ -1,0 +1,42 @@
+= field_set_tag do
+  .popUpContainer.popUpOnboard.popUpOnboardUser
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Sign up
+              .onboardTopText
+                %strong Get started in under 2 minutes.
+              .onboardFields
+                = hidden_field_tag "parents[#{index}][info][referral_code]", referral_code
+                .onboardFieldContainer
+                  %span.onboardLabel I am the
+                  = select_tag "parents[#{index}][relationship]",options_for_select(['Mother', 'Father', "Stepmother", 'Stepfather','Grandmother','Grandfather', 'Guardian']), include_blank: true, class: 'required'
+                .onboardFieldContainer
+                  %span.onboardLabel My first name
+                  = text_field_tag  "parents[#{index}][info][fname]" , nil, class: 'required'
+                .onboardFieldContainer
+                  %span.onboardLabel My last name
+                  = text_field_tag  "parents[#{index}][info][lname]", nil, class: 'required'
+                .onboardFieldContainer
+                  %span.onboardLabel E-mail address
+                  = email_field_tag   "parents[#{index}][info][email]", nil, class: 'required', onblur: "kl_verify_email('parents_#{index}_info_email')"
+                .onboardFieldContainer
+                  %span.onboardLabel Zip code
+                  = text_field_tag  :zipcode, nil, class: 'required'
+                .onboardFieldContainer.onboardFieldContainerChildrenPref
+                  %span.onboardLabel
+                    My children
+                    %br>/
+                    (preferred names)
+                  %span.preferred_kids
+                    = text_field_tag  "0", nil, placeholder: "child # 1" , onblur:"kl_change_heading(0)", class: 'requiredAny'
+                  = link_to "add more", "#" ,id: "add_more_kids", onclick: "add_more_kids()"
+              .bigNextButton{:onclick => "$(this).find('a').click();"}
+                %span.bigNextButtonSubline Child information
+              .onboardBottomButtons
+                .onboardButton.obCancel{:onClick => ""}
+                  %a{:href => "#", :onClick => "return false;"} Cancel
+              .clear

@@ -1,0 +1,60 @@
+.popUpBG
+%table.popUpTable
+  %tbody
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %span.panelName View alert/event
+            - if @notification.ae_definition
+              - ae_definition = @notification.ae_definition
+              .alertTitle
+                %span{class: @notification.alert? ? 'alertTitleAch': 'alertTitleEm'} #{ae_definition.title}
+                -#(#{@notification.profile.full_name})
+              - if ae_definition.ad_hoc?
+                .alertSubTitle #{ae_definition.sub_line}
+                .alertIssued Issued #{l @notification.created_at}
+              - elsif ae_definition.scheduled?
+                .alertSubTitle due by #{l @notification.due_by}
+                .alertIssued Issued #{l @notification.issued_on}
+              .alertDetails= ae_definition.content.html_safe if ae_definition.content
+              .alertButtons
+                = alert_or_event_buttons_at_topdashboard(@profile, @notification)
+                .alertButton.abCancel
+                  %a{:href => "#"} Cancel
+              .clear
+            - elsif @notification.json_template or @notification.document_definition
+              - document_definition = @notification.document_definition
+              - json_template = @notification.json_template
+              - title = json_template.nil? ? document_definition.name : json_template.form_name
+              .alertTitle
+                %span{class: @notification.alert? ? 'alertTitleAch': 'alertTitleEm' } #{title}
+                -#(#{@notification.profile.full_name})
+              .alertSubTitle Form req'd at #{@notification.organization.name}
+              .alertIssued Issued #{l @notification.created_at}
+              .alertDetails
+                #{@notification.organization.name} has issued a form request for #{@notification.profile.full_name}:
+                %br/
+                %br/
+                - if @notification.json_template
+                  #{ @notification.json_template.form_name}
+                  %br/
+                  #{ @notification.json_template.season.season_year}
+                - else
+                  #{ @notification.document_definition.name}
+                  %br/
+                  -#{ @notification.document_definition.is_for_season? ? @notification.document_definition.season.season_year : DocumentDefinition::TYPE[:organization_wide]}
+              .alertButtons
+                - path = json_template.nil? ? new_document_path(profile_id: @notification.profile_id,notification_id: @notification.id)  : form_data_profiles_path(profile_id: @notification.profile_id , notification_id: @notification.id,org_id: @notification.organization.id, season_id: @notification.season.org_season_id)
+                .alertButton.abSubmitDocument{onClick:"window.location.href='#{path}'; return false;"}
+                  = link_to 'Submit document',"#"
+                .alertButton.abCancel
+                  %a{:href => "#"} Cancel
+              .clear
+:javascript
+  // popUp alert/event click on 'Cancel' hide and remove content
+  $('.popUpPanel .abCancel').click(function(e){
+    e.preventDefault();
+    $('#popUpAlertEvent').hide().html('');
+  })
+

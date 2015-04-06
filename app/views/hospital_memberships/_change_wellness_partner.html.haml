@@ -1,0 +1,38 @@
+.popUpContainer.popUpOnboard.popUpCWP
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %span.panelName Sign up
+            .onboardTopText
+              Wellness is an important component of KidsLink, so we have partnered with the following advisors.
+              %br/
+              %strong
+                Please select whom you would like to be
+                %i your
+                = succeed "." do
+                  %strong.bBlue wellness content partner
+            .onboardPartnerContainer
+              - hospitals.each do |hos|
+                .onboardPartnerButton{:onClick => "", style: "background-image: url(#{hos.logo.url})", data:{hospital_id: hos.id, "hospital-name"=> hos.name}}
+
+            .onboardBottomButtons
+              .onboardButton.obCancel{:onClick => ""}
+                %a{:href => "#", :onClick => "event.preventDefault();"} Cancel
+            .clear
+
+:javascript
+  $('.onboardPartnerButton').click(function(e){
+    $(".popUpOnboardPartner #hospital_id").val($(this).attr('data-hospital-id'));
+    $(".onboardWell .wellParName").text($(this).attr('data-hospital-name'));
+    $(" .popUpCWP").remove();
+     $('.signUpPopUP').show();
+  });
+
+  $('.popUpCWP .obCancel').click(function(e){
+    $(" .popUpCWP").remove();
+     $('.signUpPopUP').show();
+  });
+

@@ -1,0 +1,14 @@
+<%if @organization.errors.any?%>
+
+alert("<%= @organization.errors.full_messages.join('\n').html_safe%>");
+<%else%>
+
+    <%if params["kl_config"] and params["kl_config"].include?(:app_upgrades)%>
+        $('#dashFormsList #loading table').find('tr').not('.manageTableHeader').remove();
+        $('#dashFormsList #loading table tr.manageTableHeader').after("<%=j render( partial: 'admin/tasks/partials/app_upgrades', locals:{app_upgrades: @organization['app_upgrades']})%>");
+
+    <%end%>
+
+  alert("Successfully Updated");
+
+<%end%>

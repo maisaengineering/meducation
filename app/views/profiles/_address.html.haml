@@ -1,0 +1,24 @@
+
+%label
+  Address (Line 1)
+  .formErrorText#address1_error{:style => "display: none"} ERROR: Address(Line 1) is required          
+=text_field_tag :address1, nil, :value => "#{@existing_profile.kids_type.address1 unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Address Line 1 is required"
+
+%label
+  Address (Line 2)
+=text_field_tag :address2, nil, :value => "#{@existing_profile.kids_type.address2 unless @existing_profile.nil?}"
+
+%label
+  City
+  .formErrorText#city_error{:style => "display: none"} ERROR: City is required          
+=text_field_tag :city, nil, :value => "#{@existing_profile.kids_type.city unless @existing_profile.nil?}", :class => "required", :title => "ERROR: City is required"
+
+%label
+  State
+  .formErrorText#state_error{:style => "display: none"} ERROR: State is required          
+=text_field_tag :state, nil, :value => "#{@existing_profile.kids_type.state unless @existing_profile.nil?}", :class => "required", :title => "ERROR: State is required"
+
+%label
+  Zip
+  .formErrorText#zip_error{:style => "display: none"} ERROR: Zip is required          
+=text_field_tag :zip, nil, :value => "#{@existing_profile.kids_type.zip unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Zip is required"

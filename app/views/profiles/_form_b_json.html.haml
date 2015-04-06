@@ -1,0 +1,178 @@
+=javascript_include_tag 'jquery.table.addrow.js'
+/ .bodyContainer
+%h1 Apply for #{@organization.name} ( #{session[:season_year]} ) and a new KidsLink membership
+
+#registrationExplanation
+  Using KidsLink, applying for #{@organization.name} is a snap.  And in the future, when you register for this organization or any other KidsLink member organization, any information you enter now will be saved and automatically copied into your future forms, saving you lots of time and effort!  
+
+  %br
+  %br    
+  
+  %form.standardForm      
+    #headder_error  
+      .formdisplay         
+        .formTopErrorText            
+          %span.formTopErrorHeader Oops!             
+          We discovered an error.  Please see below for more information.
+
+  = form_for @profile, :html =>{ :autocomplete => "off", :class => 'standardForm', :id => "profile_form", :name => "profile_form", :onSubmit => "return validate_form_fields(this);"}, authenticity_token: true do |f|
+  
+    = hidden_field_tag :org_id, params[:id]  
+
+    .formBox
+      .formSection Child information
+      
+      = f.fields_for :kids_type do |kids_fields|
+
+        -if !@existing_profile.nil?  
+          = kids_fields.hidden_field :kids_id, :value => "#{@existing_profile.kids_type.kids_id}"  
+        -else
+          = kids_fields.hidden_field :kids_id, :value => generate_id(Profile.generate_activation_code)
+
+        %label
+          First name
+          .formErrorText#fname_error{:style => "display: none"} ERROR: First name is required
+        = kids_fields.text_field :fname, :value => "#{@existing_profile.kids_type.fname unless @existing_profile.nil?}", :class => "required", :title => "ERROR: First name is required"
+        
+        %label
+          Last name
+          .formErrorText#lname_error{:style => "display: none"} ERROR: Last name is required
+        = kids_fields.text_field :lname, :value => "#{@existing_profile.kids_type.lname unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Last name is required"
+       
+        %label 
+          Preferred name/nickname
+          .formErrorText#nickname_error{:style => "display: none"} ERROR: Nick name is required
+        = kids_fields.text_field :nickname, :value => "#{@existing_profile.kids_type.nickname unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Nick name is required"
+
+        /= @existing_profile.kids_type.gender unless @existing_profile.nil?
+        = label :gender, "Sex"
+        - if !@existing_profile.nil?            
+          = kids_fields.select gender: options_for_select([[''],['Male', 'Male'],['Female', 'Female']], :selected => "#{@existing_profile.kids_type.gender unless @existing_profile.nil?}")
+        -else
+          = kids_fields.select(:gender, ['','Male', 'Female'], {},{ :class => 'required', :selected => "Female", :title => "ERROR: Gender is required"})
+        
+        %label
+          Birthdate
+          .formErrorText#birthdate_error{:style => "display: none"} ERROR: Birthdate Format MM/DD/YYYY required          
+        /= kids_fields.text_field :birthdate, :value => "#{@existing_profile.kids_type.birthdate.strftime("%m/%d/%y") unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Birthdate is required", :placeholder => "MM/DD/YYYY"
+        = kids_fields.text_field :birthdate, :value => "#{@existing_profile.kids_type.birthdate.strftime("%m/%d/%y") unless @existing_profile.nil?}", :class => "required", :title => "ERROR: Birthdate is required", :placeholder => "MM/DD/YYYY"
+        
+      = render "child_extra_cares", :f => f
+
+    .formBox
+      .formSection Enrollment
+      = render "enrollment", :f => f
+    
+    .formBox 
+      .formSection Address
+      = render "address", :f => f  
+
+    = render "parent_profile", :f => f
+
+    = render "agreement", :f => f
+
+    = f.submit 'continue'
+
+%script{:src => "../jquery.validate.js", :type => "text/javascript"}
+:javascript
+  $(document).ready(function(){
+    $("#profile_form").validate({
+      invalidHandler: function(form, validator) {
+      var errors = validator.numberOfInvalids();
+      if (errors) {
+        $('.formdisplay').css("display","block");
+      } else {       
+        $('.formdisplay').css("display","none"); 
+      }
+    }
+    });
+  });
+
+
+  function validate_form_fields(str)
+    {         
+      re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+          if(profile_form.profile_kids_type_birthdate.value != '') 
+          {               
+            if(regs = profile_form.profile_kids_type_birthdate.value.match(re))
+            {                  
+              if(profile_form.profile_kids_type_birthdate.length<10)
+              {
+                document.getElementById('birthdate_error').style.display = "block";
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+              }
+              if(regs[2] < 1 || regs[2] > 31) 
+              {                   
+                document.getElementById('birthdate_error').style.display = "block";
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+
+              } 
+              if(regs[1] < 1 || regs[1] > 12) 
+              {                   
+                document.getElementById('birthdate_error').style.display = "block";
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+              } 
+              if(regs[3] < 1902 || regs[3] > (new Date()).getFullYear()) 
+              { 
+                document.getElementById('birthdate_error').style.display = "block";
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+              } 
+            }               
+          }
+          
+        if (document.profile_form.family_currently_enrolled ==""|| document.profile_form.active_member_of_ppc.value.value ==""|| document.profile_form.age_group_and_school_days.value =="" || document.profile_form.are_you_enrolling_siblings.value =="" || document.getElementById('privacy_policy').checked== false )  
+        {
+
+            
+
+            
+            if(document.profile_form.are_you_enrolling_siblings.value == "")
+            {
+              document.getElementById('sibbling_error').style.display = "block";
+              
+            }
+
+            if(document.profile_form.age_group_and_school_days.value == "")
+            {
+              document.getElementById('age_error').style.display = "block";
+              
+              
+            }
+            if(document.profile_form.active_member_of_ppc.value == "")
+            {
+              document.getElementById('active_error').style.display = "block";
+              
+              
+            }
+            if(document.profile_form.family_currently_enrolled.value == "")
+            {
+              document.getElementById('enrolled_error').style.display = "block";
+              
+              
+            }
+
+            if(document.getElementById('privacy_policy').checked== false)
+            {
+              document.getElementById('privacy_policy_error').style.display = "block";
+              
+            }
+            
+            document.getElementById('headder_error').innerHTML = "<div class='formTopErrorText'><span class = 'formTopErrorHeader'>Oops!</span><br/>We discovered an error. Please see below for more information.</div>";
+              
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            return false;    
+        }
+    }
+
+:css
+  label.error {color: #E3981C; font-size: 12px; font-weight: 700; margin-top: -10px;}  
+  p { clear: both; }
+  .submit { margin-left: 12em; }
+  em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+
+  

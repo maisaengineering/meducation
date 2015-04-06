@@ -1,0 +1,43 @@
+10-06-2013
+===================  System Roles and Responsibilities ======================
+Present we are supporting three roles in system 'Super Admin','Org Admin','Parent'
+
+Role Model
+----------------
+belongs_to :user
+attributes - name,user_id,ref_ids
+
+Note: user has many roles but only one unique role.
+----------------------------------------------------
+========================================================================
+Creating a role for persisted user object
+========================================================================
+
+user.create_role(:super_admin)
+user.create_role(:parent)
+user.create_role(:org_admin,[array of org_ids]) # we need to pass array of ref ids here
+
+Ex: user1.create_role(:org_admin,[org1,org2])
+    here user1 managing two organizations org1,org2
+    'user1.managed_organizations' will returns all the organizations managing by this user1
+    to add another organization then
+    user1.create_role(:org_admin,[org3])
+    Now user1 managing three organizations org1,org2 and org3
+
+similarly we can create any number of roles like for hospital admin
+
+user.create_role(:hospital_admin,[array of hospital_ids])
+========================================================================
+Checking role
+========================================================================
+user.has_role?(:super_admin) #=> true ,false
+user.has_role?(:parent) #=> true ,false
+user.has_role?(:org_admin) #=> true ,false
+
+
+
+
+
+
+
+

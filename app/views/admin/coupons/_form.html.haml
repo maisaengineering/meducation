@@ -1,0 +1,34 @@
+
+= form_for @admin_coupon, :html => {:class => 'standardForm'}, authenticity_token: true do |f|
+  -if @admin_coupon.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@admin_coupon.errors.count, "error")} prohibited this admin_coupon from being saved:"
+      %ul
+        - @admin_coupon.errors.full_messages.each do |msg|
+          %li= msg
+  .formBox
+    .formSection Coupon information
+    #standardForm
+      =label :name, "Coupon Code"
+      = f.text_field :name, {:class => "required"}
+    
+    %label Coupon type    
+    = f.select :coupon_type,options_for_select([['Full membership','Full membership'],['Free Promotional','Free Promotional']]), {:class => "required"}
+    %br 
+
+    %label Discount percentage        
+    =  f.select :discount, (0..100).each {|r| [r,r] }, {:class => "required"}
+    %br
+
+    %label Organization        
+    = f.select :organization_id, Organization.all.map {|r| [r.name,r._id] },{:class => "required"}
+    %br 
+
+    
+  = f.submit 'Save'
+
+%script{:src => "../../jquery.validate.js", :type => "text/javascript"}
+:javascript
+  $(document).ready(function(){
+    $("#new_admin_coupon").validate();
+  });

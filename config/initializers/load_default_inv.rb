@@ -1,0 +1,1 @@
+#DEFAULT_INV = UniversalInvitation.unscoped.find_by(token: "INAPP", status: UniversalInvitation::STATUS[:enable])

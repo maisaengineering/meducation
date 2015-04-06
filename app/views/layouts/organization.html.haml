@@ -1,0 +1,68 @@
+!!!
+%html
+  %head
+    %title MSchool
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "admin"
+    = csrf_meta_tags
+  %body
+    .mainContainer
+      .header
+        .userBox
+          - if user_signed_in?
+            Logged in as #{current_user.fname}#{current_user.lname}
+            %br/
+            = link_to "Preferences", role_based_preferences_path
+            \    #{link_to "Log Out", destroy_user_session_path, :method=>'delete'}
+        .headerBox
+          - if user_signed_in?
+            .logoBox
+              %span#klLogo1= link_to image_tag('logo.png', :width=>"102",:height=>"75"), user_dashboard_path
+          - else
+            .logoBox
+              %span#klLogo
+          - org_logo = Organization.where(:_id=> session[:current_org]).first
+          - unless org_logo.nil?
+            - if(controller.action_name!= "index" )
+              - if(controller.action_name!= "new" )
+                .orgLogoBox
+                  %table
+                    %tr
+                      %td= image_tag org_logo.logo
+        .navContainer
+        - if user_signed_in? and current_user.has_role?(:super_admin)
+          / super admin tabs
+          .navContainer.Admin-nav
+            .navTab= link_to "Organizations", organizations_path
+            .navTab= link_to "Ae Definitions", admin_ae_definitions_path
+            .navTab{class: current_page?(admin_search_parents_path) ? 'navTabOn' : nil}= link_to "Search parents", admin_search_parents_path
+            .navTab{class: current_page?(admin_edit_email_path) ? 'navTabOn' : nil}= link_to "Update email", admin_edit_email_path
+            .navTab{class: current_page?(admin_global_config_path) ? 'navTabOn' : nil}= link_to "Settings", admin_global_config_path
+        - elsif current_user.has_role?(:org_admin)
+          .navContainer
+            - if (controller.action_name== "org_enrollees" || controller.action_name== "org_child_profile" )
+              .navTab.navTabOn= link_to "Enrollees", org_enrollees_organizations_path(:id => session[:current_org])
+            - else
+              .navTab= link_to "Enrollees", org_enrollees_organizations_path(:id => session[:current_org]) if session[:current_org].present?
+            - if (controller.controller_name == 'document_definitions' || controller.action_name== "org_form_and_documents"|| controller.action_name== "org_form" || controller.action_name=='form_content' )
+              .navTab.navTabOn= link_to "Forms/documents", org_form_and_documents_path(:id => session[:current_org])
+            - else
+              .navTab= link_to "Forms/documents", org_form_and_documents_path(:id => session[:current_org]) if session[:current_org].present?
+            - if(session[:current_org])
+              - if (controller.action_name== "edit")
+                .navTab.navTabOn= link_to "Org content", edit_organization_path(:id => session[:current_org])
+              - else
+                .navTab= link_to "Org content", edit_organization_path(:id => session[:current_org])
+            - else
+              - if (controller.action_name== "new")
+                .navTab.navTabOn= link_to "Org content", new_organization_path
+              - else
+                .navTab= link_to "Org content", new_organization_path if session[:current_org].present?
+            -#.navTab= link_to "Invitations", org_invitations_path(:id => session[:current_org]) if session[:current_org].present?
+
+      .bodyContainer
+        = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
+        = yield
+    %script{src: "//use.typekit.com/wys2fog.js", type: "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}

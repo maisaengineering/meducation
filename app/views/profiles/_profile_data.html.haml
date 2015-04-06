@@ -1,0 +1,85 @@
+- flag = 0
+%span.panelName
+  Profile Data
+  %span.panelOptions.panelOptionsWithEdit
+    = link_to "view details", "#"
+    |
+    = link_to "edit", "#"
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %tr
+    %td.panelFieldName Full Name
+    %td.panelFieldContent
+      = @kid_profile.kids_type.fname + " " + @kid_profile.kids_type.lname
+    - all_uni = {}
+    -@storedDataHash[:univ][0].each do |_field|
+      - all_uni[_field[0]] = _field[1]
+
+    - sort_p = all_uni.select {|k,v|  k if k.start_with?('Pr','pr','Ni','ni')}
+    - sort_b = all_uni.select {|k,v|  k if k.start_with?('Bi')}
+    - sort_p.each do |_field|
+      %tr
+        %td.panelFieldName Preferred name
+        %td.panelFieldContent #{_field[1]}
+      %tr
+        %td.panelFieldName Age
+        %td.panelFieldContent= accurate_humanize_age(@kid_profile.kids_type.birthdate)
+    - sort_b.each do |_field|
+      %tr
+        %td.panelFieldName #{_field[0]}
+        %td.panelFieldContent #{_field[1]}
+    -@storedDataHash[:parent].each do |parent|
+      -parent.each do |_field|
+        -if _field.instance_of?(Hash)
+          -_field.each do |_inner_field|
+            %tr
+              - _inner_field[1].delete('My relationship')
+              %td.panelFieldName #{_inner_field[0]}
+              %td.panelFieldContent #{decorate_parent_hash(_inner_field[1])}
+
+    - sel_uni = all_uni.reject {|k,v| k if k.start_with?('Fi','fi','La','la','Pr','pr','Ni','ni','Bi')}
+      %tr
+        %td.panelFieldName Address
+        %td.panelFieldContent
+          %ul
+            %li
+              #{@address1}
+            %li
+              #{@address2}
+            %li
+              #{@full_address}
+      - sel_other = all_uni.select {|k,v| k if k.start_with?('Medi','Food','Speci','Other')}
+      - sel_other.each do |other_fields|
+        %tr
+          %td.panelFieldName{:colspan => "2"} #{other_fields[0]}
+        %tr
+          %td.panelFieldContent.panelFieldContentSmall{:colspan => "2"} #{other_fields[1]}
+      - unless @univ_phone_numbers.blank?
+        - @univ_phone_numbers.each do |label,value|
+          %tr
+            %td.panelFieldName= label
+            %td.panelFieldContent= value
+      - reject_fname_and_lname = sel_uni.reject {|k,v| k if k.start_with?('Fi','fi','La','la', 'Add', 'Ci','St','Zi','Medi','Food','Speci','Other')}
+      - reject_fname_and_lname.each do |_field|
+      %tr
+        %td.panelFieldName #{_field[0]}
+        %td.panelFieldContent #{_field[1]}
+    %tr
+      %td.panelFieldName  KidsLink ID
+      %td.panelFieldContent
+        = @kid_profile.kids_type.kids_id
+    %tr
+      %td.panelFieldName Created at
+      %td.panelFieldContent
+        - if @kid_profile.kids_type.try(:created_at)
+          = @kid_profile.kids_type.created_at.strftime('%m/%d/%Y %H:%M:%S %Z')
+    %tr
+      %td.panelFieldName Updated at
+      %td.panelFieldContent
+        - if @kid_profile.kids_type.try(:updated_at)
+          = @kid_profile.kids_type.updated_at.strftime('%m/%d/%Y %H:%M:%S %Z')
+
+
+
+
+
+

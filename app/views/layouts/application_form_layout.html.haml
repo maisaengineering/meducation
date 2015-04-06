@@ -1,0 +1,96 @@
+!!!
+%html
+  %head
+    %title MSchool
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "version1"
+    = csrf_meta_tags
+  %body
+    .mainContainer
+      .header
+        .userBox
+          - if user_signed_in?
+            Logged in as #{current_user.fname}#{current_user.lname}
+            %br/
+            = link_to "Preferences",  role_based_preferences_path
+            \    #{link_to "Log Out", destroy_user_session_path, :method=>'delete'}
+        .headerBox
+          .logoBox
+            %span#klLogo1
+              - if user_signed_in?
+                - if(controller.controller_name != "payments")
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), user_dashboard_path
+                - elsif(controller.controller_name == "payments")
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), "#"
+                - elsif(controller.controller_name == "registrations")
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), new_user_session_path
+                - else
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), destroy_user_session_path
+              - elsif(controller.action_name == "profile_request")
+                - if user_signed_in?
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), profile_request_organizations_path("kidslink_network_id"=>params[:kidslink_network_id], "season_id"=>params[:season_id])
+                - else
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), root_url
+              - elsif(controller.controller_name == "profiles" && controller.action_name == "new")
+                - if user_signed_in?
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), profile_request_organizations_path("kidslink_network_id"=>params[:kidslink_network_id], "season_id"=>params[:season_id])
+                - else
+                  = link_to image_tag('logo.png', :width=>"102",:height=>"75"), root_url
+              - elsif(controller.controller_name == "sessions" && params[:kid_login]== "apply_exist")
+                = link_to image_tag('logo.png', :width=>"102",:height=>"75"), profile_request_organizations_path("kidslink_network_id"=>params[:kidslink_network_id], "season_id"=>params[:season_id])
+              - elsif(controller.controller_name == "registrations" && controller.action_name == "new")
+                - @org= Organization.where('_id' =>params[:org_id]).first
+                = link_to image_tag('logo.png', :width=>"102",:height=>"75"), profile_request_organizations_path("kidslink_network_id"=>@org.networkId, "season_id"=>params[:season_id])
+              - elsif(controller.controller_name == "payments" && controller.action_name == "new")
+                - @org= Organization.where('_id' =>params[:org_id]).first
+                = link_to image_tag('logo.png', :width=>"102",:height=>"75"), profile_request_organizations_path("kidslink_network_id"=>@org.networkId, "season_id"=>params[:season_id])
+              - else
+                = link_to image_tag('logo.png', :width=>"102",:height=>"75"), root_path
+          - org_logo = Organization.where(:_id=> params[:org_id] || session[:org_id]).first
+          - unless org_logo.nil?
+            .orgLogoBox
+              %table
+                %tr
+                  %td= image_tag org_logo.logo unless org_logo.logo.blank?
+          - if user_signed_in?
+            - if(@child)
+              .myKids My Kids
+              - @child.values.each do |child|
+                .childPhotoBox
+                  = link_to avatar(child), child_dashboard_profiles_path(child: child)
+            - if( !(controller.controller_name == 'profiles' and controller.action_name == "launch") && !(controller.controller_name == 'profiles' and controller.action_name == "top_dashboard") && !(controller.controller_name == 'profiles' and controller.action_name == "index") && !(controller.controller_name == 'profiles' and controller.action_name == "show") && !(controller.controller_name == 'profiles' and controller.action_name == "new") && !(controller.controller_name == 'profiles' and controller.action_name == "edit") && !(controller.controller_name == 'profiles' and controller.action_name == "new_logged_in") && !(controller.controller_name == 'profiles' and controller.action_name == "edit_existing"))
+              - if @child_name and  @kid_profile
+                .myKids My Kids
+                .childSummaryBox.selected
+                  %span.csbPhoto{style: thumb_photo_background(@kid_profile.photograph)}
+                  %span.csbName
+                    = @kid_profile.kids_type.fname.capitalize
+                    = @kid_profile.kids_type.lname.capitalize
+                  %span.csbID
+                    KidsLink ID #{@kid_profile.kids_type.kids_id}
+                  - count = 0
+                  - @organization_memberships.each do |each_org|
+                    - count = count+1 if each_org.notifications.alerts.requested.count > 0
+                  - if count >=1
+                    %span.csbAlerts.csbAlertsOn ALERTS: Att'n needed
+                  - else
+                    %span.csbAlerts.csbAlertsOn
+                  %ul.csbOrgList
+                    - if !@organization_memberships.blank?
+                      - if @organization_memberships.count<=2
+                        - @organization_memberships.each  do |each_org|
+                          %li= each_org.organization.preffered_name
+                      - else
+                        %li
+                          (#{@organization_memberships.count-2} others . . . )
+                - @child_name.values.each do |each_child|
+                  - if (each_child==params[:child] || each_child == @kid_profile.kids_type.id.to_s)
+                  - else
+                    .childSummaryBoxShadow
+                    .childPhotoBox= link_to avatar( each_child ||  @kid_profile ), child_dashboard_profiles_path(:child=>each_child, :email => params[:email])
+      .bodyContainer
+        = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
+        = yield
+  %script{src: "//use.typekit.com/mpd6krz.js", type: "text/javascript"}
+  :javascript
+    try{Typekit.load();}catch(e){}

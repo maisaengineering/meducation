@@ -1,0 +1,53 @@
+%span.panelName Primary information
+= hidden_field_tag 'total_service_count', 0
+%label Organization name
+= f.text_field :name
+%label Organization short name
+= f.text_field :preffered_name
+%label Description
+= f.text_area :description
+%label Display Action
+= f.text_area :action_type ,value: f.object.action_type.eql?(Organization::DISPLAY_ACTION) ? '' : f.object.action_type ,placeholder: Organization::DISPLAY_ACTION
+
+.formSectionDivider
+
+%label Address Line 1
+= f.text_field :address1
+
+%label Address Line 2
+= f.text_field :address2
+
+%label Address Line 3
+= f.text_field :address3
+.formSectionDivider
+
+%label Phone
+= f.text_field :phone_no
+
+%label Fax
+= f.text_field :fax_no
+
+
+
+%label 
+  Main email address
+  .formErrorText{:id => "loading_email"}
+
+-if !@organization.new_record?
+  = f.text_field :email, :value => "#{@organization.email unless @organization.new_record?}"
+-else
+  = f.text_field :email
+.formSectionDivider
+%label Logo
+-if !@organization.new_record?
+  //= image_tag @organization.logo
+  = f.file_field :logo, :class => 'fileUploadContainer'
+  = link_to(@organization.logo.url,@organization.logo.url,target: '_blank') if @organization.logo
+-else
+  = f.file_field :logo, :class => 'fileUploadContainer', :value => "Choose file", :onChange => "javascript: document.getElementById('12345').innerHTML = 'Selection made'"    
+  %span#12345.fileUploadStatus
+.clear
+  
+
+  
+.clear

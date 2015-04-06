@@ -1,0 +1,68 @@
+
+.formBox
+  .formSection Parents
+
+  %table{ :class => 'atable'}
+    
+    -@profile.parent_type.each_with_index do |parent,index|
+      = f.fields_for "parent_attributes[]", parent do |parent_fields|
+        
+        %tr
+          %td{:class => 'table_hr'}
+                
+                          
+            = parent_fields.label :lname, "Last name"
+            = parent_fields.text_field :lname
+
+            = parent_fields.label :fname, "First name"
+            = parent_fields.text_field :fname
+
+            = parent_fields.label :email, "E-mail address"
+            = parent_fields.text_field :email
+
+            - parent.phone_numbers.each_with_index do |phone_number, index|
+              = f.fields_for "phone_attributes[]", phone_number do |contact_number_fields| 
+                              
+                =contact_number_fields.label :contact, "Phone number #1"
+                =contact_number_fields.text_field :contact, :style => "width:100px"                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+
+                =contact_number_fields.label :contact, "Phone number #2"
+                =contact_number_fields.text_field :contact                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+
+                =contact_number_fields.label :contact, "Phone number #3"
+                =contact_number_fields.text_field :contact                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+                
+                %span.pointer.alternativeRow Add additional parents
+
+        %tr
+          %td{:class => 'table_hr'}
+            
+                
+            = parent_fields.label :lname, "Last name"
+            = parent_fields.text_field :lname
+
+            = parent_fields.label :fname, "First name"
+            = parent_fields.text_field :fname
+
+            = parent_fields.label :email, "E-mail address"
+            = parent_fields.text_field :email
+
+            - parent.phone_numbers.each_with_index do |contact_number, index|
+              = parent_fields.fields_for "contact_number_attributes[]", contact_number do | contact_number_fields|                      
+                =contact_number_fields.label :contact, "Phone number #1"
+                =contact_number_fields.text_field :contact                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+
+                =contact_number_fields.label :contact, "Phone number #2"
+                =contact_number_fields.text_field :contact                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+
+                =contact_number_fields.label :contact, "Phone number #3"
+                =contact_number_fields.text_field :contact                      
+                =contact_number_fields.select :type, options_for_select([['Mobile','Mobile'],['Home','Home'],['Work','Work']])
+                
+                %span.pointer.delRow Remove parents        
+   

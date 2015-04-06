@@ -1,0 +1,25 @@
+#dashUniDocs.dashPanel
+  %span.panelName
+    = "Universal Documents"
+    %span.panelOptions.panelOptionsWithEdit
+      %a{:href => "#"} view/edit
+      |
+      %a{:href => "#"} add
+  .panelFieldContent
+    %table#panelUniDocList{border: 0, cellpadding: 0, cellspacing: 0}
+      - if !documents.in(names: [DocumentDefinition::PHOTOGRAPH]).blank?
+        - documents.in(names: [DocumentDefinition::PHOTOGRAPH]).each do |document|
+          %tr
+            %td
+              -if is_admin == true
+                - if document.photo_graph?
+                  - url = document.source.url rescue nil
+                - else
+                  - url = document.source.converted_pdf.url rescue nil
+                = link_to_unless(document.nil? ,document.name ,url,target: '_blank')
+              - else
+                = link_to(document.name ,document_path(kid_profile.id ,document.id))
+              %td.panelUniDocDate= document.created_at.strftime("%m/%d/%y")
+      - else
+        No documents
+

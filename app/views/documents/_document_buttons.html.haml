@@ -1,0 +1,6 @@
+.documentButton.dbView{:onclick => "window.open('#{colored_document_url(document)}');"}
+  =link_to 'View', "#"
+-#.documentButton.dbFullView{:onclick => "window.open('#{bw_document_url(document)}');"}
+  = link_to 'Quick View',"#"
+.documentButton.dbEdit.document_edit
+  = link_to  'Edit', edit_document_path(document.profile_id ,document, user_tag: category_id)

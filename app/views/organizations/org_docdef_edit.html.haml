@@ -1,0 +1,44 @@
+%form
+  %h1 Edit Document Definition
+    
+  #dashEditForm.manageContainer
+    %p.manageExplanation Enter or edit the document definition below.
+    #dashEditDocDefPanel.dashPanel.managePanel
+      %span.panelName Edit Document Definition
+      %label Document type
+      %select
+        %option Universal document 1
+        %option Universal document 2
+        %option Universal document 3
+        %option Universal document 4
+        %option -----
+        %option Custom document
+      %label Applicability
+      %select
+        %option Organization-wide
+        %option Season-wide
+        
+      %label Document name
+      %input{:type => "text"}/
+      %label Template style
+      %select
+        %option None
+        %option Static download
+        %option Form output
+      %label Template upload
+      .fileUploadContainer
+        .fileUploadButtonContainer
+          %input{:type => "button", :value => "Choose file"}/
+          %input{:onChange => "javascript: document.getElementById('12345').innerHTML = 'Selection made'", :type => "file"}/
+        %span#12345.fileUploadStatus
+      .clear
+    %input{:type => "submit", :value => "Save changes"}/
+    %a{:href => org_form_and_documents_path(:id => session[:current_org])}
+      %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}              
+             
+:javascript
+  function goBack()
+    {  
+    history.go(-1);       
+    }
+    

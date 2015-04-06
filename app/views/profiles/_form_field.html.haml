@@ -1,0 +1,110 @@
+/= params['error']
+-if each_field['type'] == 'select'
+  %label
+    #{each_field['name']}
+
+    = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+
+  - if  each_field['id'] == 'gender'
+    -current_val = convert_to_male_female(current_val)
+
+  - if each_field['lookup'] != 'sessions'
+    - lookup_items = @organization.try(:send,each_field['lookup'])  if each_field.has_key?('lookup') && @organization.respond_to?(each_field['lookup'])
+    - select_items = Organization.split_array(lookup_items)  if lookup_items != nil
+    - is_disable = false #by default all are enabled
+  - else
+    - season ||= params[:season_id]
+    - org_id ||= params[:org_id]
+    - select_items = LookUp.send(each_field['lookup'],org_id,season)
+    //lookup is session so disable it to prevent from edit(age_group_and_school_days)
+    - is_disable = current_page?(controller: 'profiles',action: 'form_data') ? true : false
+  - select_items||=  each_field['selection_list']
+  - select_items||= "Select"
+
+  = select_tag :"#{index}[#{each_field['id']}]", options_for_select(select_items, current_val), {include_blank: true,disabled: is_disable }
+  -# Values for disabled form elements are not passed to the processor method
+  = hidden_field_tag(:"#{index}[#{each_field['id']}]" , current_val) if is_disable == true
+-elsif each_field['type'] == 'textarea'
+  -if each_field['reverse'] == 'true'
+    = text_area_tag :"#{index}[#{each_field['id']}]" , current_val
+    %label_right
+      #{each_field['name']}
+    = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+  - else
+    %label
+      #{each_field['name']}
+      = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+    = text_area_tag :"#{index}[#{each_field['id']}]" , current_val
+
+-elsif each_field['type'] == 'date'
+  %label
+    #{each_field['name']}
+    - unless current_val.nil?
+      -if current_val.class != String
+        - current_val =  current_val.strftime("%m/%d/%Y")
+    = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+  = text_field_tag :"#{index}[#{each_field['id']}]", current_val, :placeholder => "MM/DD/YYYY"#, :onblur => "change_format()"
+
+-elsif each_field['type'] == 'radio_button'
+  %label
+    #{each_field['name']}
+    = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+  -each_field['items'].each do |each_checkbox|
+    = each_checkbox['boxLabel']
+    = radio_button_tag :"index[#{index}].#{each_checkbox['boxLabel']}",id ="each_checkbox['boxLabel']",checked = false
+
+
+
+
+-elsif each_field['type'] == 'check_box'
+  -if each_field['reverse'] == 'true'
+    .ackBox
+      = check_box_tag :"#{index}[#{each_field['id']}]",!!current_val ,current_val, onclick:"$(this).val(this.checked)"
+    .ackText
+      #{each_field['name']}
+      = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+  -else
+    = check_box_tag :"#{index}[#{each_field['id']}]",!!current_val ,current_val, onclick:"$(this).val(this.checked)"
+    .ackText
+      #{each_field['name']}
+      = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+  %br
+
+-elsif each_field['type'] == 'password'
+  .styles{:style => "display:#{each_field['display']}"}
+    %label
+      #{each_field['name']}
+      = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index}
+    = password_field_tag :"#{index}[#{each_field['id']}]"
+
+-elsif each_field['type'] == 'phone'
+  %label
+    #{each_field['name']}
+    = render :partial => 'validation_error', :locals => {:each_field => each_field, :index => raw_index} #if ph_count.eql?(0)
+  = text_field_tag :"#{index}[#{each_field['id']}][contact]", current_val.nil?? current_val : current_val[:contact],:id => 'profile_parent_attributes___phone_numbers__contact' + "#{each_field['id']}", :class => "parent_phone_number", :style => "width: 120px;"
+  = select_tag :"#{index}[#{each_field['id']}][type]", options_for_select(each_field['selection_list'], current_val.nil?? current_val : current_val[:type]), { :style => "width: 75px;", :include_blank => true}
+-elsif each_field['type'] == 'ack'
+  = hidden_field_tag :"#{index}[#{each_field['id']}]"
+
+-else
+  -if each_field['reverse'] == 'true'
+    - is_disable = false
+    - if each_field['id'].eql?('email')
+      -# disable email for form updates unless its not blank and if valid
+      - is_disable = true if !current_val.blank? and each_field['unique'].eql?('parent') and !current_page?(controller: 'profiles',action: 'new') and !(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i).match(current_val).nil?
+    = text_field_tag :"#{index}[#{each_field['id']}]", current_val,disabled: is_disable
+    %label_right
+      #{each_field['name']}
+      = render('validation_error', :each_field => each_field, :index => raw_index)
+    = hidden_field_tag(:"#{index}[#{each_field['id']}]", current_val) if is_disable == true
+  -else
+    %label
+      #{each_field['name']}
+      = render('validation_error', :each_field => each_field, :index => raw_index)
+    - is_disable = false
+    - if each_field['id'].eql?('email')
+      -# disable email for form updates unless its not blank and if valid
+      - is_disable = true if !current_val.blank? and each_field['unique'].eql?('parent') and !current_page?(controller: 'profiles',action: 'new') and !(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i).match(current_val).nil?
+    = text_field_tag :"#{index}[#{each_field['id']}]", current_val,disabled: is_disable
+    = hidden_field_tag(:"#{index}[#{each_field['id']}]", current_val) if is_disable == true
+

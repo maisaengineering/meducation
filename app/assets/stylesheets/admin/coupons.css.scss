@@ -1,0 +1,35 @@
+// Place all the styles related to the admin::coupons controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.standardForm label {
+	display: block;
+	float: left;
+	clear: both;
+	margin-bottom: 7px;
+	margin-right: 5px;
+	width: 225px;
+	font-size: 14px;
+}
+
+.standardForm input[type=text] {
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	width: 200px;
+	height: 23px;
+	border: solid 1px #ccc;
+	margin-right: 7px;
+	font-size: 14px;
+}
+
+.standardForm label_right {
+	display: block;
+	float: right;
+	margin-bottom: 7px;
+	margin-right: 5px;
+	width: 225px;
+	font-size: 14px;
+}

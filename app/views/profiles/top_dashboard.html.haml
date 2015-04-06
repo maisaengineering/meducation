@@ -1,0 +1,11 @@
+/ .bodyContainer  
+%h1 KidsLink Home
+.bodyText
+%p 
+Use the following links to access the personalized dashboard for each of your children:
+
+- @child.each do |each_child|   
+  %p.bigLink.blueLink
+    = link_to "#{each_child[0]}", child_dashboard_profiles_path(:child => each_child[1], :email => params[:email] )
+
+%p.bigLink.blueLink= link_to 'New dashboard',top_dashboard_path(params[:profile_id])

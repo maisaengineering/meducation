@@ -1,0 +1,157 @@
+.modalBx
+  .popUpContainer
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+
+            %form
+              .popUpPanel
+                %a.close{:href => "#", :title => "Close", :onclick=>"model_box_close()"} X
+                %br
+                %h1 Copy To Clipboard
+                .clear
+                %textarea#clipTarget Copy me!
+                .clear
+                %button#d_clip_button.my_clip_button{"data-clipboard-target" => "clipTarget", onclick: "return false;"} copy to clipboard
+                .clear
+%form
+  %h1 View/Manage Enrollees
+  %table.manageLimitsContainer{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %tr
+      %td Season to manage 
+      %td
+        = select_tag('season_id', options_for_select(@seasons.collect{|s| [s.current_season_year,s.id]},session[:season]))
+        = hidden_field_tag('org', value= params[:id])
+
+    %tr
+      %td Session
+      %td
+        #session
+          = select_tag('session_data', options_for_select([['All','All']], session[:session] ))
+    %tr
+      %td Enrollment status
+      %td
+        = select_tag('enrollement_id', options_for_select([['All','All'],['Application submitted','Application submitted'],['Accepted','Accepted'],['Registered','Registered'],['Enrolled','Enrolled'],['Rejected','Rejected'],['Withdrawn','Withdrawn']],[session[:enrollement]]))
+
+  #dashEnrolleesList.dashPanel
+    %span.panelName Enrollees
+    .panelManageContainer
+      %span.panelManageText Click a child's name, or identify children and select an action:
+      %span.panelManageButton
+        = link_to 'Change Status', "#", :onclick => "status();return false", :class => "active"
+      %span.panelManageButton
+        #contact_vi_mail{}
+          = link_to 'Contact via email', "#", :onclick => "contact_vi_mail();return false", :class => "active"
+
+        -#=mail_to @all_parent_email, "Contact via email", method: :post, :remote => true, :encode => "javascript", :class => "active", :id => "send_mail"
+      %span.panelManageButton
+        = link_to "Send form","#", :onclick => "form();return false", :class => "active"
+
+      %span.panelManageButton
+        = link_to "Export all data", '#', :class => "active" ,id: 'export_all_data'
+
+    #loading
+      %table#manageEnrolleesTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %tr.manageTableHeader
+          %td
+            = check_box_tag('universal', value = "", checked = false, :class => 'parent_ckeck')
+          %td Name
+          %td Pref name
+          %td Birthdate
+          %td Season
+          %td Session
+          %td App Date
+          %td Status
+          %td Alert Status
+          %td Export
+
+
+.displayoption
+  .popUpContainer
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td
+          .popUpContent
+            = form_tag change_status_res_organizations_path, :onSubmit => "return validate_status_fields();", :method => 'post', authenticity_token: true do
+              .popUpPanel
+                %h2 Change status of selected children
+                %table
+                  %tr
+                    %td New status
+                    %td
+                      = select_tag('status', options_for_select([['Application submitted','Application submitted'],['Accepted','Accepted'],['Registered','Registered'],['Enrolled','Enrolled'],['Rejected','Rejected'],['Withdrawn','Withdrawn']]), :include_blank => "true")
+                  %tr
+                    %td New session
+                    %td
+                      #session_at_status
+                        =# select_tag('session_data_change', options_for_select(@open_sessions), :include_blank => "true")
+                        = select_tag('session_data_change', options_for_select([]), :include_blank => "true")
+                      = hidden_field_tag :season, session[:season]
+                      = hidden_field_tag :prev_status
+                      = hidden_field_tag :prev_session
+                      = hidden_field_tag :kids_id, params[:kids_id]
+                = submit_tag "Submit changes"
+                / %a{:href => org_enrollees_organizations_path(:id => session[:current_org])}
+                %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}
+
+
+#normal_form
+  .send_form
+    .popUpContainer
+      .popUpBG
+
+      %table.popUpTable
+        %tr
+          %td.popUpTableTD
+            .popUpContent
+              //%form
+              = form_tag popup_send_form_res_organizations_path, :method => 'post', authenticity_token: true do
+                .popUpPanel
+                  %h2 Send form or document request to selected children
+                  %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+                    %tr
+                      %td.formLabel Form/Document
+                      = hidden_field_tag :season, session[:season]
+                      = hidden_field_tag :kids_selected, params[:kids_id]
+
+                      %td.formField
+                        = select_tag :form_need,@org_data
+
+                  = submit_tag "Submit Changes"
+                  %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}
+
+#form_loading.form_loading{:style =>"display: none;"}
+  .popUpContainer
+    .popUpBG{:style =>"background-color: transparent;"}
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            %form
+              .popUpPanel
+                %br
+                  %h2{:align => "center"} Loading...                                                     
+
+
+
+:javascript
+  function validate_status_fields()
+  {
+    return true;
+    if($("#status").val()!="")
+    {
+       return true;
+    }
+    else
+    {
+
+      $('#status').addClass('formInputError');
+      message = "<div class='formErrorText' id='status_error'>ERROR: Must select a status</div>"
+      $('#status').prev().append(message);
+      return false;
+    }
+
+  }

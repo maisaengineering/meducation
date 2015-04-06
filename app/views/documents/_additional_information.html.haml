@@ -1,0 +1,36 @@
+#additional_information.popUpContainer.popUpDocumentsCapture.popUpDocumentsCaptureAddMeta{:style => "display: none;"}
+  .popUpBG
+  %table.popUpTable
+    %tbody
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Capture new document
+              .captureTopText
+                Enter optional information for the
+                %strong{id: 'add_info_category_name'}
+                and then click to save.
+              .captureAddMetaFields
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel org/provider/company
+                  %input{:type => "text",id: 'org_provider'}/
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel description
+                  %input{:type => "text",id: 'description'}/
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel date
+                  %input{:type => "text", value: l(Date.today),  class:  'taken_on'}/
+                  %input{:type => "hidden", value: Date.today, id: 'taken_on'}/
+                .captureAddMetaFieldContainer
+                  %span.captureAddMetaLabel expiration date
+                  %input{:type => "text",  class: 'expiration_date'}/
+                  %input{:type => "hidden", id: 'expiration_date'}/
+              #bigSaveButton
+                %a{:href => "#"} Save document
+              .captureBottomButtons
+                .captureButton.cbCancel{:onclick => "window.location.href='#{documents_path(@parent_profile)}'; return false;"}
+                  %a{:href => "#", :onclick => "return false;"} Cancel
+              .clear
+  :javascript
+    additional_information();

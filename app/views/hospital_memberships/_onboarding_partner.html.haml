@@ -1,0 +1,28 @@
+= field_set_tag do
+  .popUpContainer.popUpOnboard.popUpOnboardPartner
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Sign up
+              .onboardTopText
+                Wellness is an important component of KidsLink, so we have partnered with the following advisors.
+                %br/
+                %strong
+                  Please select whom you would like to be
+                  %i your
+                  = succeed "." do
+                    %strong.bBlue wellness content partner
+              .onboardPartnerContainer
+                -#= render '/hospital_memberships/top_hospitals', hospitals: !session[:partner].nil? ? Hospital.where(name: session[:partner]) : Hospital.onboarding(nil)
+              = hidden_field_tag "hospital_id"
+              .bigNextButton{style: 'display: none;'}
+
+              .onboardBottomButtons
+                .onboardButton.obCancel{:onClick => ""}
+                  %a{:href => "#", :onClick => "event.preventDefault();"} Cancel
+                .onboardButton.obPrevious{:onClick => "$(this).find('a').click();"}
+
+              .clear

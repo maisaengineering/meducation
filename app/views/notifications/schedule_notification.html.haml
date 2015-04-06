@@ -1,0 +1,22 @@
+= form_for @schedule_notification, url:schedule_notification_notifications_path(@schedule_notification), authenticity_token: true do |f|
+
+  - if @schedule_notification.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@schedule_notification.errors.count, "error")} prohibited this notification from being saved:"
+      %ul
+        - @schedule_notification.errors.full_messages.each do |msg|
+          %li= msg
+  #orgContentPrimary.dashPanel.managePanel
+    %label Notification type
+    =f.select :notification_type, options_for_select([['Alert'],['Event']])
+    %label Description
+    = text_area_tag "description"
+    #div_schedule{:style => "display:none;"}
+      %label Date
+      = text_field_tag "date"
+    = @org_data
+    = select_tag :form_need,form_details
+
+    .actions
+      = f.submit 'Save'
+

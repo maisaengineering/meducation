@@ -1,0 +1,9 @@
+- hospitals.each do |hos|
+  .onboardPartnerButton{:onClick => "", style: "background-image: url(#{hos.logo.url})", data:{hospital_id: hos.id, hospital_name: hos.name, is_sponsor: "#{is_sponsor}" }}
+
+:javascript
+  $('.popUpOnboardPartner .onboardPartnerButton').click(function(e){
+          $(".popUpOnboardPartner #hospital_id").val($(this).attr('data-hospital-id'));
+          $(".onboardWell .wellParName").text($(this).attr('data-hospital-name'));
+          $("#new_hospital_membership").kl_clickOnLastNext();
+   });

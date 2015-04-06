@@ -1,0 +1,22 @@
+%span.panelName
+  = link_to "Alerts", "#"
+
+%span.panelOptions
+  = link_to "view details", "#"
+
+%dl
+  - flag  = 0
+  - @orgnization_list.first.seasons.each do |each_season|
+    - if each_season._id == season.org_season_id and each_season.application_form_status != "Withdrawn" and  each_season.notifications.alerts.count > 0
+      - each_season.notifications.alerts.requested.each do |each_doc|
+        - flag = 1
+        %dt
+          - @json_tem = JsonTemplate.where(:_id => each_doc.json_template_id).first
+
+          = link_to_if params[:controller] == "profiles", "#{@json_tem.form_name}", form_data_profiles_path(:child => params[:child], :json_template_id => each_doc.json_template_id, :email =>params[:email], :org_id => each_season._parent.org_id, :season_id => each_season.org_season_id)
+
+          %dd due by #{each_doc.created_at.strftime("%m/%d/%y")}
+        %br
+
+  - if flag == 0
+    No alerts

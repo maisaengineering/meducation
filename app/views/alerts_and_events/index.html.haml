@@ -1,0 +1,78 @@
+/
+  Workflow
+  1) check if notification is a type of ae_definition
+  if yes then check if its a ad_hoc or scheduled then check for alert or event
+  No,next
+  2) check if its form or document
+- title "#{@profile.full_name} | Alerts and Events"
+.dashContainerFull
+  #dashAlertsFull.dashPanel
+    %span.panelName
+      = link_to (@kid_profile ? "#{@kid_profile.nickname}'s " : ' ')+ "Alerts and Events","#"
+    .panelInstructions
+      Select an alert to view details and options.
+      = render 'shared/switch_to'
+    - unless @notifications.blank?
+      -# TODO use mongodb's group aggreagation function(through map-reduce) to group by ae_definition_id,at this time mongoId not supporting group by
+      - duplicates = []
+      - notifications = @notifications.to_a
+      - notifications_multi_dimensional = notifications.map{|n| [n.ae_definition_id,n.profile_id]}
+      - managed_kid_ids = @managed_kids.only(:id).map(&:id).to_a
+      - notifications.each do |notification|
+        - profile = notification.profile
+        - if notification.ae_definition
+          - duplicates << notification.ae_definition_id
+          - if duplicates.count(notification.ae_definition_id).eql?(1)
+            - ae_definition = notification.ae_definition
+            .alertRow
+              .alertSummary
+                .alertMain
+                  .alertTitlePlus
+                    .alertTitle
+                      = link_to ae_definition.title,'#',class: notification.alert? ? 'alertTitleAch' : nil
+                      -# display kid name if and only if this alert/event belongs to specific kid and not to other(siblings) and not to parent
+                      = "(#{(profile.nickname)})" if show_kid_name_on_alert?(managed_kid_ids,notifications_multi_dimensional,@profile,ae_definition,profile)
+                    - if ae_definition.ad_hoc?
+                      .alertSubTitle #{ae_definition.sub_line}
+                    - else ae_definition.scheduled?
+                      .alertSubTitle due by #{l notification.due_by}
+                  - if ae_definition.ad_hoc?
+                    .alertIssued Issued #{l notification.created_at}
+                  - elsif ae_definition.scheduled?
+                    .alertIssued Issued #{l notification.issued_on}
+                // button alignment fix (default it fixed for only two buttons)
+                - style = ae_definition.request_buttons.size >= 3 ? 'padding-right: 5px;' : nil
+                .alertButtons{style: style}
+                  = alert_or_event_buttons(@profile,notification)
+              .clear
+              .alertDetails{style: 'display:none;'}
+                = raw ae_definition.content
+        - elsif notification.json_template or notification.document_definition
+          - document_definition = notification.document_definition
+          - json_template = notification.json_template
+          .alertRow
+            .alertSummary
+              .alertMain
+                .alertTitlePlus
+                  .alertTitle
+                    = link_to json_template.nil? ? document_definition.name : json_template.form_name,'#',class: notification.alert? ? 'alertTitleAch' : nil
+                    = "(#{(profile.nickname)})" unless @kid_profile
+                  .alertSubTitle Form req'd at #{notification.organization.name}
+                .alertIssued Issued #{l notification.created_at}
+              .alertButtons
+                - path = json_template.nil? ? new_document_path(profile.id,notification_id: notification.id)  : form_data_profiles_path(profile_id: profile.id , notification_id: notification.id,org_id: notification.organization.id, season_id: notification.season.org_season_id)
+                .alertButton.abSubmitDocument{onClick: "window.location.href='#{path}'"}
+                  = link_to 'Submit document', '#'
+            .clear
+            .alertDetails{style: 'display:none;'}
+              #{notification.organization.name} has issued a form request for #{notification.profile.full_name}:
+              %br/
+              %br/
+              - if notification.json_template
+                #{ notification.json_template.form_name}
+                %br/
+                #{ notification.json_template.season.season_year}
+              - else
+                #{ notification.document_definition.name}
+                %br/
+                #{ notification.document_definition.is_for_season? ? notification.document_definition.season.season_year : DocumentDefinition::TYPE[:organization_wide]}

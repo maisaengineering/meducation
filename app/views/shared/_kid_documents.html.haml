@@ -1,0 +1,35 @@
+#dashUniDocs.dashPanel
+  %span.panelName
+    = "#{bucket_name} Documents"
+    %span.panelOptions.panelOptionsWithEdit
+      %a{:href => "#"} view/edit
+      |
+      %a{:href => "#"} add
+  .panelFieldContent
+    %table#panelUniDocList{border: 0, cellpadding: 0, cellspacing: 0}
+      - case bucket
+      - when 'univ'
+        - organization_memberships.each do |organization_membership|
+          - organization_membership.notifications.org_wide.submitted.each do |normal_notification|
+            = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+          - organization_membership.seasons.active.each do |season|
+            - season.notifications.submitted.each do |normal_notification|
+              = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+      - when 'org'
+        - organization_membership.notifications.org_wide.submitted.each do |normal_notification|
+          = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+        - organization_membership.seasons.active.each do |season|
+          - season.notifications.submitted.each do |normal_notification|
+            = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+      - when 'seas'
+        - season.organization_membership.notifications.org_wide.submitted.each do |normal_notification|
+          = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+        - season.notifications.submitted.each do |normal_notification|
+          = link_to_doc_or_form(normal_notification,kid_profile,is_admin)
+
+    -#.panelActionContainer
+      %ul
+        %li
+          %a{:href => "#"} view/edit all
+        %li
+          %a{:href => "#"} add new document

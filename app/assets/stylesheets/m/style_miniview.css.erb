@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+p{ margin:0;}
+
+@font-face {
+    font-family: 'HelveticaNeueLTStd-Lt';
+    src: url('/assets/HelveticaNeueLTStd-Lt.eot?') format('eot'), url('/assets/HelveticaNeueLTStd-Lt.otf') format('opentype'), url('/assets/HelveticaNeueLTStd-Lt.woff') format('woff'), url('/assets/HelveticaNeueLTStd-Lt.ttf') format('truetype'), url('/assets/HelveticaNeueLTStd-Lt.svg#HelveticaNeueLTStd-Lt') format('svg');
+}
+@font-face {
+    font-family: 'HelveticaNeueLTStd-Md';
+    src: url('/assets/HelveticaNeueLTStd-Md.eot?') format('eot'), url('/assets/HelveticaNeueLTStd-Md.otf') format('opentype'), url('/assets/HelveticaNeueLTStd-Md.woff') format('woff'), url('/assets/HelveticaNeueLTStd-Md.ttf') format('truetype'), url('/assets/HelveticaNeueLTStd-Md.svg#HelveticaNeueLTStd-Md') format('svg');
+}
+@font-face {
+    font-family: 'HelveticaNeueLTStd-Roman';
+    src: url('/assets/HelveticaNeueLTStd-Roman.eot?') format('eot'),  url('/assets/HelveticaNeueLTStd-Roman.otf') format('opentype'),  url('/assets/HelveticaNeueLTStd-Roman.woff') format('woff'),  url('/assets/HelveticaNeueLTStd-Roman.ttf') format('truetype'),  url('/assets/HelveticaNeueLTStd-Roman.svg#HelveticaNeueLTStd-Roman') format('svg');
+}
+
+
+
+img, object, embed, video {
+	max-width: 100% !important;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width: 100%;
+}
+
+html, body {
+    width:100%;
+    height:100%;
+    margin:0px;
+}
+
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mainContentBlock {
+    background: #ffffff; /* Old browsers */
+	text-align: center;
+	font-family: 'HelveticaNeueLTStd-Lt';
+	font-size: 41px;
+	color: #717171;
+	padding-top:66px;
+	margin-bottom:50px;
+}
+
+
+.mini-feed-heading {
+	font-family: 'HelveticaNeueLTStd-Md';
+	font-size: 42px;
+	color:#48bbea;
+}
+.mini-feed-logo {
+	margin-top:33px;
+}
+.postphoto-bg {
+	background-color:#f1f1f1;
+	border-radius:20px;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	margin:0 auto;
+	margin-top:48px;
+	height:auto;
+	overflow:hidden;
+	width:383px;
+}
+.topTextStepTwo{ padding-top:42px; color:#717171; font-family: 'HelveticaNeueLTStd-Lt'; font-size:36px; line-height:42px }
+.post-title {
+	font-size:26px;
+	margin-top:14px;
+	margin-bottom:24px;
+}
+.post-wrap {
+	width:330px;
+	margin:26px auto;
+	height:auto;
+	text-align:left;
+	
+}
+.comments-title {
+	font-size:19px;
+	text-align:left;
+}
+
+.btn_accept_invitation {
+	background-color:#48bbea;
+	font-size:30px;
+	color:#ffffff;
+	padding:19px 36px;
+	border:none;
+	font-family: 'HelveticaNeueLTStd-Roman';
+	outline:none;
+	margin-top:68px;
+    text-decoration: none;
+    margin-top:68px;
+}
+
+.btn_comment {
+	background-image:url(<%= asset_path('m/native_app/btn_comment_mini-feed.png')%>);
+	background-repeat:no-repeat;
+	width:195px;
+	height:38px;
+	border:none;
+	outline:none;
+	margin-top:23px;
+    display: inline-block;
+    margin-bottom: 68px;
+}
+
+.post_img_crop {
+    height:329px;
+    width:330px;
+    background-size:auto 330px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+/******************** Login css *******************/
+.mainContentLogin {
+    background: #ffffff; /* Old browsers */
+	text-align: center;
+	font-family: 'HelveticaNeueLTStd-Lt';
+	padding-top:47px;
+	padding-bottom:53px;
+}
+
+.login_heading {
+	font-size:32px;
+	color:#717171;
+	font-family: 'HelveticaNeueLTStd-Lt';
+	margin-top:48px;
+	margin-left:25px;
+	margin-right:25px;
+}
+
+.login-bg {
+	background-color:#f1efed;
+    width: 100%;
+    height: 100%;
+}
+.login-wrap {
+	text-align:center;
+	padding:35px;
+}
+.loginformrow {
+	margin-bottom:15px;
+	height:auto;
+	overflow:hidden;
+}
+.textfield_login, .textfield_password {
+	width:100%;
+	height:74px;
+	color:#717171;
+	font-size:28px;
+	font-family: 'HelveticaNeueLTStd-Roman';
+	display:block;
+	border:none;
+	text-indent:15px;
+	line-height:55px;
+}
+.textfield_password {
+	width:46% !important;
+}
+
+.row_fp {
+	text-align:left;
+	margin-top:24px;
+}
+.row_fp a {
+	font-size:32px;
+	font-family: 'HelveticaNeueLTStd-Lt';
+	color:#717171;
+	text-decoration:underline;
+}
+
+.btn_login {
+    color:#ffffff;
+	background-repeat:no-repeat;
+	width:180px;
+	height:74px;
+	border:none;
+	font:none;
+	background-color:#48bbea;
+	background-image:url(<%= asset_path('m/native_app/arrow_icon.png')%>);
+	background-repeat: no-repeat;
+	background-position:138px 22px !important;
+	font-size:30px;
+}
+.pull-right {
+	float:right;
+}
+.pull-left {
+	float:left;
+}
+
+.error_login {
+color: #fbaf3f;
+font-size: 15px;
+position: relative;
+text-align:left;
+padding:4px 0;
+}

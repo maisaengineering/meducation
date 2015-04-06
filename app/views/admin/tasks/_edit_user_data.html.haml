@@ -1,0 +1,69 @@
+.popUpContainer
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %a.close{:href => "#", :title => "Close", :onclick=>"$(this).closest('.popUpContainer').remove();"} X
+            %br
+            %h1 Update user data
+            .clear
+            %label Verified Phone Number :
+            .clear
+            = text_field_tag :verified_phone_number, profile.verified_phone_number, data:{url: admin_update_user_data_path(profile)}
+            .clear
+            %br
+            %label Email subscription :
+            = check_box_tag :ae_notification_opt_out, true, !profile.parent_type.ae_notification_opt_out
+            .clear
+            %br
+            %label Postal Code :
+            .clear
+            = text_field_tag :zipcode, profile.address.zipcode
+            .clear
+            %br
+            %label Onboarding Partner :
+            .clear
+            = select_tag :hospital_id,options_for_select(Hospital.asc(:preferred_name).map{|hos| [hos.preferred_name, hos.id]}, profile.hospital_memberships.first.hospital_id)
+            .clear
+            %br
+            %br
+            = link_to "update","#", id:"update_btn", class:"link_button"
+            .clear
+
+:javascript
+  $("#update_btn").click(function(e){
+    e.preventDefault();
+    var $source_field = $(this).siblings('#verified_phone_number');
+    $(this).text('updating...');
+    if(confirm("Are you sure you want to update?")){
+      var myObject = new Object({verified_phone_number:$source_field.val(),
+                                 parent_type:{ ae_notification_opt_out: !$("#ae_notification_opt_out").is(':checked'),
+                                 address:{zipcode: $("#zipcode").val()}}});
+
+      $.ajax({
+        type: 'PATCH',
+        url: $source_field.attr('data-url'),
+        dataType: 'script',
+        data: {
+          profile: myObject,
+          hospital_id:$("#hospital_id").val()
+        },
+        success: function(data){
+          alert("Successfully updated user's data");
+        },
+        error: function(data){
+          alert('ERROR:' + data.responseText);
+        },
+        complete: function(data){
+          $source_field.closest('.popUpContainer').remove();
+        }
+      });
+
+    }else{
+      $(this).text('update');
+    }
+
+
+  });

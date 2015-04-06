@@ -1,0 +1,38 @@
+#dashAlerts.dashPanel
+  %span.panelName
+    Alerts
+    %span.panelOptions
+      = link_to "view details", "#"
+  %dl
+    - alerts = false
+    - case bucket
+    - when 'univ'
+      - organization_memberships.each do |organization_membership|
+        - organization_membership.notifications.org_wide.alerts.requested.each do |normal_notification|
+          = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+          - alerts = true
+        - organization_membership.seasons.active.each do |season|
+          - unless season.application_form_status == 'Rejected' || season.application_form_status == 'Withdrawn'
+            - season.notifications.alerts.requested.each do |normal_notification|
+              = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+              - alerts = true
+
+    - when 'org'
+      - organization_membership.notifications.org_wide.alerts.requested.each do |normal_notification|
+        = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+        - alerts = true
+      - organization_membership.seasons.active.each do |season|
+        - unless season.application_form_status == 'Rejected' || season.application_form_status == 'Withdrawn'
+          - season.notifications.alerts.requested.each do |normal_notification|
+            = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+            - alerts = true
+    - when 'seas'
+      - unless is_admin == false and (season.application_form_status == 'Rejected' || season.application_form_status == 'Withdrawn')
+        - season.organization_membership.notifications.org_wide.alerts.requested.each do |normal_notification|
+          = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+          - alerts = true
+        - season.notifications.alerts.requested.each do |normal_notification|
+          = link_to_doc_or_form_alert(normal_notification,kid_profile,is_admin)
+          - alerts = true
+    - if alerts == false
+      No alerts

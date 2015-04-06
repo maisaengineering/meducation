@@ -1,0 +1,24 @@
+%h1 Create Organization Admin for '#{@organization.name}'
+#orgContentPage.manageContainer
+  %p.manageExplanation if email already exists assigns the role only.
+= form_for @user,url: create_org_admins_path(@organization), :html => {:class => 'standardForm'}, authenticity_token: true do |f|
+  -if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .formBox
+    %label First Name
+    = f.text_field :fname
+    %label Last Name
+    = f.text_field :lname
+    %br
+    %label Email
+    = f.text_field :email
+    %label Password
+    = f.password_field :password
+    %label Password Confirmation
+    = f.password_field :password_confirmation
+    %br
+  = f.submit 'Save'

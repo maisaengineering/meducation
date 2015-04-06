@@ -1,0 +1,70 @@
+!!!
+%html
+  %head
+    %title MSchool
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "version1"
+    = csrf_meta_tags
+  %body
+    .mainContainer
+      .header
+        .userBox
+          - if user_signed_in?
+            Logged in as #{current_user.fname}#{current_user.lname}
+            %br/
+            = link_to "Preferences", role_based_preferences_path
+            \    #{link_to "Log Out", destroy_user_session_path, :method=>'delete'}
+        .headerBox
+          .logoBox
+            %span#klLogo1
+              = link_to image_tag('logo.png', width: 102,height: 75), registration_logo_path
+          / Organization Logo if exists
+          - @organization ||= Organization.where(id:  params[:org_id]  || session[:org_id]).first
+          - if @organization
+            .orgLogoBox
+              %table
+                %tr
+                  %td= image_tag @organization.logo unless @organization.logo.blank?
+          - if user_signed_in?
+            - unless @managed_kids.blank?
+              .myKids My Kids
+              - if @kid_profile
+                .childSummaryBox.selected
+                  %span.csbPhoto{style: thumb_photo_background(@kid_profile.photograph)}
+                  %span.csbName
+                    = @kid_profile.kids_type.fname.capitalize
+                    = @kid_profile.kids_type.lname.capitalize
+                  %span.csbID
+                    KidsLink ID #{@kid_profile.kids_type.kids_id}
+                  - count = 0
+                  - unless @organization_memberships.blank?
+                    - @organization_memberships.each do |each_org|
+                      - count = count+1 if each_org.notifications.alerts.requested.count > 0
+                    %span.csbAlerts.csbAlertsOn= count >=1 ? "ALERTS: Att'n needed" : nil
+                  %ul.csbOrgList
+                    - unless @organization_memberships.blank?
+                      - if @organization_memberships.count<=2
+                        - @organization_memberships.each  do |each_org|
+                          %li= each_org.organization.preffered_name
+                      - else
+                        %li
+                          (#{@organization_memberships.count-2} others . . . )
+              - if @managed_kids.length > 4
+                - @managed_kids.in_groups_of(3, false) do |kid_profiles|
+                  .multipleChildrenBox
+                    - kid_profiles.each do | kid_profile|
+                      #childPhotograph.mcbChildBox{onclick: "window.location.href='#{child_dashboard_path(profile_id: kid_profile.id)}'; return false;"}
+                        .mcbChildPhotoBox{style: thumb_photo_background(kid_profile.photograph)}
+                        .mcbChildName
+                          = truncate(kid_profile.kids_type.nickname, length: 10)
+              - else
+                - (@managed_kids - @kid_profile.to_a).each do |kid_profile|
+                  - if (@managed_kids.count > 1) and @kid_profile
+                    .childSummaryBoxShadow
+                  .childPhotoBox{onclick: "window.location.href='#{child_dashboard_path(profile_id: kid_profile.id)}'; return false;", style: thumb_photo_background(kid_profile.photograph)}
+      .bodyContainer
+        = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
+        = yield
+    %script{src: "//use.typekit.com/wys2fog.js", type: "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}

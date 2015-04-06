@@ -1,0 +1,1 @@
+= @org.weblinks.collect {|w| (link_to w.link_name, w.link_url.present? ? url_with_protocol(w.link_url) : '#',target: '_blank') }.join(" | ").html_safe

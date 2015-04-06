@@ -1,0 +1,13 @@
+<h1>Document Replaced for <%= @kid_name %> </h1>
+<p>Document Name: <%= @document.name %> </p>
+<p><strong>Effected Document Definitions:</strong><br/>
+  <% i = 1 %>
+  <% @document.shared_with.where(organization_id: @organization.id).each do |document_definition| %>
+      <%= i %>. <%= document_definition.name %> <br/>
+      <% i += 1 %>
+  <% end %>
+</p>
+
+<p><%= link_to "Click here to view Document", @url %>.</p>
+
+<p>For any questions about KidsLink, please reply to this email or visit our web site at <strong><a href="http://www.mykidslink.com/">www.mykidslink.com</a></strong> and choose the About Us page.</p>

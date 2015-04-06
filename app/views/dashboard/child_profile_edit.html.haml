@@ -1,0 +1,81 @@
+.popUpContainer.popUpEditProfile
+  .popUpBG
+  %table.popUpTable
+    %tr
+      %td.popUpTableTD
+        .popUpContent
+          .popUpPanel
+            %span.panelName Edit #{@kid_profile.nickname}'s Profile
+            .editProfileTopText Note: If you have shared any profile data with an organization, changing the data will alter it for them as well.
+            .editProfileFields
+              = form_for(@kid_profile, url:update_child_profile_url, html:{id:'child_profile_edit'}, authenticity_token: true) do |f|
+                .editProfileFieldCategory
+                  Basic details
+                = render 'form_basic_details', f:@kid_profile
+                = render 'address_details', f:@parent_profile
+                = render 'other_basic_details', f:@kid_profile
+
+                .editProfileFieldCategory
+                  Health & Wellness
+                = render 'form_health_and_wellness',  f:@kid_profile
+
+                .editProfileFieldCategory
+                  Parents
+                - i =0
+                .parent_forms
+                  - @kid_profile.parent_profiles.each do |parent|
+                    = hidden_field_tag "parents[#{i}][id]" , parent.id
+                    = render 'form_parent_info', index:i, f: parent, relationship: parent.relationship(@kid_profile.id) ,manageable: parent.manageable(@kid_profile.id)
+                    - i +=1
+
+              .editProfileFieldContainer.editProfileFieldContainerContacts
+                %span.editProfileLabel
+                  = link_to "add new parent/guardian", "#", onclick: "event.preventDefault();add_new_parent_or_guardian();"
+
+            .editProfileBigButtons
+              .bigSaveButton{:onclick => ""}
+                %a{:href => "#", :onClick => "event.preventDefault();"} Save profile
+              .fixedCancelButton{:onclick => ""}
+                %a{:href => "#", :onClick => "event.preventDefault();"} Cancel
+            .clear
+
+:javascript
+  if(navigator.userAgent.match(/iPad/i) != null){
+
+    var iOSKeyboardFix = {
+          targetElem: $('.appFooter'),
+          init: (function(){
+            $("input, textarea").on("focus", function() {
+              iOSKeyboardFix.bind();
+            });
+          })(),
+
+          bind: function(){
+                $(document).on('scroll', iOSKeyboardFix.react);
+                     iOSKeyboardFix.react();
+          },
+
+          react: function(){
+
+                  var offsetX  = iOSKeyboardFix.targetElem.offset().top;
+                  var scrollX = $(window).scrollTop();
+                  var changeX = offsetX - scrollX;
+
+                  iOSKeyboardFix.targetElem.css({'position': 'fixed', 'top' : '-'+changeX+'px'});
+
+                  $('input, textarea').on('blur', iOSKeyboardFix.undo);
+
+                  $(document).on('touchstart', iOSKeyboardFix.undo);
+          },
+
+          undo: function(){
+
+              iOSKeyboardFix.targetElem.removeAttr('style');
+              document.activeElement.blur();
+              $(document).off('scroll',iOSKeyboardFix.react);
+              $(document).off('touchstart', iOSKeyboardFix.undo);
+              $('input, textarea').off('blur', iOSKeyboardFix.undo);
+          }
+    };
+
+  };

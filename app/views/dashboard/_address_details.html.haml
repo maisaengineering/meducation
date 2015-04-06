@@ -1,0 +1,10 @@
+.editProfileFieldContainer.editProfileFieldContainerAddress
+  %span.editProfileLabel Address
+  = text_field_tag "address[address1]", f.pre_fill2(:address1, @parent_profile)
+  %br/
+  = text_field_tag "address[address2]", f.pre_fill2(:address2, @parent_profile)
+  %br/
+  = succeed "," do
+    = text_field_tag "address[city]", f.pre_fill2(:city, @parent_profile), placeholder: "city", class: 'epfCity'
+  = select_tag  "address[state]", options_for_select(us_territory_codes, f.pre_fill2(:state, @parent_profile)), include_blank:true, class: 'epfState'
+  = text_field_tag "address[zipcode]", f.pre_fill2(:zipcode, @parent_profile), placeholder: "zip", class: 'epfZip'

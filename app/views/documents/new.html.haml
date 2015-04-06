@@ -1,0 +1,9 @@
+.dashContainer
+  = render('shared/error_messages',target: @document) if @document.errors.any?
+  %h1 Document share/upload:  #{@document_definition.name}
+  .attachmentContainer
+    .attachmentText If you already have a document available in your KidsLink document repository, there is no need to upload it again.  Instead, you simply need to share it.
+    .attachmentBoxName Document: #{@document_definition.name}
+    = render 'form',button_name: 'Share'
+
+= render 'shared/kid_dash_left',active_class: @document_definition.organization_id.to_s

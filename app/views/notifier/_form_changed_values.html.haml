@@ -1,0 +1,10 @@
+- unless record.previous_changes.nil?
+  - record.previous_changes.each do |attr,val|
+    - unless attr.eql?('updated_at') || attr.eql?('_id') || attr.eql?('_type')
+      - unless val[0].blank? and val[1].blank?
+        - field_name =  val[0].blank? ? "#{attr} (newly added)" : attr
+        - label = bucket.eql?('parent') ? "#{relationship} #{json_template.label_name(bucket,attr) }" : json_template.label_name(bucket,attr) #get the label name from template for given key
+        = label
+        \: #{val[1].blank? ? '(blank)' : val[1]} (was "#{val[0].blank? ? '(blank)' : val[0]}")
+        %br/
+        - @is_changed = true

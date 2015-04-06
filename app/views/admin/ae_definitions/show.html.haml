@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @ae_definition.title
+%p
+  %b Content:
+  = @ae_definition.content
+%p
+  %b Hospital:
+
+
+= link_to 'Edit', edit_admin_ae_definition_path(@ae_definition)
+\|
+= link_to 'Back', admin_ae_definition_path

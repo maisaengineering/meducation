@@ -1,0 +1,579 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+
+/* start page -- November 2013 version */
+
+body.startBody {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-image: none;
+    font-family: "museo-sans-n1", "museo-sans-i1", "museo-sans-n3", "museo-sans-i3", "museo-sans-n5", "museo-sans-i5", "museo-sans-n7", "museo-sans-i7", "museo-sans-n9", museo-sans, "Segoe UI", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+
+.startContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 895px;
+    height: auto;
+    position: relative;
+}
+
+.startTopLeftContainer {
+    width: 212px;
+    height: 624px;
+    float: left;
+    position: relative;
+}
+
+.startLogo {
+    position: absolute;
+    left: 25px;
+    top: 19px;
+    width: 161px;
+    height: 105px;
+    background-image: url(<%= asset_path('l_start_nov13_logo.png')%>);
+    background-size: 161px 105px;
+}
+
+.startTopLeftPhoto {
+    width: 143px;
+    height: 471px;
+    background-image: url(<%= asset_path('l_start_nov13_vertfamily_x2.png')%>);
+    background-repeat: no-repeat;
+    background-size: 143px 471px;
+    position: absolute;
+    left: 88px;
+    top: 138px;
+    z-index: 2;
+}
+
+.startLinksContainer {
+    position: absolute;
+    bottom: 0px;
+    font-size: 13px;
+    color: #aaa;
+    font-weight: 300;
+    padding-bottom: 18px;
+    z-index: 3;
+}
+
+.startLinksContainer ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.startLinksContainer li {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    margin-bottom: 3px;
+}
+
+.startLinksContainer a {
+    text-decoration: none;
+}
+
+.startSealContainer {
+    position: relative;
+    left: -2px;
+    width: 105px;
+    height: 55px;
+    padding-top: 20px;
+}
+
+.startTopMainContainer {
+    position: relative;
+    width: 683px;
+    float: left;
+    background-image: url(<%= asset_path('l_start_nov13_bluebg.png')%>);
+    background-repeat: repeat-x;
+    text-align: center;
+    padding-bottom: 42px;
+}
+
+.startTopBoxesContainer {
+    width: 453px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22px;
+}
+
+.startTopBox {
+    /*background-image: url(<%= asset_path('l_start_nov13_topbox.png')%>);*/
+    background-repeat: no-repeat;
+    width: 116px;
+    height: 184px;
+    float: left;
+    padding: 20px;
+    padding-left: 15px;
+    text-align: center;
+}
+
+.stbCapture {
+    color: #add9e5;
+}
+
+.stbManage {
+    color: #d6de2b;
+}
+
+.stbShare {
+    color: #fcaf3b;
+}
+
+.startTopBox h1 {
+    font-weight: 700;
+    text-transform: lowercase;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    padding-top: 3px;
+    padding-bottom: 7px;
+    font-size: 20px;
+}
+
+.startTopBox h1 .stbSmall {
+    font-weight: 100;
+}
+
+.startTopBox ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.startTopBox li {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    margin-bottom: 2px;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.startTopBox li .stbSmall {
+    font-size: .8em;
+}
+
+.startTopBox .stbIcon {
+    width: 63px;
+    height: 59px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.stbCapture .stbIcon {
+    /*background-image: url(<%= asset_path('l_start_nov13_iconcapture.png')%>);*/
+}
+
+.stbManage .stbIcon {
+    /*background-image: url(<%= asset_path('l_start_nov13_iconmanage.png')%>);*/
+}
+
+.stbShare .stbIcon {
+    /*background-image: url(<%= asset_path('l_start_nov13_iconshare.png')%>);*/
+}
+
+.startBigMainButtonContainer {
+    display: inline-block;
+    text-align: center;
+    clear: both;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.startBigMainButtonContainer .sbmbFree {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #fbb448;
+    background: -webkit-linear-gradient(top, #fcdcae, #fbb448);
+    background: -linear-gradient(top, #fcdcae, #fbb448);
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 10px 10px 0px 0px;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 4px 4px 7px #777;
+    z-index: 3;
+    position: relative;
+}
+
+.startBigMainButtonContainer .sbmbMain {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #38b4e7;
+    background: -webkit-linear-gradient(top, #aee2f7, #38b4e7 65%);
+    background: -linear-gradient(top, #aee2f7, #38b4e7 65%);
+    color: #fff;
+    font-weight: 500;
+    font-size: 25px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 7px #777;
+    z-index: 4;
+    position: relative;
+}
+
+.startBigMainButtonContainer .sbmbmLight {
+    font-weight: 100;
+}
+
+.startBigMainButtonContainer:hover .sbmbFree {
+    background: none;
+    background-color: #fbb448;
+}
+
+.startBigMainButtonContainer:active .sbmbFree {
+    background: none;
+    background-color: #fbb448;
+}
+
+.startBigMainButtonContainer:hover .sbmbMain {
+    background: none;
+    background-color: #13a3de;
+}
+
+.startBigMainButtonContainer:active .sbmbMain {
+    background: none;
+    background-color: #13a3de;
+}
+
+.startUseMobileContainer {
+    display: inline-block;
+    text-align: center;
+    clear: both;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.startUseMobileContainer .sumcTop {
+    color: #13a3de;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.startUseMobileContainer .sumcTop b {
+    font-weight: 700;
+}
+
+.startUseMobileContainer .sumcBottom {
+    color: #555;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.startUseMobileContainer .sumcBottom b {
+    font-weight: 500;
+}
+
+.startLoginContainer {
+    border-radius: 10px;
+    box-shadow: 4px 4px 7px #777;
+    background-color: #d7f1fb;
+    background-image: url(<%= asset_path('l_panel_bg_medblue.png')%>);
+    background-repeat: repeat-x;
+    background-position: top;
+    height: auto;
+    padding-top: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width: 530px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -10px;
+    position: relative;
+    top: 10px;
+    text-align: left;
+}
+
+.startLoginHeader {
+    color: #13a3de;
+    font-weight: 300;
+    font-size: 17px;
+    padding-top: 5px;
+    padding-bottom: 8px;
+    text-transform: lowercase;
+}
+
+.startLoginInput {
+    width: 240px;
+    height: 33px;
+    border: solid 1px #ccc;
+    font-size: 16px;
+    border-radius: 7px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 10px;
+    color: #555;
+}
+
+input[type=password].startLoginInput {
+    width: 130px;
+}
+
+.startSignInButton {
+    border-radius: 7px;
+    box-shadow: 4px 4px 7px #777;
+    color: #fff;
+    font-size: 16px;
+    width: auto;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: 700;
+    background-color: #28ace2;
+    text-transform: lowercase;
+    cursor: pointer;
+    background-image: url(<%= asset_path('d_button_bg_dkblue.png')%>);
+    background-repeat: repeat-x;
+    text-align: center;
+    margin-top: 0px;
+    display: inline-block;
+}
+
+.startSignInButton a {
+    text-decoration: none;
+}
+
+.startSignInButton:hover a {
+    color: #000;
+}
+
+.startLoginForgotContainer {
+    font-size: 11px;
+    text-align: inherit;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.startLoginRememberContainer {
+    font-size: 13px;
+    padding-top: 5px;
+    display: inline-block;
+    margin-left: 90px;
+    position: relative;
+    top: 1px;
+}
+
+.startLoginRememberContainer input[type=checkbox] {
+    float: none;
+    margin-left: 2px;
+    margin-right: 10px;
+    margin-top: 0px;
+    position: relative;
+    top: 2px;
+}
+
+.startLearnMore {
+    font-size: 26px;
+    margin-top: 40px;
+    text-transform: lowercase;
+    font-weight: 100;
+    color: #13a3de;
+}
+
+.startLearnMore span {
+    position: relative;
+    top: -1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: .6em;
+}
+
+.startQuestionContainer {
+    clear: both;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.startQuestionBox {
+    width: 216px;
+    margin-left: 117px;
+    float: left;
+}
+
+.startQuestionBox:first-child {
+    margin-left: 0px;
+}
+
+.startQuestionBox h1 {
+    color: #fbb03f;
+    font-size: 29px;
+    font-weight: 100;
+    margin: 0px;
+    padding: 0px;
+}
+
+.startQuestionBox h1 b {
+    font-weight: 500;
+}
+
+.startQuestionBox h2 {
+    color: #13a3de;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0px;
+    padding: 0px;
+    margin-top: -1px;
+    margin-bottom: 20px;
+}
+
+.startQuestionBox p {
+    font-size: 14px;
+    color: #898989;
+    font-weight: 100;
+    line-height: 1.4em;
+}
+
+.startQuestionBox p + p {
+    margin-top: 15px;
+}
+
+.startQuestionBox p b {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.startDeviceContainer {
+    /*background-image: url(<%= asset_path('l_start_nov13_devicerow.jpg')%>);*/
+    background-repeat: no-repeat;
+    height: 397px;
+    position: relative;
+}
+
+.startDeviceContainer .sdcQuoteContainer {
+    width: 366px;
+    height: 117px;
+    font-size: 18px;
+    font-weight: 100;
+    color: #a1a1a1;
+    position: absolute;
+    left: 434px;
+    top: 142px;
+    text-align: center;
+    z-index: 4;
+}
+
+.startDeviceContainer .sdcQuoteContainer b.bBlue {
+    font-weight: 500;
+}
+
+.startDeviceContainer .sdcQuoteContainer .sdcQuoteOpen {
+    font-size: 140px;
+    font-weight: 100;
+    font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
+    letter-spacing: -.05em;
+    float: left;
+    position: relative;
+    top: -45px;
+    right: -20px;
+}
+
+.startDeviceContainer .sdcQuoteContainer .sdcQuoteClose {
+    font-size: 140px;
+    font-weight: 100;
+    font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
+    letter-spacing: -.05em;
+    float: right;
+    position: relative;
+    top: -50px;
+    right: -32px;
+}
+
+.startDeviceContainer .sdcCiteContainer {
+    left: 500px;
+    top: 289px;
+    position: absolute;
+    width: 187px;
+    height: 52px;
+    font-size: 15px;
+    color: #a1a1a1;
+    z-index: 5;
+}
+
+.startVideoContainer {
+    height: 362px;
+    background-image: url(<%= asset_path('l_start_nov13_bigbg.png')%>);
+    background-repeat: repeat-x;
+    position: relative;
+}
+
+.startVideoContainer .svcTextContainer {
+    left: 40px;
+    top: 160px;
+    position: absolute;
+    width: 414px;
+    height: 184px;
+    color: #555;
+}
+
+.startVideoContainer .svctcSee {
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.startVideoContainer .svctcSub {
+    font-size: 23px;
+    font-weight: 300;
+    margin-top: -3px;
+}
+
+.startVideoContainer .svctcPressLink {
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 80px;
+}
+
+.startVideoContainer .svcEmbedContainer {
+    left: 506px;
+    top: 59px;
+    position: absolute;
+    width: 348px;
+    height: 261px;
+}
+
+/* Login error message for start page only */
+
+.startBody .formTopErrorText {
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 7px #777;
+    background-color: #fab138;
+    overflow: hidden;
+    margin-top: 0px;
+    padding: 15px;
+    font-size: 13px;
+    color: #000;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.startLearnMore{
+    cursor: pointer;
+}
+
+
+/* css end */

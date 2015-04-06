@@ -1,0 +1,6 @@
+- unless organization.new_record?
+  %label Select season to manage
+  = select_tag :select_season_year, options_for_select(organization.seasons.collect{ |s| [s.current_season_year, s.id] }, :onchange =>"select()") + "<option value='create_new_season'>-- Create new season --</option>".html_safe
+  .formSectionDivider
+#org_season_fields
+  = render 'season_fields',season: season ,organization: organization

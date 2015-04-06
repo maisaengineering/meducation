@@ -1,0 +1,55 @@
+.dashContainer
+  %h1 Document view: Photograph of child
+  .documentViewImageBox
+    = image_tag( 'default.png', :width=>"70",:height=>"99")
+    //%img{:height => "99", :src => "images/tempphoto1.jpg", :width => "70"}/
+
+  .documentViewUploadDate Uploaded on 00/00/00 at 00:00pm EDT
+  .documentViewReplaceLink
+    = link_to "Replace this document", "#"
+
+  .documentViewShare
+    .documentViewShareHeader Shared with
+    %ul
+      %li Peachtree Pres
+      %li Camp Greystone (as Proof of Residency)
+      %li ATL Karate (as Proof of Residency, Proof of Citizenship)
+  %p  
+  .documentViewLink
+    = link_to "Click to open document", "#"
+    %br
+
+    %span.documentViewLinkFilename Original filename "Immunization Record.pdf"
+
+  .documentViewUploadDate Uploaded on 00/00/00 at 00:00pm EDT
+  .documentViewReplaceLink
+    = link_to "Replace this document", "#"
+
+
+
+.childDashLeft
+  .cdlHome
+    = link_to "kidslink home", "#"
+  %ul.cdlOrgList
+    %li
+      %a{:href => "#"} Paul Overview
+    %li.selected
+      %a{:href => "#"} Peachtree Pres
+    %li
+      %a{:href => "#"} Buckhead Baseball
+    %li
+      %a{:href => "#"} Camp Greystone
+    %li
+      %a{:href => "#"} ATL Karate
+    %li.atApp
+      %a{:href => "#"} Westminster
+      %span (@ appl)
+    %li.atApp
+      %a{:href => "#"} Pace
+      %span (@ appl)
+    %li.atApp
+      %a{:href => "#"} Lovett
+      %span (@ appl)
+  .cdlApplyAnotherBox
+    %a.cdlApplyLink{:href => "#"} Apply
+    for another KidsLink affiliated organization

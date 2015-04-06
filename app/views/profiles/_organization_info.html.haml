@@ -1,0 +1,15 @@
+= image_tag("#{@org.logo}", :width => "107", :height => "70", :class => "dashOrgLogo")
+%h1 #{@org.name}
+.dashOrgHeaderInfo
+  .dashOrgHeaderInfoBlock
+    #{@org.address1}
+    %br/
+    #{@org.address2} , #{@org.address3}
+    %br/
+  .dashOrgHeaderInfoBlock
+    #{@org.phone_no} (phone)
+    %br/
+    #{@org.fax_no} (fax)
+    %br/
+    = mail_to "#{@org.email}"
+    %br/

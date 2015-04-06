@@ -1,0 +1,258 @@
+<%= hidden_field_tag :annual_amount, @amount.to_i %>
+<%= hidden_field_tag :annual_fee, @kidslink_price.to_i %>
+<%= hidden_field_tag :org_id, params[:org_id] %>
+<%= hidden_field_tag :profile_id, params[:profile_id] %>
+
+<script>
+
+    function validate_form_fields(str) {
+        var display_ele = new Array("number_error", "exp_error", "ver_error", "address_error", "city_error", "state_error", "zip_error")
+        var display_color = new Array("transaction_credit_card_number", "transaction_credit_card_expiration_date", "transaction_credit_card_cvv", "transaction_billing_street_address", "transaction_billing_locality", "transaction_billing_region", "transaction_billing_postal_code")
+        for (i = 0; i < display_ele.length; i++) {
+            document.getElementById(display_ele[i]).style.display = "none";
+        }
+        for (i = 0; i < display_color.length; i++) {
+            document.getElementById(display_color[i]).className = "standardForm";
+        }
+        document.getElementById('ack1').style.display = "none";
+        if (document.getElementById('transaction_credit_card_number').value == "" || document.getElementById('transaction_credit_card_expiration_date').value == "" || document.getElementById('transaction_credit_card_cvv').value == "" || document.getElementById('transaction_billing_street_address').value == "" || document.getElementById('transaction_billing_locality').value == "" || document.getElementById('transaction_billing_region').value == "" || document.getElementById('transaction_billing_postal_code').value == "" || document.getElementById('privacy_policy1').checked == false || document.getElementById('privacy_policy').checked == false) {
+            if (document.getElementById('privacy_policy1').checked == false) {
+                document.getElementById('ack1').style.display = "block";
+
+            }
+            if (document.getElementById('transaction_credit_card_number').value == "") {
+                document.getElementById('number_error').style.display = "block";
+                document.getElementById('transaction_credit_card_number').className = "formInputError";
+            }
+            if (document.getElementById('transaction_credit_card_expiration_date').value == "") {
+                document.getElementById('exp_error').style.display = "block";
+                document.getElementById('transaction_credit_card_expiration_date').className = "formInputError";
+            }
+            if (document.getElementById('transaction_credit_card_cvv').value == "") {
+                document.getElementById('ver_error').style.display = "block";
+                document.getElementById('transaction_credit_card_cvv').className = "formInputError";
+            }
+
+            if (document.getElementById('transaction_billing_street_address').value == "") {
+                document.getElementById('address_error').style.display = "block";
+                document.getElementById('transaction_billing_street_address').className = "formInputError";
+            }
+            if (document.getElementById('transaction_billing_locality').value == "") {
+                document.getElementById('city_error').style.display = "block";
+                document.getElementById('transaction_billing_locality').className = "formInputError";
+            }
+            if (document.getElementById('transaction_billing_region').value == "") {
+                document.getElementById('state_error').style.display = "block";
+                document.getElementById('transaction_billing_region').className = "formInputError";
+            }
+            if (document.getElementById('transaction_billing_postal_code').value == "") {
+                document.getElementById('zip_error').style.display = "block";
+                document.getElementById('transaction_billing_postal_code').className = "formInputError";
+            }
+            $('html, body').animate({ scrollTop:0 }, 'slow');
+            document.getElementById('headder_error').innerHTML = "<div class='formTopErrorText'><span class = 'formTopErrorHeader'>Oops!</span><br/>We discovered an error. Please see below for more information.</div>";
+            return false;
+        }
+
+    }
+
+    $(document).ready(function(){
+        $("form#commentForm").submit(function(){
+            if (document.getElementById('transaction_credit_card_number').value != "" && document.getElementById('transaction_credit_card_expiration_date').value != "" && document.getElementById('transaction_credit_card_cvv').value != "" && document.getElementById('transaction_billing_street_address').value != "" && document.getElementById('transaction_billing_locality').value != "" && document.getElementById('transaction_billing_region').value != "" && document.getElementById('transaction_billing_postal_code').value != "" && document.getElementById('privacy_policy1').checked == true) {
+                $('input').attr('readonly', true);
+                $('input[type=submit]').attr("disabled", "disabled");
+                $('a').unbind("click").click(function (e) {
+                    e.preventDefault();
+                    // or return false;
+                });
+            };
+        });
+    });
+</script>
+
+
+
+<style type="text/css">
+    label.error {
+        color: #E3981C;
+        font-size: 12px !important;
+        font-weight: 700;
+        margin-top: -10px !important;
+    }
+    #coupon_error{
+        color: #E3981C;
+        font-size: 12px !important;
+        font-weight: 700;
+        position: absolute;
+        top:74px;
+        left:16px;
+    }
+
+    p {
+        clear: both;
+    }
+
+    .submit {
+        margin-left: 12em;
+    }
+
+    em {
+        padding-right: 1em;
+        vertical-align: top;
+    }
+    .formBox_position{
+        position: relative;
+    }
+</style>
+
+<h1>Apply for <%= @organization.name %> and a new KidsLink membership</h1>
+<div id="paymentExplanation">Now it is time to pay your application and/or enrollment fee of <span id="total_amount"> <b>$<%= h @amount.to_i %></b> </span>
+  for <%= @organization.name %>, which is subject to the policies of that organization.
+</div>
+
+<div class="clear"></div>
+<div id="coupons_message" style="display:none;"> You have successfully applied the coupon</div>
+<div class="standardForm">
+
+</div>
+
+<div class="standardForm">
+  <div id="headder_error">
+
+    <% if session[:error_mes] -%>
+        <div class="formTopErrorText"><span class="formTopErrorHeader">Oops!</span>We discovered an error. Please see
+          below for more information.
+          <div style="color: black;"><%= h session[:error_mes] %></div>
+        </div>
+    <% else %>
+        <div class="formdisplay" display="none">
+          <div class="formTopErrorText"><span class="formTopErrorHeader">Oops!</span>We discovered an error. Please see
+            below for more information.
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="standardForm">
+
+
+  <div class="formTopErrorText" style='display:none'><span class="formTopErrorHeader">Oops!</span>We discovered an
+    error. Please see below for more information.
+  </div>
+  <%= form_for :transaction,
+               :params => @result && @result.params[:transaction],
+               :errors => @result && @result.errors.for(:transaction),
+               :builder => ApplicationHelper::BraintreeFormBuilder,
+               :url => Braintree::TransparentRedirect.url,
+               :html => {:autocomplete => "off", :id => "commentForm", :class => "standardForm", :method => "post", :onSubmit => "return validate_form_fields(this);"}, authenticity_token: true do |f| -%>
+
+
+      <%= hidden_field_tag :payment_submit, "profile" %>
+      <%= hidden_field_tag :org_id, params[:org_id] %>
+
+      <div id="payment_amount">
+        <%= render "payment_amount" %>
+      </div>
+
+      <input type="hidden" value="1" id="payment_submit">
+
+
+      <div class="formBox formBox_position">
+        <div class="formSection">Payment</div>
+        <label>Special code (if provided)</label>
+        <%= f.text_field :order_id, :id => "coupon_code" %>
+        <%= link_to "Apply", "#", :class => "apply_coupon" %>
+
+        <span id="coupon_error"></span>
+        <div class="formSectionDivider"></div>
+        <label>Card type</label>
+        <select>
+          <option>Visa</option>
+          <option>Mastercard</option>
+          <option>American Express</option>
+        </select>
+
+        <%= f.fields_for :credit_card do |c| -%>
+            <label> Card Number
+              <div class='formErrorText' id='number_error' style='display: none'>ERROR: Card Number is required</div>
+            </label>
+            <%= c.text_field :number, {:class => "required"} %>
+
+            <label> Expiration Date (MM/YY)
+              <div class='formErrorText' id='exp_error' style='display: none'>ERROR: Expiration Date is required</div>
+            </label>
+            <%= c.text_field :expiration_date, {:class => "required"} %>
+
+            <label> Verification Number
+              <div class='formErrorText' id='ver_error' style='display: none'>ERROR: Verification Number is required
+              </div>
+            </label>
+            <%= c.text_field :cvv, {:class => "required"} %>
+            <div class="formCaption">
+              Visa/MC: Use the last 3 digits on the signature panel on the BACK of the card<br/>
+              AmEx: Use the 4 digits above the card number on the FRONT of the card
+              <br/><br/>
+              <%= image_tag('reg_cardback_visamc.png', :width => "165", :height => "115") %>
+              &nbsp;
+              <%= image_tag('reg_cardback_amex.png', :width => "150", :height => "107") %>
+            </div>
+            <div class="formSectionDivider"></div>
+        <% end -%>
+
+        <%= f.fields_for :customer do |c| -%>
+            <%= c.label :first_name, " Card Holder First Name" %>
+            <%= c.text_field :first_name %>
+            <%= c.label :last_name, "Card Holder Last Name" %>
+            <%= c.text_field :last_name %>
+
+            <%#= c.label :email, "Email" %>
+            <%#= c.text_field :email %>
+
+        <% end -%>
+
+        <%= f.fields_for :billing do |c| -%>
+            <div class="formSectionDivider"></div>
+            <label> Billing address
+              <div class='formErrorText' id='address_error' style='display: none'>ERROR: Billing address is required
+              </div>
+            </label>
+            <%= c.text_field :street_address, :class => "required" %>
+            <label>Billing city
+              <div class='formErrorText' id='city_error' style='display: none'>ERROR: Billing city is required</div>
+            </label>
+            <%= c.text_field :locality, :class => "required" %>
+            <label>Billing state
+              <div class='formErrorText' id='state_error' style='display: none'>ERROR: Billing state is required</div>
+            </label>
+            <%= c.text_field :region, :class => "required" %>
+            <label>Billing zip code
+              <div class='formErrorText' id='zip_error' style='display: none'>ERROR: Billing zip is required</div>
+            </label>
+            <%= c.text_field :postal_code, :class => "required" %>
+        <% end %>
+      </div>
+
+      <div class="formBox">
+        <div class="formSection">Acknowledgments</div>
+        <div class="formTopCaptionImportant">
+          Please read the following acknowledgments, and check the boxes adjacent to each to indicate that you agree.
+        </div>
+
+        <input type="checkbox" value="0" name="privacy_policy1" id="privacy_policy1" class="required ackBox">
+
+        <div class="ackText">
+          I understand that my credit card will be charged a total of
+          $<span id="total_amount_check"><%= @total_price.to_i %></span>, comprising
+          $<span id="total_amount_check_second"><%= @total_price.to_i %></span> for the <%= @organization.name %>
+          application and/or enrollment fee. I further understand that this payment will appear on my statement as KidsLink, and that KidsLink will remit the
+          application and/or enrollment fee to <%=  @organization.name %>.
+          <div class='formErrorText' id='ack1' style='display: none'>ERROR: Agreement is required</div>
+        </div>
+        <br/>
+      </div>
+
+      <%= f.submit "proceed with payment"%>
+  <% end -%>
+
+</div>

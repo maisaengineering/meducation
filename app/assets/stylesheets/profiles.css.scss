@@ -1,0 +1,512 @@
+// Place all the styles related to the profile controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#profile_parent_attributes__email{
+ border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 200px;
+}
+
+//#profile_parent_attributes___phone_numbers__contact{
+//    border: 1px solid #CCCCCC;
+//    display: block;
+//    float: left;
+//    font-size: 14px;
+//    height: 23px;
+//    margin-bottom: 7px;
+//    margin-right: 7px;
+//    width: 100px;
+//}
+
+#profile_parent_attributes___phone_numbers__type{
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 92px;
+}
+
+#home_type,#work_type,#mobile_type{
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 92px;
+}
+#phone_home,#phone_work,#phone_mobile{
+border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 7px;
+    width: 100px;
+}
+
+
+/* Registration Pages */
+
+#registrationExplanation {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 600px;
+	line-height: 1.3em;
+	font-size: .9em;
+	color: #888;
+}
+
+.registrationMessageFromOrg {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 600px;
+	font-size: 1.2em;
+	line-height: 1.6em;
+}
+
+/* Register with Key: Login Decision Page */
+
+.rwkLoginDecisionsBox {
+	width: 400px;
+	height: 120px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+}
+
+.rwkLoginDecisionContainer {
+	padding: 10px;
+	padding-top: 32px;
+	float: left;
+	width: 175px;
+	text-align: center;
+	font-size: 14px;
+	background-color: #eaf9fe;
+	height: 100%;
+	font-weight: 500;
+}
+
+.rwkLoginDecisionContainer + .rwkLoginDecisionContainer {
+	border-left: 2px dotted #13a3de;
+	background-color: #fff;
+	padding-top: 25px;
+}
+
+.rwkLoginDecisionContainer a {
+	text-decoration: none;
+}
+
+.rwkLoginDecisionContainer a:hover {
+	text-decoration: underline;
+}
+
+.rwkLoginDecisionContainer #rwkExistingText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkNewText {
+	font-size: 1.3em;
+	display: block;
+	font-weight: 700;
+}
+
+.rwkLoginDecisionContainer #rwkAndapplyText {
+	font-size: .8em;
+	display: block;
+	font-weight: 300;
+	margin-top: 4px;
+}
+
+
+.alternativeRow{
+    text-align: center;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    margin-left: 35%;
+    text-decoration: underline;
+    font-size: 13px;
+    color: #555;
+}
+
+.delRow{
+    margin-left: 35%;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: #555;
+}
+
+.addRow{
+    margin-left: 35%;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: #555;
+}
+
+.table_hr
+{   
+    height: 10px;
+    border-bottom: 1px solid #999;
+    clear: both;
+    padding-left:1px;
+    padding-top:10px;
+    
+}
+
+
+/* Registration payment page */
+
+#paymentExplanation {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 600px;
+	line-height: 1.6em;
+	font-size: 1.2em;
+}
+
+#paymentExplanationDetail {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 600px;
+	line-height: 1.4em;
+	font-size: 1em;
+}
+
+.paymentMathContainer {
+	width: 330px;
+	margin-left: 30px;
+	float: right;
+	line-height: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 150px;
+}
+
+.paymentMathContainer .mathBlue {
+	color: #13a3de;
+}
+
+.paymentMathFigure {
+	font-size: 24px;
+	font-weight: 700;
+	text-align: right;
+	width: 70px;
+	display: inline-block;
+	float: left;
+	vertical-align: baseline;
+}
+
+#paymentMathKidsLink {
+	width: 50px;
+}
+.paymentMathKidsLink {
+	width: 50px;
+}
+
+.paymentMathPlus {
+	font-size: 22px;
+	font-weight: 700;
+	display: inline-block;
+	width: 20px;
+	float: left;
+	clear: both;
+	vertical-align: baseline;
+}
+
+.paymentMathFeeName {
+	font-size: 18px;
+	font-weight: 300;
+	display: inline-block;
+	float: left;
+	padding-left: 10px;
+	vertical-align: baseline;
+}
+
+.paymentMathTotalContainer {
+	clear: both;
+	border-top: solid 1px #333;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+.paymentMathTotal {
+	font-size: 24px;
+	font-weight: 700;
+	text-align: right;
+	width: 70px;
+	display: inline-block;
+	vertical-align: baseline;
+}
+
+.paymentMathContainer sup {
+	font-weight: 500;
+	font-size: .7em;
+	vertical-align: baseline;
+	position: relative;
+    top: -0.4em;
+}
+
+
+
+/* Standard Form Box */
+
+.formBox {
+	width: 500px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fff;
+	overflow: hidden;
+	margin-top: 25px;
+	border-top: 5px solid #68c4ea;
+	padding: 15px;
+	padding-top: 20px;
+}
+
+.formBox .formSection {
+	clear: both;
+	font-weight: 700;
+	color: #68c4ea;
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.formBox .formSection:first-child {
+	margin-top: -15px;
+	border-top: none;
+}
+
+.formBox .formTopCaptionImportant {
+	clear: both;
+	font-weight: 700;
+	color: #333;
+	font-size: 14px;
+	padding-top: 0px;
+	padding-bottom: 15px;
+}
+
+.formBox .formCaption {
+	clear: both;
+	float: left;
+	margin-left: 25px;
+	font-weight: 300;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	width: 450px;
+}
+
+.formBox .formSectionDivider {
+	height: 10px;
+	border-bottom: 1px solid #999;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+.formBox .formSectionPrimaryAction {
+	text-align: center;
+	padding-bottom: 10px;
+	font-weight: 500;
+	text-transform: lowercase;
+}
+
+.formTopErrorText {
+	width: 400px;
+	border-radius: 10px;
+	box-shadow: 4px 4px 7px #777;
+	background-color: #fab138;
+	overflow: hidden;
+	margin-top: 25px;
+	padding: 15px;
+	font-size: 13px;
+	color: #000;
+}
+
+.formTopErrorHeader {
+	display: block;
+	color: #fff;
+	font-size: 24px;
+	font-weight: 500;
+}
+
+.formBox .formInputError {
+	background-color: #fd9;
+	border-color: #fab138 !important ;
+}
+
+.formBox .formErrorText {
+	color: #e3981c;
+	font-size: 12px;
+	font-weight: 700;
+	padding-bottom: 10px;
+	padding-top: 6px;
+}
+
+
+
+/* File Upload Hack */
+
+.fileUploadContainer {
+	position: relative; 
+	display: block;
+	float: left;
+	width: 230px;
+}
+
+.fileUploadButtonContainer {
+	position: relative; 
+	width: 125px; 
+	height: 30px; 
+	overflow: hidden;
+}
+
+.fileUploadButtonContainer input[type=button] {
+	width: 100px; 
+	position: absolute; 
+	top: 0px;
+	background-color: #fab138;
+	border-radius: 8px;
+	box-shadow: 2px 2px 4px #777;
+	font-size: 1.1em;
+	color: #fff;
+	font-weight: 500;
+	border: none;
+	padding: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-transform: lowercase;
+	cursor: pointer;
+}
+
+.fileUploadButtonContainer input[type=file]
+{
+	font-size: 45px; 
+	position: absolute; 
+	right: 0px; 
+	top: 0px; 
+	opacity: 0; 
+	cursor: pointer;
+
+	filter: alpha(opacity=0); 
+	-ms-filter: "alpha(opacity=0)"; 
+	-khtml-opacity: 0; 
+	-moz-opacity: 0;
+}
+
+.fileUploadStatus {
+	position: absolute;
+	top: 5px;
+	left: 110px;
+}
+
+/* Child Dash Left */
+
+.childDashLeft {
+	width: 193px;
+}
+
+.cdlHome {
+	padding-left: 23px;
+	font-size: 15px;
+	padding-top: 13px;
+	padding-bottom: 18px;
+	font-weight: 500;
+}
+
+.cdlHome a {
+	color: #10a2dd;
+}
+
+.cdlOrgList {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	width: 185px;
+}
+
+.cdlOrgList li {
+	list-style: none;
+	margin-left: 0px;
+	padding-top: 5px;
+	padding-left: 7px;
+	border-top: solid 1px #c2c2c2;
+	height: 20px;
+	font-weight: 500;
+	font-size: 14px;
+	width: 185px;
+}
+
+.cdlOrgList li.selected {
+	background-color: #fab138;
+	color: #fff;
+	background-image: image-url('l_orgSelected_bg.png');
+	background-position: right;
+	background-repeat: no-repeat;
+	border: none;
+	font-weight: 700;
+	width: 193px;
+}
+
+.cdlOrgList li.selected + li {
+    border: none;
+}
+
+.cdlOrgList li:first-child {
+	border: none;
+}
+
+.cdlOrgList li a {
+	text-decoration: none;
+}
+
+.cdlOrgList li.atApp {
+	color: #a7ab4e;
+}
+
+.cdlOrgList li.atApp span {
+	font-size: 10px;
+	font-weight: 300;
+}
+
+.cdlApplyAnotherBox {
+	width: 145px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 12px;
+	font-weight: 500;
+	color: #666;
+	text-align: center;
+	padding-top: 20px;
+}
+
+.cdlApplyLink {
+	color: #13a3de;
+	font-size: 20px;
+	font-weight: 500;
+	text-align: center;
+	display: block;
+	text-transform: lowercase;
+}

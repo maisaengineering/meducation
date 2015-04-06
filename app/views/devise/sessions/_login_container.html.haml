@@ -1,0 +1,20 @@
+= form_for(resource, :as => resource_name, :html => { :class => 'standardForm',:autocomplete => "off"}, :url => session_path(resource_name)) do |f|
+  - unless @alert_msg.nil?
+    .formTopErrorText.errors_new_signin_page
+      %span.formTopErrorHeader> Oops!
+      We can't locate an account with that combination of email address and password.  Try again?
+  .startLoginContainer
+    .startSealContainer
+      %script{:src => "https://sealserver.trustwave.com/seal.js?style=invert&code=556a565c9a1549848e95b3464a5f0a4e", :type => "text/javascript"}
+    .startLoginLeft
+      .startLoginHeader Current users:
+      = f.text_field :email, :class=> 'startLoginInput',:placeholder=> "e-mail address"
+      = f.password_field :password, :class=> 'startLoginInput',:placeholder=> "password"
+      = f.hidden_field :kid_login, :value => params[:kid_login]
+      .startLoginForgotContainer
+        = link_to "Forgot password?", new_user_password_path()
+    .startLoginRight
+      = f.submit "Sign in", class: 'startSignInButton'
+      .startLoginRememberContainer
+        = f.check_box "remember_me"
+        Remember me until sign-out?

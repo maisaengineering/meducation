@@ -1,0 +1,60 @@
+%p#notice= notice
+- method_verb = @ae_definition.new_record? ? :post : :put
+- url = @ae_definition.new_record? ? admin_ae_definitions_path(@ae_definition) : admin_ae_definition_path(@ae_definition)
+= form_for @ae_definition, :url => url,html: {method: method_verb}, authenticity_token: true do |f|
+  - ae_definition_type =  params[:type] || @ae_definition._type
+  = hidden_field_tag :type, ae_definition_type
+  - if @ae_definition.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@ae_definition.errors.count, "error")} prohibited this notification from being saved:"
+      %ul
+        - @ae_definition.errors.full_messages.each do |msg|
+          %li= msg
+  #dashEditForm.manageContainer
+    %p #{params[:type]} Notification
+    #dashEditDocDefPanel.dashPanel.managePanel
+      %label Title
+      = f.text_field :title
+      %label Sub line
+      = f.text_field :sub_line
+      %label Category
+      = f.text_field :category
+      %label Definition type
+      =f.select :definition_type, options_for_select(['Alert', 'Event'],@ae_definition.definition_type ),include_blank: true
+      %label Hospital
+      =f.select :hospital_id, Hospital.all.collect {|p| [ p.name, p.id ] } ,{include_blank: true,selected: @ae_definition.hospital_id}
+      %label status
+      = f.select :status, options_for_select(AeDefinition::STATUS, @ae_definition.status), include_blank: true
+      %label Content
+      = f.text_area :content
+      - if ae_definition_type.eql?(AdHocAeDefinition.to_s)
+        -#%label Occurring On
+          - occurring_on = @ae_definition.new_record? ? l(Date.today) : l(@ae_definition.occurring_on)
+          - occurring_on_hidden = @ae_definition.new_record? ? Date.today : @ae_definition.occurring_on
+          = f.text_field :occurring_on, value: occurring_on, class: 'mclInputDate ae_occurring_on' ,readonly: true
+          = f.hidden_field :occurring_on, value: occurring_on_hidden, id: 'ae_occurring_on_alt'
+        %label Type
+        = f.select :to_whom, options_for_select(['parent', 'kid'],@ae_definition.to_whom), include_blank: true
+      - else
+        %label Occurring Days
+        = f.text_field :occurring_days
+        %label Due by Days
+        = f.text_field :due_by_days
+      .clear
+      %table
+        %tr
+          %td{width: '48%'} Request Buttons
+          %td
+            - AeDefinition::REQUEST_BUTTONS.values.each do |r_button|
+              - if f.object.new_record?
+                = check_box_tag 'ae_definition[request_buttons][]',r_button,  false
+                = r_button
+              - else
+                - name = ae_definition_type.eql?(AdHocAeDefinition.to_s) ? 'ad_hoc_ae_definition[request_buttons][]' : 'scheduled_ae_definition[request_buttons][]'
+                = check_box_tag name, r_button,@ae_definition.request_buttons.include?(r_button)
+                = r_button
+      %label
+      = f.submit 'Save'
+
+
+

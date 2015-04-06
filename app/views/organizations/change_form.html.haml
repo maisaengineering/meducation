@@ -1,0 +1,37 @@
+%table#manageFormsTable.manageTable{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %tr.manageTableHeader
+    %td
+      %input{:type => "checkbox"}  
+    %td Category
+    %td Form Name
+    %td  
+    %td  
+    %td Workflow
+    %td Attachments
+    %td Responses
+
+  -@organization.seasons.each do |each_season|
+    -if(each_season.season_year == @organization_seaons[0])
+      - if(!each_season.organization_forms.nil?)
+        -each_season.organization_forms.each do |each_form|
+          %tr        
+            %td
+              = check_box_tag(each_form.id, '', checked = false, :class => 'form_check') 
+            %td #{each_form.category}
+            %td.manageNameCell #{each_form.form_name}
+            %td.manageViewCell          
+              = link_to "view collected data", "#"
+            %td.manageEditCell          
+              = link_to "edit form", org_form_organizations_path(:id => @organization, :category => each_form.category, :form_name => each_form.form_name, :season => organization_seasons(@organization)[0], :form_id =>each_form.id)
+            %td Application form
+            %td.manageEditCell          
+              = link_to "showform", form_content_organizations_path(:id => @organization, :category => each_form.category, :form_name => each_form.form_name, :season => organization_seasons(@organization)[0], :form_id =>each_form.id)
+            %td  
+            %td 18
+        
+        
+
+.panelActionContainer
+  %ul
+    %li          
+      = link_to "add new form", org_form_organizations_path(:is_new => 'yes', :id => params[:id], :season => organization_seasons(@organization)[0])

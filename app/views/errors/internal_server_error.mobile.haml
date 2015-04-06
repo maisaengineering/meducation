@@ -1,0 +1,15 @@
+- content_for :head do
+  - if current_user
+    .hButton{:onclick => "window.location.href='#{m_top_dashboard_path(current_user.parent_profile)}'"}
+      back
+    .hButton.hbLogout{:onclick => "window.location.href='#{destroy_user_session_path}'"}
+      Log Out
+  - else
+    .hButton{:onclick => "window.location.href='#{root_url}'"}
+      back
+
+#scrollContainer.scrollContainer
+  .contentContainer.ccProfile
+    .prefernceContainer
+      %h1.alertRowOn
+        Oops!  Something went wrong.  Please sign back in.

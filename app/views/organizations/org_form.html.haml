@@ -1,0 +1,53 @@
+- if !params[:error_msg].nil?
+  .standardForm      
+    #headder_error                 
+      .formTopErrorText            
+        %span.formTopErrorHeader Oops!             
+        We discovered an error. 
+        = params[:error_msg]
+-else
+  - [:notice, :error, :message].each do |key|
+    - unless flash[key].blank?
+      .standardForm      
+        #headder_error                 
+          .formTopErrorText            
+            %span.formTopErrorHeader Oops!             
+            We discovered an error. 
+            = flash[key]
+
+=form_tag org_form_edit_organizations_path, :method => 'post', authenticity_token: true do |f|
+  %h1
+    = params[:is_new] == 'yes' ? "New Form" : "Edit Form"
+  #dashEditForm.manageContainer
+    %p.manageExplanation Enter or edit the form below, using KidsLink-JSON convention.
+    #dashEditFormPanel.dashPanel.managePanel       
+      = params[:is_new] == 'yes' ? "<span class='panelName'> New Form</span>".html_safe : "<span class='panelName'> Edit Form</span>".html_safe
+      
+      = hidden_field_tag :form_id, params[:form_id]
+      = hidden_field_tag :season, params[:season]
+      = hidden_field_tag :is_new, params[:is_new]
+      = hidden_field_tag :id, params[:id]
+      / %label Form name
+      / = text_field_tag :form_name, value = @jsonTemplate.nil? ? '' : @jsonTemplate.form_name
+      %label Form category      
+      = text_field_tag :category, value = @jsonTemplate.nil? ? '' : @jsonTemplate.category
+      %label Form Workflow      
+      = select_tag :workflow, options_for_select(JsonTemplate::WORKFLOW_TYPES.values, :selected => @jsonTemplate.nil? ? '' : @jsonTemplate.workflow )
+      %br
+      = text_area_tag :content, value = @jsonTemplate.nil? ? '' : @jsonTemplate.content
+      
+      //= text_area_tag :content,value = each_content.content unless each_content.content.nil?
+      .clear
+      .link_to_download
+        = link_to "click to download(sample-json)", download_json_organizations_path(format: "json"), :title =>"Note : Child fname, lname, nickname id's and terms are mandatory and keep same id. For age group and school days lookups is compulsory i.e., 'lookup': 'sessions' For terms: id is terms and name : title or headline in description can enter terms text"
+    = submit_tag "Save changes"
+        
+    %a{:href => org_form_and_documents_path(:id => session[:current_org])}
+      %input{:onclick => "goBack()", :type => "reset", :value => "Cancel",:class => 'btnCancel'}            
+              
+:javascript
+  function goBack()
+  {        
+    window.location.href = "/organizations/#{params[:id]}/forms_and_documents"
+  }
+

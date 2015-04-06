@@ -1,0 +1,21 @@
+.childDashLeft
+  .cdlHome
+    = link_to "kidslink home", pathselection(current_user, params[:child])
+
+  %ul.cdlOrgList
+    %li
+      = link_to "#{@kid_profile.kids_type.nickname.capitalize}"" overview",  child_dashboard_profiles_path(:child => params[:child], :email =>params[:email])
+
+      - @orgnization_season.each do |seas_membr|
+        - if seas_membr.seasons[0].status == 'active'
+          - orgName = Organization.find(seas_membr.org_id).preffered_name
+          - if seas_membr.seasons.detect{|ele| ele.application_form_status == "Application submitted" }
+            - orgName += "<span> (@appl) </span>" unless orgName.nil?
+            - cssclass = "atApp"
+
+          %li{:class => "#{cssclass} selected" }
+            = link_to "#{orgName}".html_safe, child_org_dashboard_profiles_path(:child => params[:child], :org =>seas_membr.org_id, :email =>params[:email])
+
+  .cdlApplyAnotherBox
+    = link_to "Apply", "#", :class => 'cdlApplyLink'
+    for another KidsLink affiliated organization

@@ -1,0 +1,19 @@
+%h1 Apply for #{@organization.name} using an existing KidsLink membership
+
+#registrationExplanation
+  Because either you or your child already has a KidsLink membership, applying for #{@organization.name} will be a snap.  Any information you (or another parent of your child) has previously provided will be automatically copied into your forms, saving you lots of time and effort!
+
+.standardForm
+  -if flash[:notice].eql?('applied')
+    .formTopErrorText
+      %span.formTopErrorHeader Oops!
+      We discovered an error.  Please see below for more information.<br/>
+      Already applied for the kid you selected.Please select other option.
+
+  =form_tag existing_apply_form_profiles_path, :method => :get, authenticity_token: true do
+    .rwkeccChooseChildBox
+      = label_tag "Child applying"
+      = hidden_field_tag :season_id ,params[:season_id]
+      = hidden_field_tag :org_id ,@organization.id
+      = select_tag :profile_id, options_for_select(@child_applying.collect {|p| [ p[1], p[0]] } ,params[:id])
+    =submit_tag 'select child'

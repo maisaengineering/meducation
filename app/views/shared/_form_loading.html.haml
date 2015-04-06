@@ -1,0 +1,12 @@
+- progress_bar_id ||= 'form_loading'
+.form_loading{id: progress_bar_id, :style =>"display: none;"}
+  .popUpContainer
+    .popUpBG{:style =>"background-color: transparent;"}
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            %form
+              .popUpPanel
+                %br
+                  %h2{:align => "center"} Loading...

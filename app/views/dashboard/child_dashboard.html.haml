@@ -1,0 +1,38 @@
+- title "#{@kid_profile.full_name} | Dashboard"
+.profileContainer
+  .profileContainerTopLeft
+    .profilePhotoContainer.profilePhotoContainerOR
+      .profileChildPhotoBox{:style => thumb_photo_background(@kid_profile.photograph)}
+        -#= thumb_photo(@kid_profile.photograph)
+      .profileChildPhotoOptionsContainer
+        .profileBigName #{truncate(@kid_profile.nickname, length:14)}
+        %ul
+          %li
+            %a{href: "#",id: 'change_photo_id'} change ID photo
+          %li
+            = link_to "view profile", child_profile_path(@kid_profile)
+
+    .profileTopMarketingContainer
+      \&nbsp;
+      %br>/
+      \&nbsp;
+      %br>/
+      \&nbsp;
+      %br>/
+      \&nbsp;
+      %br>/
+      -#(marketing section)
+  .profileContainerRight
+    = render  'alerts_and_events'
+  -#.dashMilestonesContainer{ data: {url: timeseries_milestones_path } }
+  .profileContainerLeft
+    #dashProfileData.dashPanel
+      = render  'profile'
+    #dashOrgStatus.dashPanel
+      = render  'organizations'
+  .profileContainerRight
+    = render 'document_vault'
+  .clear
+  = render 'documents/change_photo_id'
+= render '/shared/form_loading'
+= render '/shared/errormessage'

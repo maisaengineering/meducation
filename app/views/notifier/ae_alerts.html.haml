@@ -1,0 +1,12 @@
+%span.aeAlertMail
+  - ae_definition = @notification.ae_definition
+  %h1
+    #{ae_definition.title}
+    - if @notification.profile.kids_type
+      for #{ @notification.profile.nickname }
+  %p= raw ae_definition.content
+  %span{style:"font-size: 11px;"}
+    %p
+      You are receiving this email because you are using KidsLink, either to register for a preschool or organization, or because you have downloaded the KidsLink iPhone app. If you haven't downloaded the KidsLink app, get it from the App Store or click #{link_to "http://mykidslink.com/install", "http://mykidslink.com/install"} and log in with your existing email address.
+    %p
+      To unsubscribe, please email #{mail_to "support@mykidslink.com", "support@mykidslink.com"}.

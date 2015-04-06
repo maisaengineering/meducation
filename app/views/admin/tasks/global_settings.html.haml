@@ -1,0 +1,46 @@
+= form_tag admin_update_settings_path, authenticity_token: true, remote:true do |f|
+  %h1 Edit settings
+  #dashEditForm.manageContainer
+    %p.manageExplanation
+    #dashEditFormPanel.dashPanel.managePanel
+      %span.panelName= 'Edit settings'
+      %label Current token wait time
+      %input{name: "kl_config[configuration][downtime]", type: 'text', required: true, value: @organization.configuration["downtime"]}
+      %label Current iOS version
+      %input{name: "kl_config[configuration][ios_version]", type: 'text', required: true, value: @organization.configuration["ios_version"]}
+      %label Notification Permission Prompt Interval
+      %input{name: "kl_config[configuration][perm_notification_interval]", type: 'number', required: true, value: @organization.configuration["perm_notification_interval"]}
+
+      .clear
+      = submit_tag "Update"
+
+
+#dashFormsList.dashPanel.managePanel.manageContainer
+  %span.panelName Upgrade Alerts Settings:
+  #loading
+    = form_tag admin_update_settings_path, authenticity_token: true, remote:true do |f|
+      %table#manageFormsTable.manageTable{border: 0, cellpadding: 0, cellspacing: 0}
+        %tr.manageTableHeader
+          %th version
+          %th required
+          %th
+        = render partial: 'admin/tasks/partials/app_upgrades', locals:{app_upgrades: @organization["app_upgrades"]}
+      .panelActionContainer
+      = submit_tag "Update"
+      = link_to "add new version", "#", class:"add_version"
+
+:javascript
+
+  $(".add_version").click(function(e){
+    e.preventDefault();
+    $('.manageTableHeader').after("<tr><td><input type='text' name='kl_config[app_upgrades][][version]'></td>"+
+                                  "<td><select name='kl_config[app_upgrades][][required]'><option value="+true+">Mandatory</option><option value="+false+">Optional</option></select></td><td></td></tr>");
+  });
+
+  delete_version = function(element){
+     if($("#manageFormsTable").find('tr').not('.manageTableHeader').length>1){
+        $(element).closest('tr').remove();
+     }else{
+       alert("Oops! we can't delete all versions settings.")
+     }
+  }

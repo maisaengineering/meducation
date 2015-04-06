@@ -1,0 +1,18 @@
+.dashContainer
+  %h1 Document share/upload: Photograph of child
+  .attachmentContainer
+    .attachmentText If you already have a document available in your KidsLink document repository, there is no need to upload it again.  Instead, you simply need to share it.
+    .attachmentBoxName Document: Photograph of child
+    .attachmentDecisionsBox
+      .attachmentDecisionContainer
+        = link_to "<span class='attachmentExistingDocText'> Choose existing document </span>".html_safe, "#"
+        from your
+        %span.attachmentExistingKLRText KidsLink repository
+
+      .attachmentDecisionContainer
+        = link_to "<span class='attachmentUploadText'> Upload new document </span>".html_safe, "#"
+        from your computer
+
+
+    %p  
+= render "child_panel"

@@ -1,0 +1,51 @@
+= field_set_tag  do
+  .popUpContainer.popUpOnboard.popUpOnboardFinal
+    .popUpBG
+    %table.popUpTable
+      %tr
+        %td.popUpTableTD
+          .popUpContent
+            .popUpPanel
+              %span.panelName Sign up
+              .onboardTopText
+                %strong Last step!
+              .onboardFields
+                .onboardWell
+                  %span.onboardLabel Wellness sponsor
+                  %span.wellParName
+                  %span.wellParChange
+                    (
+                    %a{:href => "#"}> select a different wellness sponsor
+                    )
+                %span.psFields
+                  .onboardFieldContainer
+                    %span.onboardLabel Create your password
+                    = password_field_tag  "parents[0][info][password]", nil, class: 'required'
+                  .onboardFieldContainer
+                    %span.onboardLabel Repeat password
+                    = password_field_tag  "parents[0][info][password_confirmation]", nil, class: 'required'
+                .onboardEULA
+                  #{check_box_tag  "is_accepted", nil, nil, class: 'required'} I agree to the KidsLink #{link_to "End User License Agreement", "#", class:"eula"}
+
+                .onboardFieldInstructions
+                  Optional: Let other parent log in too!
+                .onboardFieldContainer
+                  %span.onboardLabel Parent 2 is the
+                  = select_tag "parents[#{index}][relationship]",options_for_select(['Mother', 'Father', "Stepmother", 'Stepfather','Grandmother','Grandfather', 'Guardian']), include_blank: true, class: "required_if"
+
+                .onboardFieldContainer.onboardFieldContainerParentTwoName
+                  %span.onboardLabel Parent 2's name
+                  = text_field_tag  "parents[#{index}][info][fname]", nil, :placeholder => "first name", class: "required_if"
+                  = text_field_tag  "parents[#{index}][info][lname]", nil, :placeholder => "last name", class: "required_if"
+                .onboardFieldContainer
+                  %span.onboardLabel Parent 2's e-mail address
+                  = email_field_tag   "parents[#{index}][info][email]",nil , class: "validate_email_format"
+              .bigNextButton{:onclick => "",  id:'hm-submit-button'}
+                %a{:href => "#", :onClick => "return false;"}
+                  Finished!
+                  %span.bigNextButtonSubline See your dashboard
+              .onboardBottomButtons
+                .onboardButton.obCancel{:onClick => ""}
+                  %a{:href => "#", :onClick => "return false;"} Cancel
+                .onboardButton.obPrevious{:onClick => "$(this).find('a').click();"}
+              .clear

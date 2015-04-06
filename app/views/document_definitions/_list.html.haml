@@ -1,0 +1,69 @@
+#dashDocsList.dashPanel.managePanel
+  %span.panelName Documents
+  .panelManageContainer
+    %span.panelManageText Select to edit a doc definition or view the data, or identify docs and select an action:
+    %span.panelManageButton
+      = link_to 'Automate workflow', '#', class: 'active', id: 'set_docs_as_automate'
+  #loading_doc
+    = form_tag(update_workflow_document_definitions_path(@organization.id),id: 'update_workflow_form', authenticity_token: true) do
+      %table#manageFormsTable.manageTable{border: 0, cellpadding: 0, cellspacing: 0}
+        %tr.manageTableHeader
+          %td= check_box_tag('universal_doc',"", false, class: 'doc_check')
+          %td Season
+          %td Document Name
+          -#%td  
+          %td  
+          %td  
+          %td Workflow
+          %td Responses
+        - if document_definitions.blank?
+          %tr
+            %td{colspan: '8', align: 'center'} No Documents defined yet..
+        - else
+          - document_definitions.each do |document_definition|
+            %tr
+              %td= check_box_tag("document_definition_ids[]", document_definition.id, false, class: 'each_document')
+              %td= document_definition.season.nil? ? DocumentDefinition::TYPE[:organization_wide] : document_definition.season.current_season_year
+              %td.manageNameCell= document_definition.name
+              %td.manageViewCell= link_to_if(document_definition.submitted_count > 0,"view collected data", download_responses_document_definition_path(@organization.id,document_definition))
+              %td.manageEditCell= link_to "edit doc", edit_document_definition_path(organization.id,document_definition)
+              -#%td.manageEditCell= link_to "delete doc", document_definition_path(organization.id,document_definition) ,
+                                                        method: :delete ,data: { :confirm => 'Are you sure want delete document?' }
+              %td= document_definition.workflow
+              %td= "#{document_definition.submitted_count}/#{document_definition.requested_count}"
+    .panelActionContainer
+      %ul
+        %li
+          = link_to "add new document definition",   new_document_definition_path(organization.id)
+
+:javascript
+  $("#universal_doc").live('click', function(){
+    if ($('#universal_doc').attr('checked')){
+      //check all documents
+      $('.each_document').attr('checked', true)
+      var checked_items_length = $('.each_document:checked').length
+      //enable automate workflow link
+      if(checked_items_length > 0 ){
+        $("#set_docs_as_automate").css("pointer-events","auto").parent().effect("highlight", {}, 2000);
+      }
+    }else{
+      $("#set_docs_as_automate").css("pointer-events","none").parent().effect("highlight", {}, 2000);
+      $('.each_document').attr('checked', false)
+    }
+  });
+  $(".each_document").live('click', function(){
+    var checked_items_length = $('.each_document:checked').length
+     if($(this).attr('checked')){
+       $("#set_docs_as_automate").css("pointer-events","auto")
+     }else{
+        //disable automate workflow if none of the check boxes are checked
+       if(checked_items_length <=0 ){
+        $("#set_docs_as_automate").css("pointer-events","none")
+       }
+     }
+  });
+
+  $('#set_docs_as_automate').click(function (e){
+    e.preventDefault();//Prevent a link from opening the URL
+    $('#update_workflow_form').submit(); //submit the form.
+  })

@@ -1,0 +1,78 @@
+%html
+  %head
+    %script{:src => "//use.typekit.net/wys2fog.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+    = stylesheet_link_tag 'm_appstyles', media: 'all' , 'data-turbolinks-track' => true
+    = csrf_meta_tag
+    %meta{:content => "MSchool", :name => "apple-mobile-web-app-title"}/
+    %meta{:content => "user-scalable=no, width=640", :name => "viewport"}/
+    = yield  :meta_tag
+    = favicon_link_tag '/assets/apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png'
+    / iOS6 iPhone ICON
+    = favicon_link_tag '/assets/apple-touch-icon-57x57.png', rel: "apple-touch-icon-precomposed", sizes: "57x57"
+    / iOS6 iPad ICON
+    =# favicon_link_tag '/assets/apple-touch-icon-72x72.png', rel: "apple-touch-icon-precomposed", sizes: "72x72"
+    / iOS6 iPhone (Retina) ICON
+    = favicon_link_tag "/assets/apple-touch-icon-114x114.png", rel: "apple-touch-icon-precomposed", sizes: "114x114"
+    / iOS6 iPad (Retina) ICON
+    =# favicon_link_tag '/assets/apple-touch-icon-144x144.png', rel:"apple-touch-icon-precomposed", sizes: "144x144"
+    / iOS7 iPhone ICON
+    = favicon_link_tag '/assets/apple-touch-icon-60x60.png', rel: "apple-touch-icon", sizes: "60x60"
+    / iOS7 iPad ICON
+    =# favicon_link_tag '/assets/apple-touch-icon-76x76.png', rel: "apple-touch-icon", sizes: "76x76"
+    / iOS7 iPhone (Retina) ICON
+    = favicon_link_tag '/assets/apple-touch-icon-120x120.png', rel: "apple-touch-icon", sizes: "120x120"
+    / iOS7 iPad (Retina) ICON
+    =# favicon_link_tag '/assets/apple-touch-icon-152x152.png', rel: "apple-touch-icon", sizes:"152x152"
+
+    :javascript
+      document.addEventListener("touchstart", function() {},false);
+    = javascript_include_tag 'm_application' , 'data-turbolinks-track' => true
+    = yield :javascript
+
+    :css
+      .scrollContainer {
+          position:absolute; z-index:1;
+          top:94px;
+          left:0;
+          bottom: 166px;
+          width:100%;
+          overflow:auto;
+      }
+
+    %body
+      - if current_user
+        .headerContainer
+          .headerButtonContainer
+            = yield :head
+          - url= @hospital ? "#{@hospital.logo.url}" : nil
+          .headerWellnessLogo
+            .headerWellnessLogoTransform{:onClick => "window.location.href='#{m_hospital_info_path(@profile)}'", :style => "background-image:url(#{url});"}
+          = yield :page_title
+      - else
+        .m_kl_logo{:onClick => "window.location.reload(true);"}
+          = image_tag('h_logo.png')
+      .loading_indicator
+      = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
+      = yield
+      - if current_user
+        .footerContainer
+          .footerGradient
+          = yield :off_footer_gradient # invoke if need in any template (milestone-view ..etc )
+          %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+            %tr
+              %td.footerLogoTD{onclick:"window.location.reload(true);"}
+                %div &nbsp;
+              %td.footerChildListTD
+                .footerChildListContainer
+                  - if  !@managed_kids.blank? and @managed_kids.count<5
+                    - @managed_kids.each do |kid|
+                      %div{'data-url'=>m_child_dashboard_path(kid), class:  (!@kid_profile.nil? and @kid_profile.id.eql?(kid.id)) ? "footerChildOptionSelected": "footerChildOption", :style =>thumb_photo_background(kid.photograph)}
+                        %span #{kid.nickname}
+                  -elsif @kid_profile
+                    %div{'data-url'=>m_child_dashboard_path(@kid_profile), class: "footerChildOptionSelected", :style =>thumb_photo_background(@kid_profile.photograph)}
+                      %span #{@kid_profile.nickname}
+                  %div{'data-url'=>m_top_dashboard_path(@parent_profile), class:@kid_profile? "footerFamilyOption" : "footerFamilyOptionSelected"}
+                    %span family view
+        = yield :footer_iOS7_fix

@@ -63,7 +63,7 @@ Meducation::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w( fancybox.css fancybox.js )
+  config.assets.precompile += %w( global.css start_page.css fancybox.css fancybox.js version1.js )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -84,8 +84,8 @@ Meducation::Application.configure do
 
 
   #default url for mailer
-  config.action_mailer.default_url_options = { :host => 'kl-json.herokuapp.com' }
-  config.action_mailer.asset_host = 'https://kl-json.herokuapp.com'
+  config.action_mailer.default_url_options = { :host => 'meducation.herokuapp.com' }
+  config.action_mailer.asset_host = 'https://meducation.herokuapp.com'
 
   # ActionMailer Config
   config.action_mailer.delivery_method = :smtp

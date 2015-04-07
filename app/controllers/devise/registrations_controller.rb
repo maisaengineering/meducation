@@ -36,7 +36,7 @@ class Devise::RegistrationsController < DeviseController
   end
 
   # POST /resource
-  def create
+  def create 
     session[:existing_child] = nil
     build_resource
     @organization = Organization.find(params[:org_id])

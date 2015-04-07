@@ -21,8 +21,8 @@
       = f.text_field :category
       %label Definition type
       =f.select :definition_type, options_for_select(['Alert', 'Event'],@ae_definition.definition_type ),include_blank: true
-      %label Hospital
-      =f.select :hospital_id, Hospital.all.collect {|p| [ p.name, p.id ] } ,{include_blank: true,selected: @ae_definition.hospital_id}
+      -#%label Hospital
+      -#=f.select :hospital_id, Hospital.all.collect {|p| [ p.name, p.id ] } ,{include_blank: true,selected: @ae_definition.hospital_id}
       %label status
       = f.select :status, options_for_select(AeDefinition::STATUS, @ae_definition.status), include_blank: true
       %label Content

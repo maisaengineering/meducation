@@ -18,9 +18,9 @@
     = succeed "." do
       %b
         ="#{kids_type_profile.fname}"
-      now also has a universal KidsLink profile that can be used in the future with this and other organizations.  You and any other authorized parent of  #{kids_type_profile.nickname} may now log in at any time to make updates or see the latest information from #{kids_type_profile.nickname}'s organizations.
+      now also has a universal MSchool profile that can be used in the future with this and other organizations.  You and any other authorized parent of  #{kids_type_profile.nickname} may now log in at any time to make updates or see the latest information from #{kids_type_profile.nickname}'s organizations.
   %p
-    = link_to "<b>Continue to the KidsLink dashboard</b>".html_safe, top_dashboard_path(@parent_profile), :class =>'bigLink blueLink'
+    = link_to "<b>Continue to the MSchool dashboard</b>".html_safe, top_dashboard_path(@parent_profile), :class =>'bigLink blueLink'
   %p      
     = link_to "Or, apply another child to #{@organization.name}", profile_path(@kid_profile, org_id: params[:org_id],season_id: params[:season_id]), :class =>'bigLink blueLink'
     

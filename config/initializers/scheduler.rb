@@ -1,3 +1,4 @@
+=begin
 require 'rubygems'
 require 'rufus-scheduler'
 require 'rake'
@@ -131,4 +132,4 @@ end
 # #Ex:  scheduler.cron("5 15 * * sun") do ;end --> every tue 15:03 PM -->every sun afternoon at 3 hours and 5 mins it will run
 # #Ex:  scheduler.cron("30 10 * * sat") do ;end --> every sat 10:30 AM -->every sun morning at 10 hours and 30 mins it will run
 #
-# #every wed 00:01 Am
+# #every wed 00:01 Am=end

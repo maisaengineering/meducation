@@ -13,28 +13,33 @@ user = User.create! :fname => 'Super Admin', :email => 'superadmin@maisasolution
 user.create_role(:super_admin)
 
 puts "------------------- Creating Organization ....."
-organization = Organization.create!(email: 'maisa.engineers@gmail.com',networkId: 'ms_org_01',name: 'Hyderabad Public School',preffered_name: "HPC",
+organization = Organization.create!(email: 'admin@hpc.com',networkId: 'ms_org_01',name: 'Hyderabad Public School',preffered_name: "HPC",
                                     fax_no: '',address1: "3434 Roswell Road", address2: "Atlanta GA 30305",address3: '',phone_no: '404.842.5809')
 
+puts "----------- Creating admin ...."
+admin = User.create! fname: 'Org admin',email: 'maisa.engineers@gmail.com',password: '123456',password_confirmation: '123456'
+admin.create_role(:org_admin,[organization.id])
 
 puts "------------------- Creating seasons ....."
 organization.seasons.create!({season_year: '2015-2016',is_current: 1,season_fee: 100})
 organization.seasons.create!({season_year: '2014-2015',is_current: 0,season_fee: 150})
 
+
+
+
 puts "------------------- Creating sessions ....."
 organization.seasons.each do |season|
-  [ "Toddler Tues/Thurs (18 mo by 8/31/2013)",
-    "2-year-old Tues/Thurs (2 by 8/31/2013)",
-    "2-year-old Mon/Wed (2 by 8/31/2013)",
-    "2-year-old Mon/Wed/Fri (3 by 12/31/2013)",
-    "3-year-old Tues/Thurs (3 by 8/31/2013)",
-    "3-year-old Mon/Wed/Fri (3 by 8/31/2013)",
-    "3-year-old MondayFriday (3 by 8/31/2013)",
-    "Pre-K Mon/Wed/Fri (4 by 8/31/2013)",
-    "Pre-K MondayFriday (4 by 8/31/2013)",
-    "5/6 MondayFriday (5 by 8/31/2013)"
+  [ "Nursery",
+    "LKG",
+    "UKG",
+    "1st Class",
+    "2nd Class",
+    "3rd Class",
+    "4th Class",
+    "5th Class",
+    "7th Class"
   ].each do |element|
-    season.sessions.create!(session_name: element.gsub("2015",season.season_year.split('-')[1]),session_open: ['1','0'].sample)
+    season.sessions.create!(session_name: element.gsub("2015",season.season_year.split('-')[1]),session_open: '1')
   end
 end
 puts "------------------- Creating weblinks ....."

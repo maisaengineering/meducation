@@ -17,7 +17,7 @@
 /coverage/
 /public/system/
 /public/uploads/
-#/config/mongoid.yml
+/config/mongoid.yml
 /.idea
 /vendor/cache/
 

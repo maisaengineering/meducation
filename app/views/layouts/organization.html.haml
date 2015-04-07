@@ -37,7 +37,6 @@
             .navTab= link_to "Ae Definitions", admin_ae_definitions_path
             .navTab{class: current_page?(admin_search_parents_path) ? 'navTabOn' : nil}= link_to "Search parents", admin_search_parents_path
             .navTab{class: current_page?(admin_edit_email_path) ? 'navTabOn' : nil}= link_to "Update email", admin_edit_email_path
-            .navTab{class: current_page?(admin_global_config_path) ? 'navTabOn' : nil}= link_to "Settings", admin_global_config_path
         - elsif current_user.has_role?(:org_admin)
           .navContainer
             - if (controller.action_name== "org_enrollees" || controller.action_name== "org_child_profile" )

@@ -114,13 +114,4 @@ class Admin::TasksController < ApplicationController
     end
   end
 
-  def global_settings
-    @organization = Organization.unscoped.where(type: "global").first
-  end
-
-  def update_settings
-    @organization = Organization.unscoped.where(type: "global").first
-    @organization.update_attributes(params["kl_config"])
-  end
-
 end

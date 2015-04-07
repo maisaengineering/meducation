@@ -18,6 +18,7 @@ group :production do
   gem 'heroku_rails_deflate' # Only for heroku
   # Rails Server
   gem 'unicorn'
+  gem 'rails_12factor', group: :production
 end
 
 group :development, :test do
@@ -92,6 +93,6 @@ gem 'spreadsheet'
 #TODO uncomment while deploying to aws
 #TODO need to find solution to install exif on heroku
 # gem 'exif' # https://github.com/tonytonyjan/exif
-gem 'rails_12factor', group: :production
+
 
 gem 'rename'

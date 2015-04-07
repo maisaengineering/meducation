@@ -54,10 +54,8 @@ Meducation::Application.routes.draw do
     patch 'organic-users'=>"tasks#unset_as_organic",as: :unset_organic_user
 
     get 'edit-user-data'=>"tasks#edit_user_data",as: :edit_user_data
-    patch 'update-user-data/:id'=>"tasks#update_user_data",as: :update_user_data
+    patch 'update-user-data/:id'=>"tasks#update_user_data",as: :update_user_data 
 
-    get 'global-config'=>"tasks#global_settings",as: :global_config
-    post 'update-settings'=>"tasks#update_settings",as: :update_settings
 
     # Invitation Requests(Distribute Invitations)
     get 'invitation_requests/:scope'=>"invitation_requests#index",:as=> :invitation_requests

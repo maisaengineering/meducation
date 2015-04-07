@@ -92,6 +92,6 @@ gem 'spreadsheet'
 #TODO uncomment while deploying to aws
 #TODO need to find solution to install exif on heroku
 # gem 'exif' # https://github.com/tonytonyjan/exif
-
+gem 'rails_12factor', group: :production
 
 gem 'rename'

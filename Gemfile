@@ -12,9 +12,10 @@ gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'therubyracer', '0.12.0', :platform => :ruby
 gem "yui-compressor", "~> 0.12.0"
+gem "heroku"
+gem "heroku-api"
 
-group :production do
-  gem "heroku" # Only for heroku
+group :production do 
   gem 'heroku_rails_deflate' # Only for heroku
   # Rails Server
   gem 'unicorn'

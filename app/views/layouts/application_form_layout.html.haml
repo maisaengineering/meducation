@@ -91,6 +91,3 @@
       .bodyContainer
         = render 'shared/access_denied' if flash[:alert].eql?(t(:access_denied)) #Access Denied popup only if not authorized
         = yield
-  %script{src: "//use.typekit.com/mpd6krz.js", type: "text/javascript"}
-  :javascript
-    try{Typekit.load();}catch(e){}

@@ -35,22 +35,6 @@
       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
       document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
     = yield :javascript
-    - if Rails.env.production?
-      :javascript
-        var fb_param = {};
-        fb_param.pixel_id = '6010593914689';
-        fb_param.value = '0.00';
-        fb_param.currency = 'USD';
-        (function(){
-          var fpw = document.createElement('script');
-          fpw.async = true;
-          fpw.src = '//connect.facebook.net/en_US/fp.js';
-          var ref = document.getElementsByTagName('script')[0];
-          ref.parentNode.insertBefore(fpw, ref);
-        })();
-      %noscript
-        %img{:alt => "", :height => "1", :src => "https://www.facebook.com/offsite_event.php?id=6010593914689&amp;value=0&amp;currency=USD", :style => "display:none", :width => "1"}/
-
   %body
     -#- if current_user
     -#  .headerContainer
